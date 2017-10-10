@@ -16,15 +16,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.testmenudrawer.android.testmenudrawer.UserActivity;
+/**
+ * Created by mvalencia on 10/9/17.
+ */
 
-public class VinList extends AppCompatActivity
+public class UserActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vin_list);
+        setContentView(R.layout.activity_user);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -60,7 +62,7 @@ public class VinList extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.vin_list, menu);
+//        getMenuInflater().inflate(R.menu.vin_list, menu);
         return true;
     }
 
