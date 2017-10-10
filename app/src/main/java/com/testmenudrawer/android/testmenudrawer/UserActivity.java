@@ -16,6 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.testmenudrawer.android.testmenudrawer.VinList;
+
 /**
  * Created by mvalencia on 10/9/17.
  */
@@ -87,12 +89,12 @@ public class UserActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_scan) {
+        if (id == R.id.nav_vin_list) {
             Log.i("Nav", "Scan");
-            goToVinCaptureActivity();
-        } else if (id == R.id.nav_support) {
-            Log.i("Nav", "Support");
-            goToSupportActivity();
+            goToVinListActivity();
+//        } else if (id == R.id.nav_support) {
+//            Log.i("Nav", "Support");
+//            goToSupportActivity();
         } else if (id == R.id.nav_user) {
             Log.i("Nav", "User");
             goToUserActivity();
@@ -103,9 +105,9 @@ public class UserActivity extends AppCompatActivity
         return true;
     }
 
-    private void goToVinCaptureActivity() {
-//        Intent intent = new Intent(getApplicationContext(), VinCaptureActivity.class);
-//        startActivity(intent);
+    private void goToVinListActivity() {
+        Intent intent = new Intent(getApplicationContext(), VinList.class);
+        startActivity(intent);
     }
 
     private void goToSupportActivity() {
