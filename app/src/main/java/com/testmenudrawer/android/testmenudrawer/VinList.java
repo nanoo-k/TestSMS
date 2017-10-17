@@ -1,10 +1,15 @@
 package com.testmenudrawer.android.testmenudrawer;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.SupportActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -15,14 +20,53 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.testmenudrawer.android.testmenudrawer.UserActivity;
+
+
+import com.google.android.gms.common.api.CommonStatusCodes;
+import com.testmenudrawer.android.testmenudrawer.models.Vin;
+import com.testmenudrawer.android.testmenudrawer.models.VinsAdapter;
+//import com.varvet.barcodereadersample.barcode.BarcodeCaptureActivity;
+import com.testmenudrawer.android.testmenudrawer.utilities.NetworkUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import com.testmenudrawer.android.testmenudrawer.models.Vin.*;
+//import com.motoshop.vins.ManualEntryActivity;
+import com.testmenudrawer.android.testmenudrawer.models.VinsAdapter.*;
+
+
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.net.URL;
+import java.util.List;
+
 
 public class VinList extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
+    private VinsAdapter mAdapter;
+    private RecyclerView mVinsList;
+
+    private TextView mResultTextView;
+    private TextView mDecodedVinTextView;
+    private ListView mRecentVinsListView;
+    private ProgressBar mLoadingIndicator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /* Save references to onscreen elements */
+        mLoadingIndicator = (ProgressBar) findViewById(R.id.loading_indicator);
+        mResultTextView = (TextView) findViewById(R.id.result_textview);
+        mDecodedVinTextView = (TextView) findViewById(R.id.decode_vin_result_textview);
+//        mRecentVinsListView = (ListView) findViewById(R.id.recent_vins_list_view);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vin_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -114,5 +158,125 @@ public class VinList extends AppCompatActivity
     private void goToUserActivity() {
         Intent intent = new Intent(getApplicationContext(), UserActivity.class);
         startActivity(intent);
+    }
+
+
+    private static final int BARCODE_READER_REQUEST_CODE = 1;
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == BARCODE_READER_REQUEST_CODE) {
+//            if (resultCode == CommonStatusCodes.SUCCESS) {
+//                if (data != null) {
+//                    Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
+//                    Point[] p = barcode.cornerPoints;
+//                    mResultTextView.setText(barcode.displayValue);
+//
+//                    /* Vibrate phone and decode this Vin */
+////                    vibrate(500);
+////                    decodeVinRequest(barcode.displayValue);
+//
+//                } else mResultTextView.setText(R.string.no_barcode_captured);
+//            } else Log.e(LOG_TAG, String.format(getString(R.string.barcode_error_format),
+//                    CommonStatusCodes.getStatusCodeString(resultCode)));
+//        } else super.onActivityResult(requestCode, resultCode, data);
+//    }
+
+
+
+
+    public class GetRecentVinsTask extends AsyncTask<URL, Void, String> {
+
+        /* We need the app context available for these callback functions, so
+        ensure that we set it when calling this task */
+        private Context context;
+        public GetRecentVinsTask (Context c){
+            context = c;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Log.i("onPreExecute", "MADE IT.");
+            super.onPreExecute();
+            mLoadingIndicator.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected String doInBackground(URL... params) {
+            Log.i("doInBackground", "MADE IT.");
+
+            URL recentVinsUrl = params[0];
+            String vinResults = null;
+            try {
+                vinResults = NetworkUtils.getRecentVins(recentVinsUrl, context);
+            } catch (IOException e) {
+                Log.i("doInBackground", "exception.");
+
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return vinResults;
+//            return "true";
+        }
+
+        @Override
+        protected void onPostExecute(String vinResults) {
+
+            mLoadingIndicator.setVisibility(View.INVISIBLE);
+            if (vinResults != null) {
+                Log.i("onPostExecute", vinResults);
+
+//                showJsonDataView();
+//                mRecentVinsTextView.setText(vinResults);
+
+
+                Gson gson = new Gson();
+
+                /* This is a pattern for gson parsing an array of some kind of object */
+                /* First you determine the listType of the object */
+                Type listType = new TypeToken<List<Vin>>(){}.getType();
+                /* Then you say you're going to parse to create a list of that thing, assigning to
+                 * gson the listType */
+                List<Vin> vinList = gson.fromJson(vinResults, listType);
+
+//                Vin[] vinList = gson.fromJson(vinResults, Vin[].class);
+
+
+//                VinListAdapter adapter = new VinListAdapter(context, R.layout.vin_management_list, vinList);
+
+//                mRecentVinsListView.setAdapter(adapter);
+
+                mVinsList = (RecyclerView) findViewById(R.id.recyclerview_vins);
+
+                LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+                mVinsList.setLayoutManager(layoutManager);
+
+                mVinsList.setHasFixedSize(true);
+
+                mAdapter = new VinsAdapter(vinList);
+
+                mVinsList.setAdapter(mAdapter);
+
+            } else {
+                Log.i("onPostExecute", "Null.");
+                showErrorMessage();
+            }
+        }
+    }
+
+
+    /**
+     * This method will make the error message visible and hide the JSON
+     * View.
+     * <p>
+     * Since it is okay to redundantly set the visibility of a View, we don't
+     * need to check whether each view is currently visible or invisible.
+     */
+    private void showErrorMessage() {
+        // First, hide the currently visible data
+//        mRecentVinsListView.setVisibility(View.INVISIBLE);
+        // Then, show the error
+//        mErrorMessageDisplay.setVisibility(View.VISIBLE);
     }
 }
