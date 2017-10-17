@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.testmenudrawer.android.testmenudrawer.UserActivity;
 
@@ -38,7 +39,7 @@ import com.google.gson.reflect.TypeToken;
 import com.testmenudrawer.android.testmenudrawer.models.Vin.*;
 //import com.motoshop.vins.ManualEntryActivity;
 import com.testmenudrawer.android.testmenudrawer.models.VinsAdapter.*;
-
+import com.testmenudrawer.android.testmenudrawer.utilities.PreferenceData;
 
 
 import java.io.IOException;
@@ -182,8 +183,66 @@ public class VinList extends AppCompatActivity
 //        } else super.onActivityResult(requestCode, resultCode, data);
 //    }
 
+    /* onStart, onResume */
+    @Override
+    protected void onPostResume() {
 
+        /* Check if user is logged in */
+        getRecentVins();
+//        decodeVinRequest("3FA6P0K93FR226629");
+//        boolean isLoggedIn = PreferenceData.getUserLoggedInStatus(this.getApplicationContext());
+//        if (!isLoggedIn) {
+//
+//            navigateToLogin();
+//        }
+//        else {
+//            super.onPostResume();
+//        }
+        super.onPostResume();
+    }
 
+    /* Navigate to login page */
+    protected void navigateToLogin () {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+    }
+
+    public void getRecentVins () {
+        boolean isLoggedIn = PreferenceData.getUserLoggedInStatus(this.getApplicationContext());
+
+        /* If user doesn't have a JWT, we can't make the request */
+        if (!isLoggedIn) {
+            Context context = getApplicationContext();
+            int duration = Toast.LENGTH_SHORT;
+
+            String text = "You are not logged in. Please log in.";
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+
+            navigateToLogin();
+
+        } else {
+            makeRecentVinsRequest();
+        }
+
+    }
+
+    /**
+     * This method retrieves the search text from the EditText, constructs the
+     * URL (using {@link NetworkUtils}) for the github repository you'd like to find, displays
+     * that URL in a TextView, and finally fires off an AsyncTask to perform the GET request using
+     * our {@link GetRecentVinsTask}
+     */
+    private void makeRecentVinsRequest() {
+
+        String jwt = PreferenceData.getJwt(this.getApplicationContext());
+
+        URL recentVinsUrl = NetworkUtils.buildRecentVinsUrl();
+
+        new GetRecentVinsTask(this.getApplicationContext()).execute(recentVinsUrl);
+
+    }
 
     public class GetRecentVinsTask extends AsyncTask<URL, Void, String> {
 
@@ -198,7 +257,7 @@ public class VinList extends AppCompatActivity
         protected void onPreExecute() {
             Log.i("onPreExecute", "MADE IT.");
             super.onPreExecute();
-            mLoadingIndicator.setVisibility(View.VISIBLE);
+//            mLoadingIndicator.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -223,7 +282,7 @@ public class VinList extends AppCompatActivity
         @Override
         protected void onPostExecute(String vinResults) {
 
-            mLoadingIndicator.setVisibility(View.INVISIBLE);
+//            mLoadingIndicator.setVisibility(View.INVISIBLE);
             if (vinResults != null) {
                 Log.i("onPostExecute", vinResults);
 
