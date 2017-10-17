@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.SupportActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,7 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.testmenudrawer.android.testmenudrawer.UserActivity;
-
+import com.testmenudrawer.android.testmenudrawer.SupportActivity;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.testmenudrawer.android.testmenudrawer.models.Vin;
@@ -139,6 +138,9 @@ public class VinList extends AppCompatActivity
         } else if (id == R.id.nav_user) {
             Log.i("Nav", "User");
             goToUserActivity();
+        } else if (id == R.id.nav_support) {
+            Log.i("Nav", "Support");
+            goToSupportActivity();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -152,8 +154,8 @@ public class VinList extends AppCompatActivity
     }
 
     private void goToSupportActivity() {
-//        Intent intent = new Intent(getApplicationContext(), SupportActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(getApplicationContext(), SupportActivity.class);
+        startActivity(intent);
     }
 
     private void goToUserActivity() {

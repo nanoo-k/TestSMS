@@ -15,6 +15,11 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="User"
             android:background="#000000" />
+        <item
+            android:id="@+id/nav_support"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Support"
+            android:background="#000000" />
 
         <!--<ViewStub-->
             <!--android:id="@+id/layout_stub"-->
