@@ -82,7 +82,7 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_user)
+        setContentView(R.layout.activity_support)
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
 

@@ -22,32 +22,66 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".LoginActivity">
+    tools:context=".SupportActivity">
+
+    <TextView
+        android:id="@+id/contact_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Contact Name"
+        android:textSize="22sp"
+        android:visibility="gone" />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/contact_name_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
+        android:hint=""
         android:textSize="22sp" />
 
+    <TextView
+        android:id="@+id/contact_email_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Contact Email"
+        android:textSize="22sp"
+        android:visibility="gone" />
+
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/contact_email_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:hint="Password"
+        android:hint=""
         android:ems="10"
         android:textSize="22sp" />
 
     <TextView
-        android:id="@+id/tv_url_display"
+        android:id="@+id/contact_phone_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Click search and your URL will show up here!"
+        android:text="Contact Phone"
         android:textSize="22sp"
         android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/contact_phone_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint=""
+        android:ems="10"
+        android:textSize="22sp" />
+
+    <EditText
+        android:id="@+id/block_text_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="How can we help you?"
+        android:ems="10"
+        android:textSize="22sp" />
+
 
     <Button
         android:text="Login"
@@ -56,21 +90,6 @@
         android:id="@+id/button"
         android:onClick="login" />
 
-    <Button
-        android:id="@+id/btn_show_jwt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="showJwt"
-        android:text="Show JWT"
-        android:visibility="gone" />
-
-    <Button
-        android:id="@+id/btn_get_recent_vins"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="getRecentVins"
-        android:text="Get Vins"
-        android:visibility="gone" />
 
     <FrameLayout
         android:layout_width="match_parent"
