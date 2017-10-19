@@ -1,6 +1,7 @@
 package com.testmenudrawer.android.testmenudrawer.models;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,8 +19,11 @@ import java.net.URL;
 import java.util.List;
 
 
+import com.testmenudrawer.android.testmenudrawer.SupportActivity;
 import com.testmenudrawer.android.testmenudrawer.utilities.NetworkUtils;
 import com.testmenudrawer.android.testmenudrawer.utilities.PreferenceData;
+
+import com.testmenudrawer.android.testmenudrawer.SupportActivity;
 
 /**
  * Created by mvalencia on 10/17/17.
@@ -53,7 +57,7 @@ public class VinsAdapter extends RecyclerView.Adapter<VinsViewHolder> {
         boolean shouldAttachToParentImmediately = false;
 
         View view = inflater.inflate(layoutIdForListItem, parent, shouldAttachToParentImmediately);
-        VinsViewHolder viewHolder = new VinsViewHolder(view);
+        VinsViewHolder viewHolder = new VinsViewHolder(view, context);
 
         return viewHolder;
     }
@@ -83,10 +87,11 @@ class VinsViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
     TextView carDetailsMakeTextView;
     TextView carDetailsModelTextView;
 
+    Context context;
 
-    public VinsViewHolder(View itemView) {
+    public VinsViewHolder(View itemView, Context context) {
         super(itemView);
-
+        context = context;
         itemView.setOnClickListener(this);
 
         dateTextView = (TextView) itemView.findViewById(R.id.date_text_view);
@@ -126,7 +131,11 @@ class VinsViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        Log.i("yay", "blbladlbfl");
+        /*
+            TODO: Make this context work so that I can run with this intent
+         */
+        Intent intent = new Intent(context.getApplicationContext(), SupportActivity.class);
+        context.startActivity(intent);
     }
 
     public class DeleteVinTask extends AsyncTask<URL, Void, String> {
