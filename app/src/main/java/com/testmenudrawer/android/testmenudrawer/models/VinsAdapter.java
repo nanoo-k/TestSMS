@@ -26,7 +26,7 @@ import com.testmenudrawer.android.testmenudrawer.utilities.PreferenceData;
  */
 
 
-public class VinsAdapter extends RecyclerView.Adapter<VinsAdapter.VinsViewHolder> {
+public class VinsAdapter extends RecyclerView.Adapter<VinsViewHolder> {
 
     private List<Vin> mVins;
 //    final private ListItemClickListener mOnClickListener;
@@ -60,7 +60,8 @@ public class VinsAdapter extends RecyclerView.Adapter<VinsAdapter.VinsViewHolder
 
     @Override
     public void onBindViewHolder(VinsViewHolder holder, int position) {
-        holder.bind(position);
+        Vin vin = mVins.get(position);
+        holder.bind(vin);
     }
 
     @Override
@@ -68,104 +69,112 @@ public class VinsAdapter extends RecyclerView.Adapter<VinsAdapter.VinsViewHolder
         return mVins.size();
     }
 
-    class VinsViewHolder extends RecyclerView.ViewHolder {
+}
 
-        int mId;
-        String mVin;
-        int mPosition;
+class VinsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView dateTextView;
-        TextView vinTextView;
-        TextView carDetailsYearTextView;
-        TextView carDetailsMakeTextView;
-        TextView carDetailsModelTextView;
+    int mId;
+    String mVin;
+    int mPosition;
 
-
-        public VinsViewHolder(View itemView) {
-            super(itemView);
+    TextView dateTextView;
+    TextView vinTextView;
+    TextView carDetailsYearTextView;
+    TextView carDetailsMakeTextView;
+    TextView carDetailsModelTextView;
 
 
-            dateTextView = (TextView) itemView.findViewById(R.id.date_text_view);
-            vinTextView = (TextView) itemView.findViewById(R.id.vin_text_view);
-            carDetailsYearTextView = (TextView) itemView.findViewById(R.id.car_details_year_text_view);
-            carDetailsMakeTextView = (TextView) itemView.findViewById(R.id.car_details_make_text_view);
-            carDetailsModelTextView = (TextView) itemView.findViewById(R.id.car_details_model_text_view);
+    public VinsViewHolder(View itemView) {
+        super(itemView);
+
+        itemView.setOnClickListener(this);
+
+        dateTextView = (TextView) itemView.findViewById(R.id.date_text_view);
+        vinTextView = (TextView) itemView.findViewById(R.id.vin_text_view);
+        carDetailsYearTextView = (TextView) itemView.findViewById(R.id.car_details_year_text_view);
+        carDetailsMakeTextView = (TextView) itemView.findViewById(R.id.car_details_make_text_view);
+        carDetailsModelTextView = (TextView) itemView.findViewById(R.id.car_details_model_text_view);
 
 
             /* Handle request to delete VIN */
-            Button deleteButton = (Button) itemView.findViewById(R.id.delete_button);
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    /* Delete VIN from list */
-                    mVins.remove(getAdapterPosition());
-                    /* TODO: Wut this do? Update mVins data? */
-                    notifyItemRemoved(getAdapterPosition());
-                    /* Make the HTTP request to delete the VIN */
-                    deleteVinRequest(mVin, getAdapterPosition(), context);
-                }
-            });
+        Button deleteButton = (Button) itemView.findViewById(R.id.delete_button);
+//        deleteButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                    /* Delete VIN from list */
+//                mVins.remove(getAdapterPosition());
+//                    /* TODO: Wut this do? Update mVins data? */
+//                notifyItemRemoved(getAdapterPosition());
+//                    /* Make the HTTP request to delete the VIN */
+//                deleteVinRequest(mVin, getAdapterPosition(), context);
+//            }
+//        });
 
+    }
+
+    private void deleteVinRequest(String vin, int position, Context context) {
+        String jwt = PreferenceData.getJwt(context);
+
+        URL deleteVinUrl = NetworkUtils.buildDeleteVinUrl(vin);
+
+        Log.i("deleteVinUrl: ", "" + deleteVinUrl);
+        Log.i("jwt: ", jwt);
+
+        new VinsViewHolder.DeleteVinTask(context).execute(deleteVinUrl);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        Log.i("yay", "blbladlbfl");
+    }
+
+    public class DeleteVinTask extends AsyncTask<URL, Void, String> {
+
+        /* We need the app context available for these callback functions, so
+        ensure that we set it when calling this task */
+        private Context context;
+        public DeleteVinTask (Context c){
+            context = c;
         }
 
-        private void deleteVinRequest(String vin, int position, Context context) {
-            String jwt = PreferenceData.getJwt(context);
-
-            URL deleteVinUrl = NetworkUtils.buildDeleteVinUrl(vin);
-
-            Log.i("deleteVinUrl: ", "" + deleteVinUrl);
-            Log.i("jwt: ", jwt);
-
-            new VinsAdapter.VinsViewHolder.DeleteVinTask(context).execute(deleteVinUrl);
-
-        }
-
-        public class DeleteVinTask extends AsyncTask<URL, Void, String> {
-
-            /* We need the app context available for these callback functions, so
-            ensure that we set it when calling this task */
-            private Context context;
-            public DeleteVinTask (Context c){
-                context = c;
-            }
-
-            @Override
-            protected void onPreExecute() {
-                Log.i("onPreExecute", "MADE IT.");
-                super.onPreExecute();
+        @Override
+        protected void onPreExecute() {
+            Log.i("onPreExecute", "MADE IT.");
+            super.onPreExecute();
 //                mLoadingIndicator.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected String doInBackground(URL... params) {
+            Log.i("doInBackground", "MADE IT.");
+
+            URL deleteVinUrl = params[0];
+            String isSuccess = null;
+            try {
+                isSuccess = NetworkUtils.deleteVin(deleteVinUrl, context);
+            } catch (IOException e) {
+                Log.i("doInBackground", "IOException.");
+
+                e.printStackTrace();
+            } catch (Exception e) {
+                Log.i("doInBackground", "exception.");
+                e.printStackTrace();
             }
+            return isSuccess;
+        }
 
-            @Override
-            protected String doInBackground(URL... params) {
-                Log.i("doInBackground", "MADE IT.");
+        @Override
+        protected void onPostExecute(String isSuccess) {
 
-                URL deleteVinUrl = params[0];
-                String isSuccess = null;
-                try {
-                    isSuccess = NetworkUtils.deleteVin(deleteVinUrl, context);
-                } catch (IOException e) {
-                    Log.i("doInBackground", "IOException.");
+            if (isSuccess == "true") {
+                sendAnalyticsHit(context, "DeleteVinSuccess", "DeleteVinSuccess", "DeleteVinSuccess");
 
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    Log.i("doInBackground", "exception.");
-                    e.printStackTrace();
-                }
-                return isSuccess;
+                Log.i("SUCCESS: ", "SUCCESS");
             }
-
-            @Override
-            protected void onPostExecute(String isSuccess) {
-
-                if (isSuccess == "true") {
-                    sendAnalyticsHit(context, "DeleteVinSuccess", "DeleteVinSuccess", "DeleteVinSuccess");
-
-                    Log.i("SUCCESS: ", "SUCCESS");
-                }
-                else {
-                    Log.i("FAILURE: ", "FAILURE");
-                }
+            else {
+                Log.i("FAILURE: ", "FAILURE");
+            }
 
             /* If VIN got decoded and we got data from server... */
 //                mLoadingIndicator.setVisibility(View.INVISIBLE);
@@ -186,39 +195,42 @@ public class VinsAdapter extends RecyclerView.Adapter<VinsAdapter.VinsViewHolder
 //                    Log.i("onPostExecute", "Null.");
 //                    showErrorMessage();
 //                }
-            }
         }
+    }
 
-        /* Implement these where we want and then set autotracking to false (res/xml/tracker_settings) */
-        private void sendAnalyticsHit (Context context, String category, String action, String label) {
+    /* Implement these where we want and then set autotracking to false (res/xml/tracker_settings) */
+    private void sendAnalyticsHit (Context context, String category, String action, String label) {
 
-            // Get the tracker
+        // Get the tracker
 //            Tracker tracker = ((MyApplication) context.getApplicationContext()).getTracker();
 
-            // Send the hit
+        // Send the hit
 //            tracker.send(new HitBuilders.EventBuilder()
 //                    .setCategory(category)
 //                    .setAction(action)
 //                    .setLabel(label)
 //                    .build());
 
-            Log.i("tracking: ", "did it.");
-        }
+        Log.i("tracking: ", "did it.");
+    }
 
-        void bind(int position) {
-            Vin vin = mVins.get(position);
+    void bind(Vin vin) {
+//        Vin vin = mVins.get(position);
 
-            mId = vin.getId();
-            mVin = vin.getVin();
-            mPosition = position;
+        mId = vin.getId();
+        mVin = vin.getVin();
+//        mPosition = position;
 
-            dateTextView.setText(vin.getDate());
-            vinTextView.setText(vin.getVin());
-            carDetailsYearTextView.setText(vin.getYear());
-            carDetailsMakeTextView.setText(vin.getMake());
-            carDetailsModelTextView.setText(vin.getModel());
+        dateTextView.setText(vin.getDate());
+        vinTextView.setText(vin.getVin());
+        carDetailsYearTextView.setText(vin.getYear());
+        carDetailsMakeTextView.setText(vin.getMake());
+        carDetailsModelTextView.setText(vin.getModel());
 
-        }
+
+        itemView.setOnClickListener(this);
+
+    }
 
 //        @Override
 //        public void onClick(View v) {
@@ -226,5 +238,4 @@ public class VinsAdapter extends RecyclerView.Adapter<VinsAdapter.VinsViewHolder
 ////            int clickedPosition = getAdapterPosition();
 ////            mOnClickListener.onListItemClick(clickedPosition);
 //        }
-    }
 }
