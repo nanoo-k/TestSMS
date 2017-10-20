@@ -48,7 +48,7 @@ import java.util.List;
 
 
 public class VinList extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+    implements NavigationView.OnNavigationItemSelectedListener {
 
 
     private VinsAdapter mAdapter;
