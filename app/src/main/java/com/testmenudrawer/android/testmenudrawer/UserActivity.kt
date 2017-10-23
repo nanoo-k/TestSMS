@@ -17,6 +17,7 @@ import android.view.MenuItem
 
 import com.testmenudrawer.android.testmenudrawer.VinList
 import com.testmenudrawer.android.testmenudrawer.SupportActivity
+import com.testmenudrawer.android.testmenudrawer.utilities.PreferenceData
 
 /**
  * Created by mvalencia on 10/9/17.
@@ -62,7 +63,12 @@ class UserActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val id = item.itemId
 
 
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
+            PreferenceData.clearJwt(applicationContext);
+
+
+            val intent = Intent(applicationContext, LoginActivity::class.java)
+            startActivity(intent)
             return true
         }
 

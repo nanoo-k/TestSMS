@@ -20,4 +20,7 @@
     <string name="error_message">
         Failed to get results. Please try again.
     </string>
+
+    <!-- Strings related to App bar -->
+    <string name="action_logout">Logout</string>
 </resources>

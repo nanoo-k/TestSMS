@@ -116,7 +116,8 @@ public class VinList extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
+            Log.i("HITH IT", "HERE");
             return true;
         }
 
