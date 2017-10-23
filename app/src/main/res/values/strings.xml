@@ -4,6 +4,7 @@
     <string name="vin_list_title">VIN List</string>
     <string name="user_title">User</string>
     <string name="support_title">Support</string>
+    <string name="vehicle_detail_title">Vehicle Information</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

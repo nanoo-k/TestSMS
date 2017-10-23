@@ -20,15 +20,19 @@ import java.util.List;
 
 
 import com.testmenudrawer.android.testmenudrawer.SupportActivity;
+import com.testmenudrawer.android.testmenudrawer.VehicleDetailActivity;
 import com.testmenudrawer.android.testmenudrawer.utilities.NetworkUtils;
 import com.testmenudrawer.android.testmenudrawer.utilities.PreferenceData;
 
-import com.testmenudrawer.android.testmenudrawer.SupportActivity;
+import com.testmenudrawer.android.testmenudrawer.VehicleDetailActivity;
 
 /**
  * Created by mvalencia on 10/17/17.
  */
 
+/**
+ * TODO: THIS IS NOT A MODEL. PUT SOMEWHERE ELSE. THIS IS PART OF THE RECYCLER VIEW COMPOSITION. MAYBE RENAME IT "VINSLISTADAPTER".
+ */
 
 public class VinsAdapter extends RecyclerView.Adapter<VinsAdapter.VinsViewHolder> {
 
@@ -131,7 +135,7 @@ public class VinsAdapter extends RecyclerView.Adapter<VinsAdapter.VinsViewHolder
         /*
             TODO: Make this context work so that I can run with this intent
          */
-            Intent intent = new Intent(context.getApplicationContext(), SupportActivity.class);
+            Intent intent = new Intent(context.getApplicationContext(), VehicleDetailActivity.class);
             context.startActivity(intent);
         }
 

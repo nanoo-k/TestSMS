@@ -45,6 +45,11 @@
             android:noHistory="true"
             android:excludeFromRecents="true">
         </activity>
+        <activity
+            android:name=".VehicleDetailActivity"
+            android:label="@string/vehicle_detail_title"
+            android:excludeFromRecents="true">
+        </activity>
     </application>
 
 </manifest>
