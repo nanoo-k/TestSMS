@@ -2,10 +2,7 @@ package com.testmenudrawer.android.testmenudrawer
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
 import android.util.Log
-import android.view.View
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
@@ -15,8 +12,6 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 
-import com.testmenudrawer.android.testmenudrawer.VinList
-import com.testmenudrawer.android.testmenudrawer.SupportActivity
 import com.testmenudrawer.android.testmenudrawer.utilities.PreferenceData
 
 /**
@@ -52,7 +47,7 @@ class UserActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.vin_list, menu);
+        getMenuInflater().inflate(R.menu.logout, menu);
         return true
     }
 
