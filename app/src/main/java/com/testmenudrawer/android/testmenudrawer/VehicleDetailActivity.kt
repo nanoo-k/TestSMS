@@ -18,11 +18,11 @@ import com.testmenudrawer.android.testmenudrawer.utilities.PreferenceData
  * Created by mvalencia on 10/9/17.
  */
 
-class UserActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class VehicleDetailActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user)
+        setContentView(R.layout.activity_vehicle_detail)
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
 
