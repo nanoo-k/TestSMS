@@ -11,8 +11,16 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 
 import com.testmenudrawer.android.testmenudrawer.utilities.PreferenceData
+
+private val DEFAULT_TEXT: String = "Information not available"
+private val EXTRA_VIN: String = "VehicleDetailActivity - vin"
+private val EXTRA_YEAR: String = "VehicleDetailActivity - year"
+private val EXTRA_MAKE: String = "VehicleDetailActivity - make"
+private val EXTRA_MODEL: String = "VehicleDetailActivity - model"
+private var EXTRA_ENGINE: String = "VehicleDetailActivity - engine"
 
 /**
  * Created by mvalencia on 10/9/17.
@@ -20,9 +28,21 @@ import com.testmenudrawer.android.testmenudrawer.utilities.PreferenceData
 
 class VehicleDetailActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    private var mVin: TextView? = null
+    private var mYear: TextView? = null
+    private var mMake: TextView? = null
+    private var mModel: TextView? = null
+    private var mEngine: TextView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vehicle_detail)
+
+        mVin = findViewById(R.id.vin_value) as TextView
+        mYear = findViewById(R.id.year_value) as TextView
+        mMake = findViewById(R.id.make_value) as TextView
+        mModel = findViewById(R.id.model_value) as TextView
+        mEngine = findViewById(R.id.engine_value) as TextView
 
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
@@ -35,6 +55,7 @@ class VehicleDetailActivity : AppCompatActivity(), NavigationView.OnNavigationIt
 
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
+
     }
 
     override fun onBackPressed() {

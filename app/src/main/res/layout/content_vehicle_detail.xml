@@ -20,6 +20,14 @@
         tools:context=".SupportActivity">
 
         <TextView
+            android:id="@+id/vin_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Year"
+            android:textSize="22sp" />
+
+        <TextView
             android:id="@+id/year_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
