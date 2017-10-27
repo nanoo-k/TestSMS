@@ -132,10 +132,20 @@ public class VinsAdapter extends RecyclerView.Adapter<VinsAdapter.VinsViewHolder
 
         @Override
         public void onClick(View v) {
-        /*
-            TODO: Make this context work so that I can run with this intent
-         */
             Intent intent = new Intent(context.getApplicationContext(), VehicleDetailActivity.class);
+
+            String vin = mVehicle.getVin();
+            String year = mVehicle.getYear();
+            String make = mVehicle.getMake();
+            String model = mVehicle.getModel();
+            String engine = mVehicle.getEngine();
+
+            intent.putExtra("VehicleDetailActivity - vin", vin);
+            intent.putExtra("VehicleDetailActivity - year", year);
+            intent.putExtra("VehicleDetailActivity - make", make);
+            intent.putExtra("VehicleDetailActivity - model", model);
+            intent.putExtra("VehicleDetailActivity - engine", engine);
+
             context.startActivity(intent);
         }
 
@@ -224,8 +234,10 @@ public class VinsAdapter extends RecyclerView.Adapter<VinsAdapter.VinsViewHolder
             Log.i("tracking: ", "did it.");
         }
 
+        Vin mVehicle = null;
+
         void bind(Vin vin) {
-//        Vin vin = mVins.get(position);
+            mVehicle = vin;
 
             mId = vin.getId();
             mVin = vin.getVin();

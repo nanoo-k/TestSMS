@@ -56,6 +56,24 @@ class VehicleDetailActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
 
+        extractDataFromIntent()
+
+    }
+
+    private fun extractDataFromIntent() {
+        var intent: Intent = getIntent()
+
+        var vin: String = intent.getStringExtra(EXTRA_VIN)
+        var year: String = intent.getStringExtra(EXTRA_YEAR)
+        var make: String = intent.getStringExtra(EXTRA_MAKE)
+        var model: String = intent.getStringExtra(EXTRA_MODEL)
+        var engine: String = intent.getStringExtra(EXTRA_ENGINE)
+
+        mVin!!.setText(vin)
+        mYear!!.setText(year)
+        mMake!!.setText(make)
+        mModel!!.setText(model)
+        mEngine!!.setText(engine)
     }
 
     override fun onBackPressed() {
