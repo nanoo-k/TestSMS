@@ -52,7 +52,8 @@
         <activity
             android:name=".SupportActivity"
             android:label="@string/support_title"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.SUPPORTACTIVITY" />
 
@@ -63,7 +64,8 @@
             android:name=".LoginActivity"
             android:label="@string/app_name"
             android:noHistory="true"
-            android:excludeFromRecents="true">
+            android:excludeFromRecents="true"
+            android:windowSoftInputMode="adjustResize|stateHidden">
         </activity>
     </application>
 
