@@ -26,6 +26,7 @@ import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private TextView mErrorMessage;
     private ImageView mMotoshopLogo;
     private EditText mUsernameEditText;
     private EditText mPasswordEditText;
@@ -54,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
 
 //        SharedPreferences sharedPreferences = getPreferenceScreen().getSharedPreferences();
 
+        mErrorMessage = (TextView) findViewById(R.id.error_message);
         mMotoshopLogo = (ImageView) findViewById(R.id.motoshop_logo);
         mUsernameEditText = (EditText) findViewById(R.id.username);
         mPasswordEditText = (EditText) findViewById(R.id.password);
@@ -74,6 +76,8 @@ public class LoginActivity extends AppCompatActivity {
 //        mPasswordEditText.setText("PASS8520");
 
         resizeLogo();
+
+        mErrorMessage.bringToFront();
 
     }
 
