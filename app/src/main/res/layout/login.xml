@@ -37,12 +37,12 @@
     <!--android:paddingTop="@dimen/activity_vertical_margin"-->
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="352dp"
         android:layout_height="257dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        app:srcCompat="@android:drawable/btn_star"
-        android:id="@+id/imageView" />
+        ads:srcCompat="@drawable/ic_logo_applogin" />
 
     <TextView
         android:id="@+id/username_label"
@@ -53,18 +53,21 @@
         android:gravity="center_horizontal"
         android:text="Username"
         android:textAllCaps="true"
+        android:textColor="#919191"
         android:textSize="16sp" />
 
     <EditText
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/username_label"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/username_label"
         android:gravity="center_horizontal"
         android:hint=""
         android:imeOptions="actionNext"
         android:inputType="text"
+        android:textColor="#616161"
+        android:textColorLink="#616161"
         android:textSize="22sp" />
 
     <TextView
@@ -76,6 +79,7 @@
         android:gravity="center_horizontal"
         android:text="Password"
         android:textAllCaps="true"
+        android:textColor="#919191"
         android:textSize="16sp" />
 
     <EditText
@@ -89,6 +93,8 @@
         android:hint=""
         android:imeOptions="actionGo"
         android:inputType="textPassword"
+        android:textColor="#616161"
+        android:textColorLink="#616161"
         android:textSize="22sp" />
 
     <!--<TextView-->
@@ -106,8 +112,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
+        android:background="#40B0E6"
         android:onClick="login"
-        android:text="Login" />
+        android:text="@string/login"
+        android:textColor="#FFFFFF"
+        android:textColorLink="#FFFFFF" />
 
     <!--android:gravity="bottom"-->
     <!--android:layout_gravity="bottom"-->
