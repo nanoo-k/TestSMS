@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +26,7 @@ import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private ImageView mMotoshopLogo;
     private EditText mUsernameEditText;
     private EditText mPasswordEditText;
 
@@ -51,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
 
 //        SharedPreferences sharedPreferences = getPreferenceScreen().getSharedPreferences();
 
+        mMotoshopLogo = (ImageView) findViewById(R.id.motoshop_logo);
         mUsernameEditText = (EditText) findViewById(R.id.username);
         mPasswordEditText = (EditText) findViewById(R.id.password);
 
@@ -69,8 +73,22 @@ public class LoginActivity extends AppCompatActivity {
 //        mUsernameEditText.setText("KM@QA3");
 //        mPasswordEditText.setText("PASS8520");
 
+        resizeLogo();
+
     }
 
+    private void resizeLogo() {
+        // Get the height of the window
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+
+
+        // Define and assign new logo height
+        int newLogoHeight = height / 2;
+        mMotoshopLogo.getLayoutParams().height = newLogoHeight;
+    }
 
     /**
      * This method will make the View for the JSON data visible and
