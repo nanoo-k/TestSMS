@@ -54,10 +54,10 @@ public class LoginActivity extends AppCompatActivity {
         mUsernameEditText = (EditText) findViewById(R.id.username);
         mPasswordEditText = (EditText) findViewById(R.id.password);
 
-        mUrlDisplayTextView = (TextView) findViewById(R.id.tv_url_display);
-        mSearchResultsTextView = (TextView) findViewById(R.id.tv_github_search_results_json);
+//        mUrlDisplayTextView = (TextView) findViewById(R.id.tv_url_display);
+//        mSearchResultsTextView = (TextView) findViewById(R.id.tv_github_search_results_json);
 
-        mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
+//        mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
 
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
 

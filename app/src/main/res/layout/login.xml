@@ -14,107 +14,112 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".LoginActivity">
+
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="vertical"-->
+    <!--tools:context=".LoginActivity">-->
+
+    <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingTop="@dimen/activity_vertical_margin"-->
 
     <ImageView
         android:layout_width="352dp"
         android:layout_height="257dp"
-        app:srcCompat="@android:drawable/btn_star" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@android:drawable/btn_star"
+        android:id="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/username_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/imageView"
+        android:layout_below="@+id/imageView"
+        android:gravity="center_horizontal"
+        android:text="Username"
+        android:textAllCaps="true"
+        android:textSize="16sp" />
 
     <EditText
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
+        android:layout_alignEnd="@+id/username_label"
+        android:layout_below="@+id/username_label"
+        android:gravity="center_horizontal"
+        android:hint=""
         android:imeOptions="actionNext"
         android:inputType="text"
         android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/password_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/username"
+        android:gravity="center_horizontal"
+        android:text="Password"
+        android:textAllCaps="true"
+        android:textSize="16sp" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/username"
+        android:layout_below="@+id/password_label"
         android:ems="10"
-        android:hint="Password"
+        android:gravity="center_horizontal"
+        android:hint=""
         android:imeOptions="actionGo"
         android:inputType="textPassword"
         android:textSize="22sp" />
 
-    <TextView
-        android:id="@+id/tv_url_display"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Click search and your URL will show up here!"
-        android:textSize="22sp"
-        android:visibility="gone" />
+    <!--<TextView-->
+        <!--android:id="@+id/tv_url_display"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:text="Click search and your URL will show up here!"-->
+        <!--android:textSize="22sp"-->
+        <!--android:visibility="gone" />-->
 
     <Button
-        android:text="Login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/button"
-        android:onClick="login" />
-
-    <Button
-        android:id="@+id/btn_show_jwt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="showJwt"
-        android:text="Show JWT"
-        android:visibility="gone" />
-
-    <Button
-        android:id="@+id/btn_get_recent_vins"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="getRecentVins"
-        android:text="Get Vins"
-        android:visibility="gone" />
-
-    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:onClick="login"
+        android:text="Login" />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
+    <!--android:gravity="bottom"-->
+    <!--android:layout_gravity="bottom"-->
 
-            <TextView
-                android:id="@+id/tv_github_search_results_json"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Make a search!"
-                android:textSize="18sp"
-                android:visibility="gone" />
-        </ScrollView>
-
-        <TextView
-            android:id="@+id/tv_error_message_display"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="@string/error_message"
-            android:textSize="22sp"
-            android:visibility="gone" />
-
-        <ProgressBar
-            android:id="@+id/pb_loading_indicator"
-            android:layout_height="42dp"
-            android:layout_width="42dp"
-            android:layout_gravity="center"
-            android:visibility="invisible" />
-    </FrameLayout>
+    <!--<Button-->
+        <!--android:id="@+id/btn_show_jwt"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:onClick="showJwt"-->
+        <!--android:text="Show JWT"-->
+        <!--android:visibility="gone" />-->
 
 
-</LinearLayout>
+<!--</LinearLayout>-->
+</RelativeLayout>
