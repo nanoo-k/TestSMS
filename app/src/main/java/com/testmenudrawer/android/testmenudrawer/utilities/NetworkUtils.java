@@ -128,16 +128,16 @@ public class NetworkUtils {
      * @return The contents of the HTTP response.
      * @throws IOException Related to network and stream reading
      */
-    public static String getJWT (URL url, Context context) throws Exception {
+    public static String getJWT (URL url, Context context, String username, String password) throws Exception {
 
         OkHttpClient client = new OkHttpClient();
         Gson gson = new Gson();
 
 
-        PreferenceData.setLoggedInUser(context, "MANAGERKM");
+        PreferenceData.setLoggedInUser(context, username);
         PreferenceData.setUserLoggedInStatus(context, true);
 
-        String credential = Credentials.basic("MANAGERKM", "PASS8520");
+        String credential = Credentials.basic(username, password);
 
         Request request = new Request.Builder()
                 .url(url)
@@ -153,6 +153,8 @@ public class NetworkUtils {
             System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
         }
 
+        Log.i("ERROR AFTER THIS", "SURE IS");
+
 //        JSONObject jsonObject = new JSONObject(response.body().string());
 
         String responseString = response.body().string();
@@ -160,7 +162,7 @@ public class NetworkUtils {
         /* You can only call response.body().string() once. Why. I dunno, but it's fact. */
         JWT jwt = gson.fromJson(responseString, JWT.class);
 
-        Log.i("JWT.toString", jwt.toString());
+//        Log.i("JWT.toString", jwt.toString());
 
         PreferenceData.setJwt(context, jwt.jwt);
 

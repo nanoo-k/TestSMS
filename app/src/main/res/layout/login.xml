@@ -45,7 +45,8 @@
         android:gravity="center_horizontal"
         android:text="Hella broke. Hella broke. These credentials here are hella broke."
         android:textColor="#ffffff"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:translationY="-200dp" />
 
     <ImageView
         android:id="@+id/motoshop_logo"
