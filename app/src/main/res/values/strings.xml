@@ -24,5 +24,5 @@
 
     <!-- Strings related to App bar -->
     <string name="action_logout">Logout</string>
-    <string name="login">Login</string>
+    <string name="login">Sign In</string>
 </resources>

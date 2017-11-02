@@ -10,12 +10,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.testmenudrawer.android.testmenudrawer.utilities.NetworkUtils;
 import com.testmenudrawer.android.testmenudrawer.utilities.PreferenceData;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,7 +29,9 @@ import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextView mErrorMessage;
+    private LinearLayout mErrorMessage;
+    private TextView mErrorMessageClose;
+    private TextView mErrorMessageForgotPassword;
     private ImageView mMotoshopLogo;
     private EditText mUsernameEditText;
     private EditText mPasswordEditText;
@@ -39,18 +44,34 @@ public class LoginActivity extends AppCompatActivity {
 
 //        SharedPreferences sharedPreferences = getPreferenceScreen().getSharedPreferences();
 
-        mErrorMessage = (TextView) findViewById(R.id.error_message);
+        mErrorMessage = (LinearLayout) findViewById(R.id.error_message);
+        mErrorMessageClose = (TextView) findViewById(R.id.error_message_close);
+        mErrorMessageForgotPassword = (TextView) findViewById(R.id.error_message_forgot_password);
         mMotoshopLogo = (ImageView) findViewById(R.id.motoshop_logo);
         mUsernameEditText = (EditText) findViewById(R.id.username);
         mPasswordEditText = (EditText) findViewById(R.id.password);
-
-//        mUrlDisplayTextView = (TextView) findViewById(R.id.tv_url_display);
-//        mSearchResultsTextView = (TextView) findViewById(R.id.tv_github_search_results_json);
-
-//        mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
-
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
 
+
+
+        mErrorMessageClose.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                hideErrorMessage();
+
+            }
+        });
+        mErrorMessageForgotPassword.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                goToSupportActivity(v);
+
+            }
+        });
 
         /* Set default test username and pass */
         mUsernameEditText.setText("MANAGERKM");
@@ -80,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void hideErrorMessage() {
-        mErrorMessage.animate().translationY(-200);
+        mErrorMessage.animate().translationY(-400);
         mErrorMessage.setVisibility(View.INVISIBLE);
     }
 
