@@ -78,7 +78,6 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordEditText.setText("PASS8520");
 
         resizeLogo();
-
         mErrorMessage.bringToFront();
     }
 

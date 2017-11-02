@@ -34,9 +34,10 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/error_message"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:orientation="vertical"
-        android:translationY="-400dp">
+        android:layout_height="400sp"
+        android:orientation="vertical">
+
+        <!--android:translationY="-400dp"-->
         <TextView
             android:id="@+id/error_message_close"
             android:layout_width="match_parent"
@@ -54,7 +55,7 @@
             android:layout_alignParentStart="true"
             android:background="#E94C31"
             android:gravity="center_horizontal"
-            android:text="Invalid username or password."
+            android:text="Lost your password?"
             android:textColor="#ffffff"
             android:textSize="16sp" />
 
