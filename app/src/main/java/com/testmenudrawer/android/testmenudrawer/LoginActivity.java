@@ -166,8 +166,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login (View view) {
-//        Log.i("THIS", "THAT");
         makeLoginRequest();
+    }
+
+    public void goToSupportActivity(View view) {
+        Intent intent = new Intent(getApplicationContext(), SupportActivity.class);
+        startActivity(intent);
     }
 
     public void showJwt (View view) {

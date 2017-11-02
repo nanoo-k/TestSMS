@@ -113,14 +113,21 @@
         android:textSize="22sp" />
 
 
-    <!--<TextView-->
-        <!--android:id="@+id/tv_url_display"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:text="Click search and your URL will show up here!"-->
-        <!--android:textSize="22sp"-->
-        <!--android:visibility="gone" />-->
+    <Button
+        android:id="@+id/forgot_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="11dp"
+        android:background="#FAFAFA"
+        android:onClick="goToSupportActivity"
+        android:stateListAnimator="@null"
+        android:text="Forgot your password?"
+        android:textAllCaps="false"
+        android:textColor="#40B0E6"
+        android:textColorLink="#40B0E6"
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/button"
