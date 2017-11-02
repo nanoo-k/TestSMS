@@ -71,7 +71,7 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     private fun goToSupportActivity() {
         val intent = Intent(applicationContext, SupportActivity::class.java)
-        startActivity(intent);
+        startActivity(intent)
     }
 
     private fun goToUserActivity() {

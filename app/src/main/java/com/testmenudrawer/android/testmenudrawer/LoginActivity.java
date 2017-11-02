@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            Log.i("onPreExecute", "MADE IT.");
+            Log.i("onPreExecute", "preprepre");
             super.onPreExecute();
 //            mLoadingIndicator.setVisibility(View.VISIBLE);
         }
@@ -121,23 +121,31 @@ public class LoginActivity extends AppCompatActivity {
         protected String doInBackground(URL... params) {
             URL searchUrl = params[0];
             String loginResults = null;
+
+
+            Log.i("doInBackground", "starting it");
+
+
             try {
                 loginResults = NetworkUtils.getJWT(searchUrl, context, mUsernameEditText.getText().toString(), mPasswordEditText.getText().toString());
 
             } catch (IOException e) {
-//                Log.i("doInBackground", "exception.");
+                Log.i("doInBackground", "exception.");
 
                 e.printStackTrace();
             } catch (Exception e) {
+
+                Log.i("doInBackground", "catch.");
                 e.printStackTrace();
             }
+            Log.i("doInBackground", "doing it?");
             return loginResults;
         }
 
         @Override
         protected void onPostExecute(String loginResults) {
 
-//            Log.i("loginResults", loginResults);
+            Log.i("loginResults", "HEREHERE!");
 
 //            mLoadingIndicator.setVisibility(View.INVISIBLE);
             if (loginResults != null && loginResults != "closed") {
@@ -146,8 +154,8 @@ public class LoginActivity extends AppCompatActivity {
                 goToMainActivity();
 
             } else {
-//                Log.i("onPostExecute", "Null.");
-//                showErrorMessage();
+                Log.i("onPostExecute", "Null.");
+                showErrorMessage();
             }
         }
     }
