@@ -28,11 +28,11 @@ import okhttp3.Response;
  */
 public class NetworkUtils {
 
-    final static String API_SERVER_BASE_URI = "https://api-dev.motoshop.io/shop-qa";
+    final static String API_SERVER_BASE_URI = "https://api-dev.motoshop.io/shop-dev";
 //    final static String API_SERVER_BASE_URI = "https://api.motoshop.io/shop";
 //            - also `shop-qa` and just `shop`
 
-    final static String AUTHENTICATE = API_SERVER_BASE_URI + "/authenticate";
+    final static String AUTHENTICATE = API_SERVER_BASE_URI + "/authenticate/mobile";
     final static String VIN = API_SERVER_BASE_URI + "/vin/scans";
     final static String USER_INFO = API_SERVER_BASE_URI + "/users/info";
 
@@ -129,7 +129,6 @@ public class NetworkUtils {
      * @throws IOException Related to network and stream reading
      */
     public static String getJWT (URL url, Context context, String username, String password) throws Exception {
-
         OkHttpClient client = new OkHttpClient();
         Gson gson = new Gson();
 
@@ -141,15 +140,20 @@ public class NetworkUtils {
 
         String credential = Credentials.basic(username, password);
 
+        Log.i("credentials", credential);
+
         Request request = new Request.Builder()
                 .url(url)
                 .get()
-                .addHeader("Authorization", credential)
+                // TODO: Might try `Basic` too
+                .addHeader("Authenticate", credential)
                 .build();
 
+        Log.i("THIS", "mm.");
         Response response = client.newCall(request).execute();
         if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
+        Log.i("NOT THAT", "mm.");
         Headers responseHeaders = response.headers();
         for (int i = 0; i < responseHeaders.size(); i++) {
             System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));

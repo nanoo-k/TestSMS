@@ -129,6 +129,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
             try {
+//                loginResults = NetworkUtils.getJWT(searchUrl, context);
                 loginResults = NetworkUtils.getJWT(searchUrl, context, mUsernameEditText.getText().toString(), mPasswordEditText.getText().toString());
 
             } catch (IOException e) {
@@ -180,6 +181,7 @@ public class LoginActivity extends AppCompatActivity {
             showErrorMessage();
 
         } else {
+            Log.i("This part works", "YEP");
             URL loginUrl = NetworkUtils.buildAuthUrl(u, p);
 
 //        mUrlDisplayTextView.setText(loginUrl.toString());
