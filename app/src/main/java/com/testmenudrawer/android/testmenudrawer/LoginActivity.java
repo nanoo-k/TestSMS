@@ -100,8 +100,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void hideErrorMessage() {
-        mErrorMessage.animate().translationY(-400);
-        mErrorMessage.setVisibility(View.INVISIBLE);
+        mErrorMessage.animate().translationY(-350);
+//        mErrorMessage.setVisibility(View.INVISIBLE);
     }
 
     public class LoginTask extends AsyncTask<URL, Void, String> {

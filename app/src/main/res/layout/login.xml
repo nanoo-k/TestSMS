@@ -34,11 +34,11 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/error_message"
         android:layout_width="match_parent"
-        android:layout_height="100sp"
+        android:layout_height="100dp"
         android:background="#E94C31"
         android:orientation="vertical">
 
-        <!--android:translationY="-400dp"-->
+        <!--android:translationY="-200dp"-->
         <TextView
             android:id="@+id/error_message_close"
             android:layout_width="match_parent"
@@ -55,8 +55,8 @@
             android:id="@+id/error_message_forgot_password"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_alignParentStart="true"
+            android:layout_weight="1"
             android:background="#E94C31"
             android:gravity="center_horizontal"
             android:text="Lost your password?"
