@@ -74,10 +74,14 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         /* Set default test username and pass */
-//        mUsernameEditText.setText("MANAGERKM");
-//        mPasswordEditText.setText("PASS8520");
-        mUsernameEditText.setText("km@qa3");
-        mPasswordEditText.setText("pass8520");
+        mUsernameEditText.setText("MANAGERKM");
+        mPasswordEditText.setText("PASS8520");
+
+//        mUsernameEditText.setText("managerfost");
+//        mPasswordEditText.setText("pass8520");
+
+//        mUsernameEditText.setText("km@managerkm");
+//        mPasswordEditText.setText("pass8520");
 
         resizeLogo();
         mErrorMessage.bringToFront();
@@ -206,13 +210,13 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void showJwt (View view) {
-        String text = PreferenceData.getJwt(this.getApplicationContext());
-
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-    }
+//    public void showJwt (View view) {
+//        String text = PreferenceData.getJwt(this.getApplicationContext());
+//
+//        Context context = getApplicationContext();
+//        int duration = Toast.LENGTH_SHORT;
+//
+//        Toast toast = Toast.makeText(context, text, duration);
+//        toast.show();
+//    }
 }

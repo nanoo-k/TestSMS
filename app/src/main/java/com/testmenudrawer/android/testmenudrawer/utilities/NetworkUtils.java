@@ -146,7 +146,7 @@ public class NetworkUtils {
                 .url(url)
                 .get()
                 // TODO: Might try `Basic` too
-                .addHeader("Authenticate", credential)
+                .addHeader("Authorization", credential)
                 .build();
 
         Log.i("THIS", "mm.");
