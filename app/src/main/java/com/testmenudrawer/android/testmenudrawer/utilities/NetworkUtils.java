@@ -133,6 +133,8 @@ public class NetworkUtils {
         OkHttpClient client = new OkHttpClient();
         Gson gson = new Gson();
 
+        Log.i("username", username);
+        Log.i("password", password);
 
         PreferenceData.setLoggedInUser(context, username);
         PreferenceData.setUserLoggedInStatus(context, true);

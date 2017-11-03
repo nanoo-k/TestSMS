@@ -74,8 +74,10 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         /* Set default test username and pass */
-        mUsernameEditText.setText("MANAGERKM");
-        mPasswordEditText.setText("PASS8520");
+//        mUsernameEditText.setText("MANAGERKM");
+//        mPasswordEditText.setText("PASS8520");
+        mUsernameEditText.setText("km@qa3");
+        mPasswordEditText.setText("pass8520");
 
         resizeLogo();
         mErrorMessage.bringToFront();
