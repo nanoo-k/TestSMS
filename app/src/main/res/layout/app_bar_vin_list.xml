@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    CoordinatorLayout is a super-powered FrameLayout.
+
+    CoordinatorLayout is intended for two primary use cases:
+
+    As a top-level application decor or chrome layout
+    As a container for a specific interaction with one or more child views
+-->
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,11 +14,22 @@
     android:layout_height="match_parent"
     tools:context="com.testmenudrawer.android.testmenudrawer.VinList">
 
+    <!--
+        AppBarLayout is a vertical LinearLayout which implements many of the features
+        of material designs app bar concept, namely scrolling gestures.
+
+        This view depends heavily on being used as a direct child within a CoordinatorLayout.
+        If you use AppBarLayout within a different ViewGroup, most of it's functionality will not
+        work.
+    -->
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
+        <!--
+            A standard toolbar for use within application content.
+        -->
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -22,6 +41,11 @@
 
     <include layout="@layout/content_vin_list" />
 
+    <!--
+        Floating action buttons are used for a special type of promoted action. They are
+        distinguished by a circled icon floating above the UI and have special motion behaviors
+        related to morphing, launching, and the transferring anchor point.
+    -->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

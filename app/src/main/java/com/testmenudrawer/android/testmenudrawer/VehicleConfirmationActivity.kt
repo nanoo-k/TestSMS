@@ -1,9 +1,14 @@
+/**
+ * Created by mvalencia on 11/16/17.
+ */
+
 package com.testmenudrawer.android.testmenudrawer
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.support.design.widget.NavigationView
+import android.support.v4.app.NavUtils
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -14,9 +19,6 @@ import android.view.MenuItem
 import android.widget.TextView
 
 import com.testmenudrawer.android.testmenudrawer.utilities.PreferenceData
-import android.support.v4.app.NavUtils
-import android.support.v4.content.ContextCompat.startActivity
-
 
 private val DEFAULT_TEXT: String = "Information not available"
 private val EXTRA_VIN: String = "VehicleDetailActivity - vin"
@@ -29,7 +31,7 @@ private var EXTRA_ENGINE: String = "VehicleDetailActivity - engine"
  * Created by mvalencia on 10/9/17.
  */
 
-class VehicleDetailActivity : AppCompatActivity() {
+class VehicleConfirmationActivity : AppCompatActivity() {
 
     private var mVin: TextView? = null
     private var mYear: TextView? = null
@@ -93,7 +95,7 @@ class VehicleDetailActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.delete_vin, menu);
+        getMenuInflater().inflate(R.menu.save_vin, menu);
         return true
     }
 

@@ -2,6 +2,7 @@ package com.testmenudrawer.android.testmenudrawer
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.NavigationView
 import android.support.v4.content.ContextCompat.startActivity
 import android.support.v4.view.GravityCompat
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.testmenudrawer.android.testmenudrawer.utilities.PreferenceData
 
 /**
@@ -31,6 +33,26 @@ class VinCaptureActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer.setDrawerListener(toggle)
         toggle.syncState()
+
+        val fab = findViewById(R.id.fab) as FloatingActionButton
+        fab.setOnClickListener {
+            val intent = Intent(getApplicationContext(), VehicleConfirmationActivity::class.java)
+
+            val vin = "Blah blah"
+            val year = "Blah blah"
+            val make = "Blah blah"
+            val model = "Blah blah"
+            val engine = "Blah blah"
+
+            intent.putExtra("VehicleDetailActivity - vin", vin)
+            intent.putExtra("VehicleDetailActivity - year", year)
+            intent.putExtra("VehicleDetailActivity - make", make)
+            intent.putExtra("VehicleDetailActivity - model", model)
+            intent.putExtra("VehicleDetailActivity - engine", engine)
+
+            startActivity(intent)
+        }
+
 
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)

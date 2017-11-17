@@ -25,4 +25,7 @@
     <!-- Strings related to App bar -->
     <string name="action_logout">Logout</string>
     <string name="login">Sign In</string>
+    <string name="action_delete_vin">Delete</string>
+    <string name="action_save_vin">Save</string>
+
 </resources>

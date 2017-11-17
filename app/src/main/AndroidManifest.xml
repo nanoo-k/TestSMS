@@ -19,12 +19,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".VehicleDetailActivity"
             android:label="@string/vehicle_detail_title"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName="com.testmenudrawer.android.testmenudrawer.VinList" >
             <intent-filter>
                 <action android:name="android.intent.action.VEHICLEDETAILACTIVITY" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".VehicleConfirmationActivity"
+            android:label="@string/vehicle_detail_title"
+            android:parentActivityName="com.testmenudrawer.android.testmenudrawer.VinCaptureActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VEHICLECONFIRMATIONACTIVITY" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
