@@ -18,16 +18,59 @@ import android.view.MenuItem
 
 import com.testmenudrawer.android.testmenudrawer.VinList
 import com.testmenudrawer.android.testmenudrawer.UserActivity
+import android.arch.lifecycle.ViewModelProviders
+import android.view.View
+import android.widget.EditText
+import android.widget.Toast
+import com.testmenudrawer.android.testmenudrawer.models.SupportViewModel
+import android.view.View.OnFocusChangeListener
+import android.widget.TextView
+
+
+//import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion.User
+
 
 /**
  * Created by mvalencia on 10/17/17.
  */
 class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+
+    var mViewModel: SupportViewModel? = null;
+
+
+    private var mUsernameEditText: EditText? = null
+    private var mEmailEditText: EditText? = null
+    private var mPhoneEditText: EditText? = null
+    private var mCommentsEditText: EditText? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_support)
+
+        mViewModel = ViewModelProviders.of(this).get(SupportViewModel::class.java!!)
+
+        val username: String = mViewModel!!.getUsername()
+
+//        mViewModel.get.observer(this, object : Observer() {
+//            fun onChanged(@Nullable data: User) {
+//                // update ui.
+//            }
+//        })
+
+        mUsernameEditText = findViewById<EditText>(R.id.contact_name_field)
+        mEmailEditText = findViewById<EditText>(R.id.contact_email_field)
+        mPhoneEditText = findViewById<EditText>(R.id.contact_phone_field)
+        mCommentsEditText = findViewById<EditText>(R.id.block_text_field)
+
+        mUsernameEditText!!.setText(mViewModel!!.getUsername())
+        mEmailEditText!!.setText(mViewModel!!.getEmail())
+        mPhoneEditText!!.setText(mViewModel!!.getPhone())
+        mCommentsEditText!!.setText(mViewModel!!.getComments())
+
+        setFocusEventHandlers()
+
         val toolbar = findViewById<Toolbar>(R.id.toolbar_support)
         setSupportActionBar(toolbar)
 
@@ -40,6 +83,46 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
+    }
+
+    fun setFocusEventHandlers() {
+        mUsernameEditText!!.setOnFocusChangeListener(object : OnFocusChangeListener {
+            override fun onFocusChange(view: View, hasFocus: Boolean) {
+                if (hasFocus) {
+//                    Toast.makeText(applicationContext, "Got the focus", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(applicationContext, "Lost the focus", Toast.LENGTH_LONG).show()
+                    mViewModel!!.setUsername("NEW USERNAME")
+                }
+            }
+        })
+        mEmailEditText!!.setOnFocusChangeListener(object : OnFocusChangeListener {
+            override fun onFocusChange(view: View, hasFocus: Boolean) {
+                if (hasFocus) {
+//                    Toast.makeText(applicationContext, "Got the focus", Toast.LENGTH_LONG).show()
+                } else {
+//                    Toast.makeText(applicationContext, "Lost the focus", Toast.LENGTH_LONG).show()
+                }
+            }
+        })
+        mPhoneEditText!!.setOnFocusChangeListener(object : OnFocusChangeListener {
+            override fun onFocusChange(view: View, hasFocus: Boolean) {
+                if (hasFocus) {
+//                    Toast.makeText(applicationContext, "Got the focus", Toast.LENGTH_LONG).show()
+                } else {
+//                    Toast.makeText(applicationContext, "Lost the focus", Toast.LENGTH_LONG).show()
+                }
+            }
+        })
+        mCommentsEditText!!.setOnFocusChangeListener(object : OnFocusChangeListener {
+            override fun onFocusChange(view: View, hasFocus: Boolean) {
+                if (hasFocus) {
+//                    Toast.makeText(applicationContext, "Got the focus", Toast.LENGTH_LONG).show()
+                } else {
+//                    Toast.makeText(applicationContext, "Lost the focus", Toast.LENGTH_LONG).show()
+                }
+            }
+        })
     }
 
     override fun onBackPressed() {
