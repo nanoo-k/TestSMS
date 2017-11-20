@@ -41,11 +41,11 @@ class VehicleDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vehicle_detail)
 
-        mVin = findViewById(R.id.vin_value) as TextView
-        mYear = findViewById(R.id.year_value) as TextView
-        mMake = findViewById(R.id.make_value) as TextView
-        mModel = findViewById(R.id.model_value) as TextView
-        mEngine = findViewById(R.id.engine_value) as TextView
+        mVin = findViewById<TextView>(R.id.vin_value)
+        mYear = findViewById<TextView>(R.id.year_value)
+        mMake = findViewById<TextView>(R.id.make_value)
+        mModel = findViewById<TextView>(R.id.model_value)
+        mEngine = findViewById<TextView>(R.id.engine_value)
 
 //        val toolbar = findViewById(R.id.toolbar) as Toolbar
 //        setSupportActionBar(toolbar)
@@ -117,7 +117,7 @@ class VehicleDetailActivity : AppCompatActivity() {
         // Respond to the action bar's Up/Home button
             android.R.id.home -> {
                 val upIntent = NavUtils.getParentActivityIntent(this)
-                if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                if (NavUtils.shouldUpRecreateTask(this, upIntent!!)) {
                     // This activity is NOT part of this app's task, so create a new task
                     // when navigating up, with a synthesized back stack.
 //                    TaskStackBuilder.create(this)
@@ -128,7 +128,7 @@ class VehicleDetailActivity : AppCompatActivity() {
                 } else {
                     // This activity is part of this app's task, so simply
                     // navigate up to the logical parent activity.
-                    NavUtils.navigateUpTo(this, upIntent)
+                    NavUtils.navigateUpTo(this, upIntent!!)
                 }
                 return true
             }
