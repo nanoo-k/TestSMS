@@ -1,5 +1,6 @@
 package com.testmenudrawer.android.testmenudrawer
 
+import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -36,8 +37,7 @@ import android.widget.TextView
 class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
 
-    var mViewModel: SupportViewModel? = null;
-
+    var mViewModel: SupportViewModel? = null
 
     private var mUsernameEditText: EditText? = null
     private var mEmailEditText: EditText? = null
@@ -49,25 +49,29 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         setContentView(R.layout.activity_support)
 
-        mViewModel = ViewModelProviders.of(this).get(SupportViewModel::class.java!!)
-
-        val username: String = mViewModel!!.getUsername()
-
-//        mViewModel.get.observer(this, object : Observer() {
-//            fun onChanged(@Nullable data: User) {
-//                // update ui.
-//            }
-//        })
-
         mUsernameEditText = findViewById<EditText>(R.id.contact_name_field)
         mEmailEditText = findViewById<EditText>(R.id.contact_email_field)
         mPhoneEditText = findViewById<EditText>(R.id.contact_phone_field)
         mCommentsEditText = findViewById<EditText>(R.id.block_text_field)
 
-        mUsernameEditText!!.setText(mViewModel!!.getUsername())
-        mEmailEditText!!.setText(mViewModel!!.getEmail())
-        mPhoneEditText!!.setText(mViewModel!!.getPhone())
-        mCommentsEditText!!.setText(mViewModel!!.getComments())
+
+
+        mViewModel = ViewModelProviders.of(this).get(SupportViewModel::class.java!!)
+
+        val usernameObserver = object : Observer<String> {
+            override fun onChanged(newName: String?) {
+                // Update the UI, in this case, a TextView.
+                mUsernameEditText!!.setText(newName)
+            }
+        }
+
+        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+        mViewModel!!.getUsername().observe(this, usernameObserver)
+
+//        mUsernameEditText!!.setText(mViewModel!!.getUsername())
+//        mEmailEditText!!.setText(mViewModel!!.getEmail())
+//        mPhoneEditText!!.setText(mViewModel!!.getPhone())
+//        mCommentsEditText!!.setText(mViewModel!!.getComments())
 
         setFocusEventHandlers()
 
@@ -92,37 +96,40 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 //                    Toast.makeText(applicationContext, "Got the focus", Toast.LENGTH_LONG).show()
                 } else {
                     Toast.makeText(applicationContext, "Lost the focus", Toast.LENGTH_LONG).show()
-                    mViewModel!!.setUsername("NEW USERNAME")
+//                    mViewModel!!.setUsername("NEW USERNAME")
+
+                    val anotherName : String = "John Doe";
+                    mViewModel!!.getUsername().setValue(anotherName);
                 }
             }
         })
-        mEmailEditText!!.setOnFocusChangeListener(object : OnFocusChangeListener {
-            override fun onFocusChange(view: View, hasFocus: Boolean) {
-                if (hasFocus) {
-//                    Toast.makeText(applicationContext, "Got the focus", Toast.LENGTH_LONG).show()
-                } else {
-//                    Toast.makeText(applicationContext, "Lost the focus", Toast.LENGTH_LONG).show()
-                }
-            }
-        })
-        mPhoneEditText!!.setOnFocusChangeListener(object : OnFocusChangeListener {
-            override fun onFocusChange(view: View, hasFocus: Boolean) {
-                if (hasFocus) {
-//                    Toast.makeText(applicationContext, "Got the focus", Toast.LENGTH_LONG).show()
-                } else {
-//                    Toast.makeText(applicationContext, "Lost the focus", Toast.LENGTH_LONG).show()
-                }
-            }
-        })
-        mCommentsEditText!!.setOnFocusChangeListener(object : OnFocusChangeListener {
-            override fun onFocusChange(view: View, hasFocus: Boolean) {
-                if (hasFocus) {
-//                    Toast.makeText(applicationContext, "Got the focus", Toast.LENGTH_LONG).show()
-                } else {
-//                    Toast.makeText(applicationContext, "Lost the focus", Toast.LENGTH_LONG).show()
-                }
-            }
-        })
+//        mEmailEditText!!.setOnFocusChangeListener(object : OnFocusChangeListener {
+//            override fun onFocusChange(view: View, hasFocus: Boolean) {
+//                if (hasFocus) {
+////                    Toast.makeText(applicationContext, "Got the focus", Toast.LENGTH_LONG).show()
+//                } else {
+////                    Toast.makeText(applicationContext, "Lost the focus", Toast.LENGTH_LONG).show()
+//                }
+//            }
+//        })
+//        mPhoneEditText!!.setOnFocusChangeListener(object : OnFocusChangeListener {
+//            override fun onFocusChange(view: View, hasFocus: Boolean) {
+//                if (hasFocus) {
+////                    Toast.makeText(applicationContext, "Got the focus", Toast.LENGTH_LONG).show()
+//                } else {
+////                    Toast.makeText(applicationContext, "Lost the focus", Toast.LENGTH_LONG).show()
+//                }
+//            }
+//        })
+//        mCommentsEditText!!.setOnFocusChangeListener(object : OnFocusChangeListener {
+//            override fun onFocusChange(view: View, hasFocus: Boolean) {
+//                if (hasFocus) {
+////                    Toast.makeText(applicationContext, "Got the focus", Toast.LENGTH_LONG).show()
+//                } else {
+////                    Toast.makeText(applicationContext, "Lost the focus", Toast.LENGTH_LONG).show()
+//                }
+//            }
+//        })
     }
 
     override fun onBackPressed() {

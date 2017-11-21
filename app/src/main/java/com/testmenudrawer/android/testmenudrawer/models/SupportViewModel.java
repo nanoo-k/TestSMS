@@ -1,6 +1,8 @@
 package com.testmenudrawer.android.testmenudrawer.models;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.util.Log;
 
 /**
  * Created by mvalencia on 11/20/17.
@@ -8,40 +10,54 @@ import android.arch.lifecycle.ViewModel;
 
 public class SupportViewModel extends ViewModel {
 
-    private String username = "Frequency G";
-    private String email = "email@corp.com";
-    private String phone = "(134)234-2341";
-    private String comments = "So so so many good things.";
+    private MutableLiveData<String> mUsername;
+    private MutableLiveData<String> mEmail;
+    private MutableLiveData<String> mPhone;
+    private MutableLiveData<String> mComments;
 
-    public String getUsername() {
-        return username;
+    public MutableLiveData<String> getUsername() {
+        if (mUsername == null) {
+            mUsername = new MutableLiveData<String>();
+            mUsername.setValue("Some name");
+        }
+        return mUsername;
     }
 
-    public String getEmail() {
-        return email;
+    public MutableLiveData<String> getEmail() {
+        if (mEmail == null) {
+            mEmail = new MutableLiveData<String>();
+        }
+        return mEmail;
     }
 
-    public String getPhone() {
-        return phone;
+    public MutableLiveData<String> getPhone() {
+        if (mPhone == null) {
+            mPhone = new MutableLiveData<String>();
+        }
+        return mPhone;
     }
 
-    public String getComments() {
-        return comments;
+    public MutableLiveData<String> getComments() {
+        if (mComments == null) {
+            mComments = new MutableLiveData<String>();
+        }
+        return mComments;
     }
 
-    public void setComments(String comments) {
-        this.comments = comments;
+    public void setComments(MutableLiveData<String> comments) {
+        mComments = comments;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(MutableLiveData<String> email) {
+        mEmail = email;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhone(MutableLiveData<String> phone) {
+        mPhone = phone;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(MutableLiveData<String> username) {
+        mUsername = username;
+//        Log.i("new username", String.valueOf(username));
     }
 }
