@@ -12,10 +12,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.analytics.HitBuilders;
+import com.testmenudrawer.android.testmenudrawer.LoginActivity;
 import com.testmenudrawer.android.testmenudrawer.R;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -50,10 +52,27 @@ public class VinsAdapter extends RecyclerView.Adapter<VinsAdapter.VinsViewHolder
 //        mOnClickListener = listener;
     }
 
+    private List<String> mData = new ArrayList<>();
+
+    public void setData(List<String> data) {
+        Log.i("setData: ", "Made it here");
+        mData = data;
+
+        Log.i("setData, mData is: ", mData.get(0));
+    }
+
+    public void setVinList(List<Vin> vins) {
+        mVins = vins;
+    }
+
     Context context;
 
     @Override
     public VinsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+//        Log.i("onCreate, mData is: ", mData);
+
+        mData = new ArrayList<>();
 
         context = parent.getContext();
         int layoutIdForListItem = R.layout.vin_management_list;

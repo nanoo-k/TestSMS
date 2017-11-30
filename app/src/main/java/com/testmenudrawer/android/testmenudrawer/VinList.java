@@ -1,12 +1,15 @@
 package com.testmenudrawer.android.testmenudrawer;
 
+import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Point;
+import android.content.Loader;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+
+//import android.support.v4.app.LoaderManager;
+//import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,10 +27,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.testmenudrawer.android.testmenudrawer.UserActivity;
-import com.testmenudrawer.android.testmenudrawer.SupportActivity;
-
-import com.google.android.gms.common.api.CommonStatusCodes;
 import com.testmenudrawer.android.testmenudrawer.models.Vin;
 import com.testmenudrawer.android.testmenudrawer.models.VinsAdapter;
 //import com.varvet.barcodereadersample.barcode.BarcodeCaptureActivity;
@@ -35,15 +34,16 @@ import com.testmenudrawer.android.testmenudrawer.utilities.NetworkUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import com.testmenudrawer.android.testmenudrawer.models.Vin.*;
 //import com.motoshop.vins.ManualEntryActivity;
-import com.testmenudrawer.android.testmenudrawer.models.VinsAdapter.*;
 import com.testmenudrawer.android.testmenudrawer.utilities.PreferenceData;
+import com.testmenudrawer.android.testmenudrawer.utilities.VinListAsyncTaskLoader;
+//import com.testmenudrawer.android.testmenudrawer.utilities.VinListAsyncTaskLoader;
 
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -59,8 +59,76 @@ public class VinList extends AppCompatActivity
     private ListView mRecentVinsListView;
     private ProgressBar mLoadingIndicator;
 
+
+    // A RecyclerView.Adapter which will display the data
+//    private MyAdapter mAdapter;
+    // Our Callbacks. Could also have the Activity/Fragment implement
+// LoaderManager.LoaderCallbacks<List<String>>
+    private LoaderManager.LoaderCallbacks<List<String>>
+            mLoaderCallbacks =
+            new LoaderManager.LoaderCallbacks<List<String>>() {
+                @Override
+                public Loader<List<String>> onCreateLoader(
+                        int id, Bundle args) {
+                    Log.i("onCreateLoader", "STARTED");
+                    return new VinListAsyncTaskLoader(VinList.this);
+                }
+
+                @Override
+                public void onLoadFinished(Loader<List<String>> loader, List<String> data) {
+                    Log.i("onLoadFinished", "DONE");
+                    Log.i("Datum: ", data.get(0));
+
+                    // Display our data, for instance updating our adapter
+                    if (mAdapter == null) {
+                        Log.i("mAdapter is ", "null");
+                    } else {
+                        mAdapter.setData(data);
+                    }
+                }
+
+                @Override
+                public void onLoaderReset(Loader<List<String>> loader) {
+
+                    // Loader reset, throw away our data,
+                    // unregister any listeners, etc.
+
+                    if (mAdapter == null) {
+                        Log.i("mAdapter is ", "null");
+                    } else {
+
+                        List<String> data = new ArrayList<>();
+                        mAdapter.setData(data);
+                    }
+                    // Of course, unless you use destroyLoader(),
+                    // this is called when everything is already dying
+                    // so a completely empty onLoaderReset() is
+                    // totally acceptable
+                }
+            };
+
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        // The usual onCreate() — setContentView(), etc.
+//        getSupportLoaderManager().initLoader(0, null, mLoaderCallbacks);
+//    }
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+        mAdapter = new VinsAdapter(null);
+
+
+//        super.onCreate(savedInstanceState);
+//        getSupportLoaderManager().initLoader(0, null,  mLoaderCallbacks);
+        getLoaderManager().initLoader(0, null,  mLoaderCallbacks);
+
         /* Save references to onscreen elements */
         mLoadingIndicator = (ProgressBar) findViewById(R.id.loading_indicator);
         mResultTextView = (TextView) findViewById(R.id.result_textview);
@@ -319,7 +387,10 @@ public class VinList extends AppCompatActivity
 
                 mVinsList.setHasFixedSize(true);
 
-                mAdapter = new VinsAdapter(vinList);
+//                mAdapter = new VinsAdapter(vinList);
+                if (mAdapter != null) {
+                    mAdapter.setVinList(vinList);
+                }
 
                 mVinsList.setAdapter(mAdapter);
 

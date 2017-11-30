@@ -12,11 +12,11 @@ import java.util.List;
 
 //public static class VinListAsyncTaskLoader extends
 public class VinListAsyncTaskLoader extends
-        AsyncTaskLoader<String> {
+        AsyncTaskLoader<List<String>> {
     // You probably have something more complicated
     // than just a String. Roll with me
-//    private List<String> mData;
-    private String mData;
+    private List<String> mData;
+//    private String mData;
     public VinListAsyncTaskLoader(Context context) {
         super(context);
     }
@@ -31,21 +31,25 @@ public class VinListAsyncTaskLoader extends
         }
     }
     @Override
-    public String loadInBackground() {
+    public List<String> loadInBackground() {
         // This is on a background thread
         // Good to know: the Context returned by getContext()
         // is the application context
 //        File jsonFile = new File(
 //                getContext().getFilesDir(), "downloaded.json");
-//        List<String> data = new ArrayList<>();
+        List<String> data = new ArrayList<>();
 
-        String data = "This data come from the loader";
+        data.add("Number 1");
+        data.add("Number 2");
+        data.add("Number 3");
+
+//        String data = "This data come from the loader";
         // Parse the JSON using the library of your choice
         // Check isLoadInBackgroundCanceled() to cancel out early
         return data;
     }
     @Override
-    public void deliverResult(String data) {
+    public void deliverResult(List<String> data) {
         // We’ll save the data for later retrieval
         mData = data;
         // We can do any pre-processing we want here
