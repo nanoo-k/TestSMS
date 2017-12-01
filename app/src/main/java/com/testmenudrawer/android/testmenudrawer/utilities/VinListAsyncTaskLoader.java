@@ -35,9 +35,8 @@ public class VinListAsyncTaskLoader extends
     }
     @Override
     protected void onStartLoading() {
-        if (mData != null) {
-            // Use cached data
-//            deliverResult(mData);
+        if (mVinList != null) {
+            Log.i("GIVING CACHED DATUMS", "TOTES");
             deliverResult(mVinList);
         } else {
             // We have no data, so kick off loading it
@@ -47,6 +46,10 @@ public class VinListAsyncTaskLoader extends
 //    public List<String> loadInBackground() {
     @Override
     public List<Vin> loadInBackground() {
+
+
+        Log.i("loadInBackground: ", "SHOULDN'T HAPPEN MORE THAN ONCE.");
+
         // This is on a background thread
         // Good to know: the Context returned by getContext()
         // is the application context
@@ -58,51 +61,56 @@ public class VinListAsyncTaskLoader extends
 //        data.add("Number 2");
 //        data.add("Number 3");
 
-        URL recentVinsUrl = NetworkUtils.buildRecentVinsUrl();
-        String vinResults = null;
-        try {
-            vinResults = NetworkUtils.getRecentVins(recentVinsUrl, getContext());
-        } catch (IOException e) {
-            Log.i("doInBackground", "exception.");
+        if (mVinList == null) {
 
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+
+            URL recentVinsUrl = NetworkUtils.buildRecentVinsUrl();
+            String vinResults = null;
+            try {
+                vinResults = NetworkUtils.getRecentVins(recentVinsUrl, getContext());
+            } catch (IOException e) {
+                Log.i("doInBackground", "exception.");
+
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+            if (vinResults != null) {
+
+                Gson gson = new Gson();
+
+                /* This is a pattern for gson parsing an array of some kind of object */
+                /* First you determine the listType of the object */
+                Type listType = new TypeToken<List<Vin>>(){}.getType();
+                /* Then you say you're going to parse to create a list of that thing, assigning to
+                 * gson the listType */
+                List<Vin> vinList = gson.fromJson(vinResults, listType);
+
+    //            mVinsList = (RecyclerView) findViewById(R.id.recyclerview_vins);
+    //
+    //            LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+    //            mVinsList.setLayoutManager(layoutManager);
+    //
+    //            mVinsList.setHasFixedSize(true);
+    //
+    ////                mAdapter = new VinsAdapter(vinList);
+    //            if (mAdapter != null) {
+    //                mAdapter.setVinList(vinList);
+    //            }
+    //
+    //            mVinsList.setAdapter(mAdapter);
+
+                return vinList;
+
+            } else {
+                Log.i("Data is ", "Null.");
+            }
+
         }
 
-
-        if (vinResults != null) {
-
-            Gson gson = new Gson();
-
-            /* This is a pattern for gson parsing an array of some kind of object */
-            /* First you determine the listType of the object */
-            Type listType = new TypeToken<List<Vin>>(){}.getType();
-            /* Then you say you're going to parse to create a list of that thing, assigning to
-             * gson the listType */
-            List<Vin> vinList = gson.fromJson(vinResults, listType);
-
-//            mVinsList = (RecyclerView) findViewById(R.id.recyclerview_vins);
-//
-//            LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-//            mVinsList.setLayoutManager(layoutManager);
-//
-//            mVinsList.setHasFixedSize(true);
-//
-////                mAdapter = new VinsAdapter(vinList);
-//            if (mAdapter != null) {
-//                mAdapter.setVinList(vinList);
-//            }
-//
-//            mVinsList.setAdapter(mAdapter);
-
-            return vinList;
-
-        } else {
-            Log.i("Data is ", "Null.");
-        }
-
-        return null;
+        return mVinList;
 
 //        String data = "This data come from the loader";
         // Parse the JSON using the library of your choice

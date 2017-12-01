@@ -113,7 +113,7 @@ public class VinList extends AppCompatActivity
                         Log.i("mAdapter is ", "null");
                     } else {
 
-                        mAdapter.setData(null);
+                        mAdapter.setVinList(null);
                     }
                     // Of course, unless you use destroyLoader(),
                     // this is called when everything is already dying
