@@ -64,31 +64,47 @@ public class VinList extends AppCompatActivity
 //    private MyAdapter mAdapter;
     // Our Callbacks. Could also have the Activity/Fragment implement
 // LoaderManager.LoaderCallbacks<List<String>>
-    private LoaderManager.LoaderCallbacks<List<String>>
+    private LoaderManager.LoaderCallbacks<List<Vin>>
             mLoaderCallbacks =
-            new LoaderManager.LoaderCallbacks<List<String>>() {
+            new LoaderManager.LoaderCallbacks<List<Vin>>() {
                 @Override
-                public Loader<List<String>> onCreateLoader(
+                public Loader<List<Vin>> onCreateLoader(
                         int id, Bundle args) {
                     Log.i("onCreateLoader", "STARTED");
                     return new VinListAsyncTaskLoader(VinList.this);
                 }
 
                 @Override
-                public void onLoadFinished(Loader<List<String>> loader, List<String> data) {
-                    Log.i("onLoadFinished", "DONE");
-                    Log.i("Datum: ", data.get(0));
+                public void onLoadFinished(Loader<List<Vin>> loader, List<Vin> data) {
+//                    Log.i("onLoadFinished", "DONE");
+//                    Log.i("Datum: ", data.get(0));
+//
+//                    // Display our data, for instance updating our adapter
+//                    if (mAdapter == null) {
+//                        Log.i("mAdapter is ", "null");
+//                    } else {
+//                        mAdapter.setData(data);
+//                    }
 
-                    // Display our data, for instance updating our adapter
-                    if (mAdapter == null) {
-                        Log.i("mAdapter is ", "null");
-                    } else {
-                        mAdapter.setData(data);
+
+                    mVinsList = findViewById(R.id.recyclerview_vins);
+
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                    mVinsList.setLayoutManager(layoutManager);
+
+                    mVinsList.setHasFixedSize(true);
+
+//                    mAdapter = new VinsAdapter(vinList);
+                    if (mAdapter != null) {
+                        mAdapter.setVinList(data);
                     }
+
+                    mVinsList.setAdapter(mAdapter);
+
                 }
 
                 @Override
-                public void onLoaderReset(Loader<List<String>> loader) {
+                public void onLoaderReset(Loader<List<Vin>> loader) {
 
                     // Loader reset, throw away our data,
                     // unregister any listeners, etc.
@@ -97,8 +113,7 @@ public class VinList extends AppCompatActivity
                         Log.i("mAdapter is ", "null");
                     } else {
 
-                        List<String> data = new ArrayList<>();
-                        mAdapter.setData(data);
+                        mAdapter.setData(null);
                     }
                     // Of course, unless you use destroyLoader(),
                     // this is called when everything is already dying
@@ -121,11 +136,10 @@ public class VinList extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+//        super.onCreate(savedInstanceState);
 
         mAdapter = new VinsAdapter(null);
 
-
-//        super.onCreate(savedInstanceState);
 //        getSupportLoaderManager().initLoader(0, null,  mLoaderCallbacks);
         getLoaderManager().initLoader(0, null,  mLoaderCallbacks);
 
@@ -262,7 +276,8 @@ public class VinList extends AppCompatActivity
     protected void onPostResume() {
 
         /* Check if user is logged in */
-        getRecentVins();
+//        getRecentVins();
+
 //        decodeVinRequest("3FA6P0K93FR226629");
 //        boolean isLoggedIn = PreferenceData.getUserLoggedInStatus(this.getApplicationContext());
 //        if (!isLoggedIn) {
@@ -281,26 +296,26 @@ public class VinList extends AppCompatActivity
         startActivity(intent);
     }
 
-    public void getRecentVins () {
-        boolean isLoggedIn = PreferenceData.getUserLoggedInStatus(this.getApplicationContext());
-
-        /* If user doesn't have a JWT, we can't make the request */
-        if (!isLoggedIn) {
-            Context context = getApplicationContext();
-            int duration = Toast.LENGTH_SHORT;
-
-            String text = "You are not logged in. Please log in.";
-
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-
-            navigateToLogin();
-
-        } else {
-            makeRecentVinsRequest();
-        }
-
-    }
+//    public void getRecentVins () {
+//        boolean isLoggedIn = PreferenceData.getUserLoggedInStatus(this.getApplicationContext());
+//
+//        /* If user doesn't have a JWT, we can't make the request */
+//        if (!isLoggedIn) {
+//            Context context = getApplicationContext();
+//            int duration = Toast.LENGTH_SHORT;
+//
+//            String text = "You are not logged in. Please log in.";
+//
+//            Toast toast = Toast.makeText(context, text, duration);
+//            toast.show();
+//
+//            navigateToLogin();
+//
+//        } else {
+//            makeRecentVinsRequest();
+//        }
+//
+//    }
 
     /**
      * This method retrieves the search text from the EditText, constructs the
@@ -308,98 +323,98 @@ public class VinList extends AppCompatActivity
      * that URL in a TextView, and finally fires off an AsyncTask to perform the GET request using
      * our {@link GetRecentVinsTask}
      */
-    private void makeRecentVinsRequest() {
+//    private void makeRecentVinsRequest() {
+//
+//        String jwt = PreferenceData.getJwt(this.getApplicationContext());
+//
+//        URL recentVinsUrl = NetworkUtils.buildRecentVinsUrl();
+//
+//        new GetRecentVinsTask(this.getApplicationContext()).execute(recentVinsUrl);
+//
+//    }
 
-        String jwt = PreferenceData.getJwt(this.getApplicationContext());
-
-        URL recentVinsUrl = NetworkUtils.buildRecentVinsUrl();
-
-        new GetRecentVinsTask(this.getApplicationContext()).execute(recentVinsUrl);
-
-    }
-
-    public class GetRecentVinsTask extends AsyncTask<URL, Void, String> {
-
-        /* We need the app context available for these callback functions, so
-        ensure that we set it when calling this task */
-        private Context context;
-        public GetRecentVinsTask (Context c){
-            context = c;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            Log.i("onPreExecute", "MADE IT.");
-            super.onPreExecute();
-//            mLoadingIndicator.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        protected String doInBackground(URL... params) {
-            Log.i("doInBackground", "MADE IT.");
-
-            URL recentVinsUrl = params[0];
-            String vinResults = null;
-            try {
-                vinResults = NetworkUtils.getRecentVins(recentVinsUrl, context);
-            } catch (IOException e) {
-                Log.i("doInBackground", "exception.");
-
-                e.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return vinResults;
-//            return "true";
-        }
-
-        @Override
-        protected void onPostExecute(String vinResults) {
-
-//            mLoadingIndicator.setVisibility(View.INVISIBLE);
-            if (vinResults != null) {
-                Log.i("onPostExecute", vinResults);
-
-//                showJsonDataView();
-//                mRecentVinsTextView.setText(vinResults);
-
-
-                Gson gson = new Gson();
-
-                /* This is a pattern for gson parsing an array of some kind of object */
-                /* First you determine the listType of the object */
-                Type listType = new TypeToken<List<Vin>>(){}.getType();
-                /* Then you say you're going to parse to create a list of that thing, assigning to
-                 * gson the listType */
-                List<Vin> vinList = gson.fromJson(vinResults, listType);
-
-//                Vin[] vinList = gson.fromJson(vinResults, Vin[].class);
-
-
-//                VinListAdapter adapter = new VinListAdapter(context, R.layout.vin_management_list, vinList);
-
-//                mRecentVinsListView.setAdapter(adapter);
-
-                mVinsList = (RecyclerView) findViewById(R.id.recyclerview_vins);
-
-                LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-                mVinsList.setLayoutManager(layoutManager);
-
-                mVinsList.setHasFixedSize(true);
-
-//                mAdapter = new VinsAdapter(vinList);
-                if (mAdapter != null) {
-                    mAdapter.setVinList(vinList);
-                }
-
-                mVinsList.setAdapter(mAdapter);
-
-            } else {
-                Log.i("onPostExecute", "Null.");
-                showErrorMessage();
-            }
-        }
-    }
+//    public class GetRecentVinsTask extends AsyncTask<URL, Void, String> {
+//
+//        /* We need the app context available for these callback functions, so
+//        ensure that we set it when calling this task */
+//        private Context context;
+//        public GetRecentVinsTask (Context c){
+//            context = c;
+//        }
+//
+//        @Override
+//        protected void onPreExecute() {
+//            Log.i("onPreExecute", "MADE IT.");
+//            super.onPreExecute();
+////            mLoadingIndicator.setVisibility(View.VISIBLE);
+//        }
+//
+//        @Override
+//        protected String doInBackground(URL... params) {
+//            Log.i("doInBackground", "MADE IT.");
+//
+//            URL recentVinsUrl = params[0];
+//            String vinResults = null;
+//            try {
+//                vinResults = NetworkUtils.getRecentVins(recentVinsUrl, context);
+//            } catch (IOException e) {
+//                Log.i("doInBackground", "exception.");
+//
+//                e.printStackTrace();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            return vinResults;
+////            return "true";
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String vinResults) {
+//
+////            mLoadingIndicator.setVisibility(View.INVISIBLE);
+//            if (vinResults != null) {
+//                Log.i("onPostExecute", vinResults);
+//
+////                showJsonDataView();
+////                mRecentVinsTextView.setText(vinResults);
+//
+//
+//                Gson gson = new Gson();
+//
+//                /* This is a pattern for gson parsing an array of some kind of object */
+//                /* First you determine the listType of the object */
+//                Type listType = new TypeToken<List<Vin>>(){}.getType();
+//                /* Then you say you're going to parse to create a list of that thing, assigning to
+//                 * gson the listType */
+//                List<Vin> vinList = gson.fromJson(vinResults, listType);
+//
+////                Vin[] vinList = gson.fromJson(vinResults, Vin[].class);
+//
+//
+////                VinListAdapter adapter = new VinListAdapter(context, R.layout.vin_management_list, vinList);
+//
+////                mRecentVinsListView.setAdapter(adapter);
+//
+//                mVinsList = (RecyclerView) findViewById(R.id.recyclerview_vins);
+//
+//                LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+//                mVinsList.setLayoutManager(layoutManager);
+//
+//                mVinsList.setHasFixedSize(true);
+//
+////                mAdapter = new VinsAdapter(vinList);
+//                if (mAdapter != null) {
+//                    mAdapter.setVinList(vinList);
+//                }
+//
+//                mVinsList.setAdapter(mAdapter);
+//
+//            } else {
+//                Log.i("onPostExecute", "Null.");
+//                showErrorMessage();
+//            }
+//        }
+//    }
 
 
     /**

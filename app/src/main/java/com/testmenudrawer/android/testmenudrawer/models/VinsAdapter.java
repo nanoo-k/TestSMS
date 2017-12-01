@@ -39,6 +39,7 @@ import com.testmenudrawer.android.testmenudrawer.VehicleDetailActivity;
 public class VinsAdapter extends RecyclerView.Adapter<VinsAdapter.VinsViewHolder> {
 
     private List<Vin> mVins;
+    private List<String> mData;
 //    final private ListItemClickListener mOnClickListener;
 
 
@@ -51,8 +52,6 @@ public class VinsAdapter extends RecyclerView.Adapter<VinsAdapter.VinsViewHolder
         mVins = vins;
 //        mOnClickListener = listener;
     }
-
-    private List<String> mData = new ArrayList<>();
 
     public void setData(List<String> data) {
         Log.i("setData: ", "Made it here");
@@ -72,7 +71,7 @@ public class VinsAdapter extends RecyclerView.Adapter<VinsAdapter.VinsViewHolder
 
 //        Log.i("onCreate, mData is: ", mData);
 
-        mData = new ArrayList<>();
+//        mData = new ArrayList<>();
 
         context = parent.getContext();
         int layoutIdForListItem = R.layout.vin_management_list;
