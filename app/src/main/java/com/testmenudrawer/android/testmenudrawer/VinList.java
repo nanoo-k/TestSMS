@@ -136,44 +136,53 @@ public class VinList extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-//        super.onCreate(savedInstanceState);
-
-        mAdapter = new VinsAdapter(null);
-
-//        getSupportLoaderManager().initLoader(0, null,  mLoaderCallbacks);
-        getLoaderManager().initLoader(0, null,  mLoaderCallbacks);
-
-        /* Save references to onscreen elements */
-        mLoadingIndicator = (ProgressBar) findViewById(R.id.loading_indicator);
-        mResultTextView = (TextView) findViewById(R.id.result_textview);
-        mDecodedVinTextView = (TextView) findViewById(R.id.decode_vin_result_textview);
-//        mRecentVinsListView = (ListView) findViewById(R.id.recent_vins_list_view);
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vin_list);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        boolean isLoggedIn = PreferenceData.getUserLoggedInStatus(this.getApplicationContext());
+        if (!isLoggedIn) {
 
-                Intent intent = new Intent(getApplicationContext(), VinCaptureActivity.class);
-                startActivity(intent);
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-            }
-        });
+            navigateToLogin();
+        }
+        else {
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+            mAdapter = new VinsAdapter(null);
+
+    //        getSupportLoaderManager().initLoader(0, null,  mLoaderCallbacks);
+            getLoaderManager().initLoader(0, null,  mLoaderCallbacks);
+
+            /* Save references to onscreen elements */
+            mLoadingIndicator = (ProgressBar) findViewById(R.id.loading_indicator);
+            mResultTextView = (TextView) findViewById(R.id.result_textview);
+            mDecodedVinTextView = (TextView) findViewById(R.id.decode_vin_result_textview);
+    //        mRecentVinsListView = (ListView) findViewById(R.id.recent_vins_list_view);
+
+            setContentView(R.layout.activity_vin_list);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent = new Intent(getApplicationContext(), VinCaptureActivity.class);
+                    startActivity(intent);
+    //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+    //                        .setAction("Action", null).show();
+                }
+            });
+
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.setDrawerListener(toggle);
+            toggle.syncState();
+
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
+
+        }
     }
 
     @Override
