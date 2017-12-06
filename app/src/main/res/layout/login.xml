@@ -14,161 +14,229 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
     tools:context=".LoginActivity">
 
-
-    <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
-    <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
-    <!--android:paddingTop="@dimen/activity_vertical_margin"-->
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/error_message"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="#E94C31"
-        android:orientation="vertical"
-        android:translationY="-200dp">
-
-        <TextView
-            android:id="@+id/error_message_close"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_alignParentStart="true"
-            android:layout_weight="1"
-            android:background="#E94C31"
-            android:gravity="bottom|center_horizontal"
-            android:text="Invalid username or password."
-            android:textColor="#ffffff"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/error_message_forgot_password"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_alignParentStart="true"
-            android:layout_weight="1"
-            android:background="#E94C31"
-            android:gravity="center_horizontal"
-            android:text="Lost your password?"
-            android:textColor="#ffffff"
-            android:textSize="16sp" />
-
-    </LinearLayout>
-
     <ImageView
-        android:id="@+id/motoshop_logo"
-        android:layout_width="match_parent"
-        android:layout_height="257dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        ads:srcCompat="@drawable/ic_logo_applogin"/>
-
-    <!--android:adjustViewBounds="true"-->
-    <!--android:scaleType="centerInside"-->
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toTopOf="parent"
+        ads:srcCompat="@drawable/side_nav_bar" />
 
     <TextView
-        android:id="@+id/username_label"
-        android:layout_width="match_parent"
+        android:id="@+id/usenameLabel"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/motoshop_logo"
-        android:layout_below="@+id/motoshop_logo"
-        android:gravity="center_horizontal"
-        android:text="Username"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="username"
         android:textAllCaps="true"
-        android:textColor="#919191"
-        android:textSize="16sp" />
+        android:textColor="#A8A8A8"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
         android:id="@+id/username"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/username_label"
-        android:gravity="center_horizontal"
-        android:hint=""
-        android:imeOptions="actionNext"
-        android:inputType="text"
-        android:textColor="#616161"
-        android:textColorLink="#616161"
-        android:textSize="22sp" />
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#A8A8A8"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColorHint="#A8A8A8"
+        ads:layout_constraintEnd_toEndOf="@+id/usenameLabel"
+        ads:layout_constraintStart_toStartOf="@+id/usenameLabel"
+        ads:layout_constraintTop_toBottomOf="@+id/usenameLabel" />
 
     <TextView
-        android:id="@+id/password_label"
-        android:layout_width="match_parent"
+        android:id="@+id/passwordLabel"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/username"
-        android:gravity="center_horizontal"
-        android:text="Password"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="password"
         android:textAllCaps="true"
-        android:textColor="#919191"
-        android:textSize="16sp" />
+        android:textColor="#A8A8A8"
+        ads:layout_constraintEnd_toEndOf="@+id/usenameLabel"
+        ads:layout_constraintStart_toStartOf="@+id/usenameLabel"
+        ads:layout_constraintTop_toBottomOf="@+id/username" />
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/username"
-        android:layout_below="@+id/password_label"
-        android:ems="10"
-        android:gravity="center_horizontal"
-        android:hint=""
-        android:imeOptions="actionGo"
-        android:inputType="textPassword"
-        android:textColor="#616161"
-        android:textColorLink="#616161"
-        android:textSize="22sp" />
-
-
-    <Button
-        android:id="@+id/forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/password"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="11dp"
-        android:background="#FAFAFA"
-        android:onClick="goToSupportActivity"
-        android:stateListAnimator="@null"
-        android:text="Forgot your password?"
-        android:textAllCaps="false"
-        android:textColor="#40B0E6"
-        android:textColorLink="#40B0E6"
-        android:textSize="16sp" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#A8A8A8"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:textColorHint="#A8A8A8"
+        ads:layout_constraintEnd_toEndOf="@+id/usenameLabel"
+        ads:layout_constraintStart_toStartOf="@+id/usenameLabel"
+        ads:layout_constraintTop_toBottomOf="@+id/passwordLabel" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
+        android:id="@+id/submitButton"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
         android:background="#40B0E6"
-        android:onClick="login"
-        android:text="@string/login"
-        android:textColor="#FFFFFF"
-        android:textColorLink="#FFFFFF" />
+        android:text="Sign In"
+        android:textColor="#ffffff"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent" />
 
-    <!--android:gravity="bottom"-->
-    <!--android:layout_gravity="bottom"-->
+</android.support.constraint.ConstraintLayout>
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:ads="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:fitsSystemWindows="true"-->
+    <!--android:orientation="vertical"-->
+    <!--tools:context=".LoginActivity">-->
+
+    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+        <!--xmlns:tools="http://schemas.android.com/tools"-->
+        <!--android:id="@+id/error_message"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:background="#E94C31"-->
+        <!--android:orientation="vertical"-->
+        <!--android:translationY="-200dp">-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/error_message_close"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="#E94C31"-->
+            <!--android:gravity="bottom|center_horizontal"-->
+            <!--android:text="Invalid username or password."-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:textSize="16sp" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/error_message_forgot_password"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="#E94C31"-->
+            <!--android:gravity="center_horizontal"-->
+            <!--android:text="Lost your password?"-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:textSize="16sp" />-->
+
+    <!--</LinearLayout>-->
+
+    <!--<ImageView-->
+        <!--android:id="@+id/motoshop_logo"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="257dp"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--ads:srcCompat="@drawable/ic_logo_applogin"/>-->
+
+
+    <!--<TextView-->
+        <!--android:id="@+id/username_label"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignEnd="@+id/motoshop_logo"-->
+        <!--android:layout_below="@+id/motoshop_logo"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:text="Username"-->
+        <!--android:textAllCaps="true"-->
+        <!--android:textColor="#919191"-->
+        <!--android:textSize="16sp" />-->
+
+    <!--<EditText-->
+        <!--android:id="@+id/username"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_below="@+id/username_label"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:hint=""-->
+        <!--android:imeOptions="actionNext"-->
+        <!--android:inputType="text"-->
+        <!--android:textColor="#616161"-->
+        <!--android:textColorLink="#616161"-->
+        <!--android:textSize="22sp" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/password_label"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_below="@+id/username"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:text="Password"-->
+        <!--android:textAllCaps="true"-->
+        <!--android:textColor="#919191"-->
+        <!--android:textSize="16sp" />-->
+
+    <!--<EditText-->
+        <!--android:id="@+id/password"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignEnd="@+id/username"-->
+        <!--android:layout_below="@+id/password_label"-->
+        <!--android:ems="10"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:hint=""-->
+        <!--android:imeOptions="actionGo"-->
+        <!--android:inputType="textPassword"-->
+        <!--android:textColor="#616161"-->
+        <!--android:textColorLink="#616161"-->
+        <!--android:textSize="22sp" />-->
+
 
     <!--<Button-->
-        <!--android:id="@+id/btn_show_jwt"-->
+        <!--android:id="@+id/forgot_password"-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
-        <!--android:onClick="showJwt"-->
-        <!--android:text="Show JWT"-->
-        <!--android:visibility="gone" />-->
+        <!--android:layout_below="@+id/password"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="11dp"-->
+        <!--android:background="#FAFAFA"-->
+        <!--android:onClick="goToSupportActivity"-->
+        <!--android:stateListAnimator="@null"-->
+        <!--android:text="Forgot your password?"-->
+        <!--android:textAllCaps="false"-->
+        <!--android:textColor="#40B0E6"-->
+        <!--android:textColorLink="#40B0E6"-->
+        <!--android:textSize="16sp" />-->
 
+    <!--<Button-->
+        <!--android:id="@+id/button"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:background="#40B0E6"-->
+        <!--android:onClick="login"-->
+        <!--android:text="@string/login"-->
+        <!--android:textColor="#FFFFFF"-->
+        <!--android:textColorLink="#FFFFFF" />-->
 
-<!--</LinearLayout>-->
-</RelativeLayout>
+<!--</RelativeLayout>-->
