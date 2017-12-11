@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -29,6 +30,7 @@ import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private android.support.constraint.ConstraintLayout mContainer;
     private LinearLayout mErrorMessage;
     private TextView mErrorMessageClose;
     private TextView mErrorMessageForgotPassword;
@@ -44,14 +46,14 @@ public class LoginActivity extends AppCompatActivity {
 
 //        SharedPreferences sharedPreferences = getPreferenceScreen().getSharedPreferences();
 
-        mErrorMessage = (LinearLayout) findViewById(R.id.error_message);
-        mErrorMessageClose = (TextView) findViewById(R.id.error_message_close);
-        mErrorMessageForgotPassword = (TextView) findViewById(R.id.error_message_forgot_password);
-        mMotoshopLogo = (ImageView) findViewById(R.id.motoshop_logo);
-        mUsernameEditText = (EditText) findViewById(R.id.username);
-        mPasswordEditText = (EditText) findViewById(R.id.password);
-        mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
-
+        mContainer = findViewById(R.id.container);
+        mErrorMessage = findViewById(R.id.error_message);
+        mErrorMessageClose = findViewById(R.id.error_message_close);
+        mErrorMessageForgotPassword = findViewById(R.id.error_message_forgot_password);
+        mMotoshopLogo = findViewById(R.id.motoshop_logo);
+        mUsernameEditText = findViewById(R.id.username);
+        mPasswordEditText = findViewById(R.id.password);
+        mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
 
 
         mErrorMessageClose.setOnClickListener(new View.OnClickListener(){
@@ -85,6 +87,12 @@ public class LoginActivity extends AppCompatActivity {
 
         resizeLogo();
         mErrorMessage.bringToFront();
+
+        slideTextFields();
+    }
+
+    private void slideTextFields() {
+        mContainer.animate().translationY(100);
     }
 
     private void resizeLogo() {
@@ -96,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         // Define and assign new logo height
-        int newLogoHeight = height / 2;
+        int newLogoHeight = height / 3;
         mMotoshopLogo.getLayoutParams().height = newLogoHeight;
     }
 
