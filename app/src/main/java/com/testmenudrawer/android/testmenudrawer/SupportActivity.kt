@@ -20,11 +20,14 @@ import android.view.MenuItem
 import com.testmenudrawer.android.testmenudrawer.VinList
 import com.testmenudrawer.android.testmenudrawer.UserActivity
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
+import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import com.testmenudrawer.android.testmenudrawer.models.SupportViewModel
 import android.view.View.OnFocusChangeListener
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 
 
@@ -39,6 +42,7 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     var mViewModel: SupportViewModel? = null
 
+    private var mContainer: android.support.constraint.ConstraintLayout? = null
     private var mUsernameEditText: EditText? = null
     private var mEmailEditText: EditText? = null
     private var mPhoneEditText: EditText? = null
@@ -49,6 +53,7 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         setContentView(R.layout.activity_support)
 
+        mContainer = findViewById<android.support.constraint.ConstraintLayout>(R.id.container)
         mUsernameEditText = findViewById<EditText>(R.id.contact_name_field)
         mEmailEditText = findViewById<EditText>(R.id.contact_email_field)
         mPhoneEditText = findViewById<EditText>(R.id.contact_phone_field)
@@ -87,6 +92,23 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
+
+
+        // Hide keyboard when user clicks around screen
+        mContainer!!.setOnTouchListener(View.OnTouchListener { v, event ->
+            // Hide keyboard
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+
+            // Make textfields lose focus
+            mEmailEditText!!.clearFocus()
+            mPhoneEditText!!.clearFocus()
+            mUsernameEditText!!.clearFocus()
+            mCommentsEditText!!.clearFocus()
+
+            //                animateTextFields(0);
+            true
+        })
     }
 
     fun setFocusEventHandlers() {
