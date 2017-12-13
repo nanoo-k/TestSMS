@@ -9,131 +9,197 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.testmenudrawer.android.testmenudrawer.UserActivity"
     tools:showIn="@layout/app_bar_user">
-    <!--
-      Copyright (C) 2016 The Android Open Source Project
 
-      Licensed under the Apache License, Version 2.0 (the "License");
-      you may not use this file except in compliance with the License.
-      You may obtain a copy of the License at
+    <ImageButton
+        android:id="@+id/toll_free_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="#FAFAFA"
+        android:elevation="0dp"
+        android:onClick="makeCall"
+        android:tint="#2A9BD2"
+        app:layout_constraintBottom_toBottomOf="@+id/toll_free_number"
+        app:layout_constraintEnd_toStartOf="@+id/toll_free_number"
+        app:layout_constraintTop_toTopOf="@+id/toll_free_number"
+        app:srcCompat="@android:drawable/sym_action_call" />
 
-           http://www.apache.org/licenses/LICENSE-2.0
+    <Button
+        android:id="@+id/toll_free_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="#FAFAFA"
+        android:onClick="makeCall"
+        android:text="Toll Free (844) 278 - 6643"
+        android:textColor="#2A9BD2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-      Unless required by applicable law or agreed to in writing, software
-      distributed under the License is distributed on an "AS IS" BASIS,
-      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-      See the License for the specific language governing permissions and
-      limitations under the License.
-    -->
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <TextView
+        android:id="@+id/horizontal_rule"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="#A8A8A8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toll_free_number" />
+
+    <TextView
+        android:id="@+id/contact_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="Contact Name"
+        android:textAllCaps="true"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontal_rule" />
+
+    <EditText
+        android:id="@+id/contact_name_field"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context=".SupportActivity">
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:backgroundTint="#A8A8A8"
+        android:hint=""
+        android:textAlignment="viewStart"
+        android:textColor="#565656"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/contact_name_label"
+        app:layout_constraintTop_toBottomOf="@+id/contact_name_label" />
 
-        <TextView
-            android:id="@+id/contact_name_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Contact Name"
-            android:textSize="22sp" />
+    <TextView
+        android:id="@+id/contact_email_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="Contact Email"
+        android:textAllCaps="true"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/contact_name_label"
+        app:layout_constraintStart_toStartOf="@+id/contact_name_label"
+        app:layout_constraintTop_toBottomOf="@+id/contact_name_field" />
 
-        <EditText
-            android:id="@+id/contact_name_field"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint=""
-            android:textSize="22sp" />
+    <EditText
+        android:id="@+id/contact_email_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:backgroundTint="#A8A8A8"
+        android:ems="10"
+        android:hint=""
+        android:textAlignment="viewStart"
+        android:textColor="#565656"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/contact_name_field"
+        app:layout_constraintStart_toStartOf="@+id/contact_name_label"
+        app:layout_constraintTop_toBottomOf="@+id/contact_email_label" />
 
-        <TextView
-            android:id="@+id/contact_email_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Contact Email"
-            android:textSize="22sp" />
+    <TextView
+        android:id="@+id/contact_phone_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="Contact Phone"
+        android:textAllCaps="true"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/contact_name_label"
+        app:layout_constraintStart_toStartOf="@+id/contact_name_label"
+        app:layout_constraintTop_toBottomOf="@+id/contact_email_field" />
 
-        <EditText
-            android:id="@+id/contact_email_field"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint=""
-            android:ems="10"
-            android:textSize="22sp" />
+    <EditText
+        android:id="@+id/contact_phone_field"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:backgroundTint="#A8A8A8"
+        android:ems="10"
+        android:hint=""
+        android:textAlignment="viewStart"
+        android:textColor="#565656"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/contact_name_field"
+        app:layout_constraintStart_toStartOf="@+id/contact_name_label"
+        app:layout_constraintTop_toBottomOf="@+id/contact_phone_label" />
 
-        <TextView
-            android:id="@+id/contact_phone_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Contact Phone"
-            android:textSize="22sp" />
-
-        <EditText
-            android:id="@+id/contact_phone_field"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint=""
-            android:ems="10"
-            android:textSize="22sp" />
-
-        <EditText
-            android:id="@+id/block_text_field"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="How can we help you?"
-            android:ems="10"
-            android:textSize="22sp" />
-
-
-        <Button
-            android:text="Login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/button"
-            android:onClick="login" />
-
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
-
-                <TextView
-                    android:id="@+id/tv_github_search_results_json"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Make a search!"
-                    android:textSize="18sp"
-                    android:visibility="gone" />
-            </ScrollView>
-
-            <TextView
-                android:id="@+id/tv_error_message_display"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="@string/error_message"
-                android:textSize="22sp"
-                android:visibility="gone" />
-
-            <ProgressBar
-                android:id="@+id/pb_loading_indicator"
-                android:layout_height="42dp"
-                android:layout_width="42dp"
-                android:layout_gravity="center"
-                android:visibility="invisible" />
-        </FrameLayout>
+    <EditText
+        android:id="@+id/block_text_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edit_text_border_color"
+        android:backgroundTint="#FAFAFA"
+        android:ems="10"
+        android:hint="How can we help you?"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+        android:textColor="#565656"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/contact_name_field"
+        app:layout_constraintStart_toStartOf="@+id/contact_name_field"
+        app:layout_constraintTop_toBottomOf="@+id/contact_phone_field" />
 
 
-    </LinearLayout>
+    <Button
+        android:id="@+id/submit_button"
+        style="@style/Widget.AppCompat.EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#2A9BD2"
+        android:onClick="submit"
+        android:text="Submit"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<ScrollView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="16dp">-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_github_search_results_json"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Make a search!"-->
+                <!--android:textSize="18sp"-->
+                <!--android:visibility="gone" />-->
+        <!--</ScrollView>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_error_message_display"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="16dp"-->
+            <!--android:text="@string/error_message"-->
+            <!--android:textSize="22sp"-->
+            <!--android:visibility="gone" />-->
+
+        <!--<ProgressBar-->
+            <!--android:id="@+id/pb_loading_indicator"-->
+            <!--android:layout_height="42dp"-->
+            <!--android:layout_width="42dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:visibility="invisible" />-->
+    <!--</FrameLayout>-->
+
 
 </android.support.constraint.ConstraintLayout>

@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         mUsernameEditText = findViewById(R.id.username);
         mPasswordEditText = findViewById(R.id.password);
         mSignInButton = findViewById(R.id.submitButton);
-        mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
+//        mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
 
 //        mContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener(){
 //            public void onGlobalLayout(){

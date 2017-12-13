@@ -117,7 +117,7 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 if (hasFocus) {
 //                    Toast.makeText(applicationContext, "Got the focus", Toast.LENGTH_LONG).show()
                 } else {
-                    Toast.makeText(applicationContext, "Lost the focus", Toast.LENGTH_LONG).show()
+//                    Toast.makeText(applicationContext, "Lost the focus", Toast.LENGTH_LONG).show()
 //                    mViewModel!!.setUsername("NEW USERNAME")
 
                     val anotherName : String = "John Doe";
@@ -205,5 +205,18 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     private fun goToUserActivity() {
         val intent = Intent(applicationContext, UserActivity::class.java)
         startActivity(intent)
+    }
+
+    fun submit(view: View) {
+//        makeLoginRequest()
+
+        Log.i("Submit", "submitting");
+
+    }
+
+    fun makeCall(view: View) {
+//        makeLoginRequest()
+
+        Log.i("Make call", "calling");
     }
 }
