@@ -14,27 +14,28 @@
         android:id="@+id/toll_free_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="32dp"
         android:background="#FAFAFA"
         android:elevation="0dp"
         android:onClick="makeCall"
         android:tint="#2A9BD2"
         app:layout_constraintBottom_toBottomOf="@+id/toll_free_number"
-        app:layout_constraintEnd_toStartOf="@+id/toll_free_number"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/toll_free_number"
+        app:layout_constraintVertical_bias="0.444"
         app:srcCompat="@android:drawable/sym_action_call" />
 
     <Button
         android:id="@+id/toll_free_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:background="#FAFAFA"
         android:onClick="makeCall"
         android:text="Toll Free (844) 278 - 6643"
         android:textColor="#2A9BD2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/toll_free_image"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -53,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:text="Contact Name"
         android:textAllCaps="true"
         android:textSize="14sp"
