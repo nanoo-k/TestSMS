@@ -348,7 +348,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (u.equals("") || p.equals("")) {
 
-            Log.i("THIS THE ERROR RIGHT HERE", "YEP");
+            Log.i("THIS THE ERROR", "YEP");
 
             showErrorMessage();
 

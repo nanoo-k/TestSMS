@@ -1,5 +1,6 @@
 package com.testmenudrawer.android.testmenudrawer
 
+import android.Manifest
 import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
@@ -21,6 +22,11 @@ import com.testmenudrawer.android.testmenudrawer.VinList
 import com.testmenudrawer.android.testmenudrawer.UserActivity
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
+import android.support.v4.content.PermissionChecker.PERMISSION_GRANTED
 import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
@@ -37,8 +43,10 @@ import android.widget.TextView
 /**
  * Created by mvalencia on 10/17/17.
  */
-class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
+
+    private val PERMISSION_REQUEST_CALL_PHONE = 0
 
     var mViewModel: SupportViewModel? = null
 
@@ -47,6 +55,7 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     private var mEmailEditText: EditText? = null
     private var mPhoneEditText: EditText? = null
     private var mCommentsEditText: EditText? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -218,5 +227,43 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 //        makeLoginRequest()
 
         Log.i("Make call", "calling");
+
+        var permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
+
+        if (permissionCheck ==  PackageManager.PERMISSION_GRANTED) {
+            val callIntent = Intent(Intent.ACTION_CALL)
+            callIntent.data = Uri.parse("tel:" + 8442786643)//change the number
+            startActivity(callIntent)
+        } else {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_CONTACTS), PERMISSION_REQUEST_CALL_PHONE);
+        }
+
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
+                                            grantResults: IntArray) {
+        // BEGIN_INCLUDE(onRequestPermissionsResult)
+        if (requestCode == PERMISSION_REQUEST_CALL_PHONE) {
+            // Request for camera permission.
+            if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission has been granted. Start camera preview Activity.
+//                Snackbar.make(mLayout, "Camera permission was granted. Starting preview.",
+//                        Snackbar.LENGTH_SHORT)
+//                        .show()
+//                startCamera()
+
+                Log.i("Make call", "calling...");
+
+            } else {
+                // Permission request was denied.
+//                Snackbar.make(mLayout, "Camera permission request was denied.",
+//                        Snackbar.LENGTH_SHORT)
+//                        .show()
+
+                Log.i("Call denied", "calling...");
+            }
+        }
+        // END_INCLUDE(onRequestPermissionsResult)
     }
 }
