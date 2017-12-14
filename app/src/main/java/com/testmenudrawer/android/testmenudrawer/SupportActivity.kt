@@ -34,6 +34,7 @@ import android.widget.Toast
 import com.testmenudrawer.android.testmenudrawer.models.SupportViewModel
 import android.view.View.OnFocusChangeListener
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.TextView
 
 
@@ -55,6 +56,10 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     private var mEmailEditText: EditText? = null
     private var mPhoneEditText: EditText? = null
     private var mCommentsEditText: EditText? = null
+    private var mSubmitButton: Button? = null
+
+    // Going to validate all these
+    private var editTexts = arrayListOf<EditText>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +72,7 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         mEmailEditText = findViewById<EditText>(R.id.contact_email_field)
         mPhoneEditText = findViewById<EditText>(R.id.contact_phone_field)
         mCommentsEditText = findViewById<EditText>(R.id.block_text_field)
+        mSubmitButton = findViewById<Button>(R.id.submit_button)
 
 
 
@@ -118,49 +124,71 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             //                animateTextFields(0);
             true
         })
+
+
+        // Add elements to array of EditTexts that are going to be validated
+        editTexts.add(mUsernameEditText!!)
+        editTexts.add(mCommentsEditText!!)
+        editTexts.add(mPhoneEditText!!)
+        editTexts.add(mEmailEditText!!)
+        validateForm()
+    }
+
+    private fun validateForm() {
+        var isFormValid: Boolean = true
+        for (editText in editTexts) {
+            var isFieldValid: Boolean = false
+            if (editText.text.length == 0) {
+                isFormValid = false
+            }
+        }
+
+        if (isFormValid) {
+            mSubmitButton!!.setEnabled(true)
+            mSubmitButton!!.setAlpha(1.0f)
+        } else {
+            mSubmitButton!!.setEnabled(false)
+            mSubmitButton!!.setAlpha(0.5f)
+        }
+
     }
 
     fun setFocusEventHandlers() {
-        mUsernameEditText!!.setOnFocusChangeListener(object : OnFocusChangeListener {
+        mUsernameEditText!!.onFocusChangeListener = object : OnFocusChangeListener {
             override fun onFocusChange(view: View, hasFocus: Boolean) {
                 if (hasFocus) {
 //                    Toast.makeText(applicationContext, "Got the focus", Toast.LENGTH_LONG).show()
                 } else {
-//                    Toast.makeText(applicationContext, "Lost the focus", Toast.LENGTH_LONG).show()
-//                    mViewModel!!.setUsername("NEW USERNAME")
-
-                    val anotherName : String = "John Doe";
-                    mViewModel!!.getUsername().setValue(anotherName);
+//                    val anotherName: String = "John Doe";
+//                    mViewModel!!.getUsername().setValue(anotherName);
+                    validateForm()
                 }
             }
-        })
-//        mEmailEditText!!.setOnFocusChangeListener(object : OnFocusChangeListener {
-//            override fun onFocusChange(view: View, hasFocus: Boolean) {
-//                if (hasFocus) {
-////                    Toast.makeText(applicationContext, "Got the focus", Toast.LENGTH_LONG).show()
-//                } else {
-////                    Toast.makeText(applicationContext, "Lost the focus", Toast.LENGTH_LONG).show()
-//                }
-//            }
-//        })
-//        mPhoneEditText!!.setOnFocusChangeListener(object : OnFocusChangeListener {
-//            override fun onFocusChange(view: View, hasFocus: Boolean) {
-//                if (hasFocus) {
-////                    Toast.makeText(applicationContext, "Got the focus", Toast.LENGTH_LONG).show()
-//                } else {
-////                    Toast.makeText(applicationContext, "Lost the focus", Toast.LENGTH_LONG).show()
-//                }
-//            }
-//        })
-//        mCommentsEditText!!.setOnFocusChangeListener(object : OnFocusChangeListener {
-//            override fun onFocusChange(view: View, hasFocus: Boolean) {
-//                if (hasFocus) {
-////                    Toast.makeText(applicationContext, "Got the focus", Toast.LENGTH_LONG).show()
-//                } else {
-////                    Toast.makeText(applicationContext, "Lost the focus", Toast.LENGTH_LONG).show()
-//                }
-//            }
-//        })
+        }
+        mEmailEditText!!.onFocusChangeListener = object : OnFocusChangeListener {
+            override fun onFocusChange(view: View, hasFocus: Boolean) {
+                if (hasFocus) {
+                } else {
+                    validateForm()
+                }
+            }
+        }
+        mPhoneEditText!!.onFocusChangeListener = object : OnFocusChangeListener {
+            override fun onFocusChange(view: View, hasFocus: Boolean) {
+                if (hasFocus) {
+                } else {
+                    validateForm()
+                }
+            }
+        }
+        mCommentsEditText!!.onFocusChangeListener = object : OnFocusChangeListener {
+            override fun onFocusChange(view: View, hasFocus: Boolean) {
+                if (hasFocus) {
+                } else {
+                    validateForm()
+                }
+            }
+        }
     }
 
     override fun onBackPressed() {
@@ -225,6 +253,21 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         setContentView(R.layout.support_thank_you)
 
     }
+
+    fun goBack(view: View) {
+
+        // If user is logged in, go to vin list
+        if (false) {
+            val intent = Intent(applicationContext, LoginActivity::class.java)
+            startActivity(intent)
+        }
+        // Else go to login screen
+        else {
+            val intent = Intent(applicationContext, LoginActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
 
     fun makeCall(view: View) {
 //        makeLoginRequest()
