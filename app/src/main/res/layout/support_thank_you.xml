@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -18,31 +18,31 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/paragraph_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Our team of Motoshop SMS specialists will be in touch with you shortly."
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintStart_toStartOf="@+id/header"
+        app:layout_constraintTop_toBottomOf="@+id/header" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/paragraph_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="We strive to respond to all e-mail inquiries in 2 hours."
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintStart_toStartOf="@+id/paragraph_1"
+        app:layout_constraintTop_toBottomOf="@+id/paragraph_1" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/back_btn"
         android:layout_width="39dp"
         android:layout_height="19dp"
         android:layout_marginTop="16dp"
         android:background="#ffffff"
         android:text="Back"
         android:textColor="#2A9BD2"
-        app:layout_constraintStart_toStartOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintStart_toStartOf="@+id/paragraph_2"
+        app:layout_constraintTop_toBottomOf="@+id/paragraph_2" />
 </android.support.constraint.ConstraintLayout>

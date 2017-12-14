@@ -221,6 +221,9 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         Log.i("Submit", "submitting");
 
+
+        setContentView(R.layout.support_thank_you)
+
     }
 
     fun makeCall(view: View) {
