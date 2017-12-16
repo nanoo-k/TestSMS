@@ -73,6 +73,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--<activity-->
+            <!--android:name=".EmptyUserSupportActivity"-->
+            <!--android:label="@string/support_title"-->
+            <!--android:theme="@style/AppTheme.NoActionBar"-->
+            <!--android:windowSoftInputMode="adjustPan"-->
+            <!--android:parentActivityName="com.testmenudrawer.android.testmenudrawer.LoginActivity">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.SUPPORTACTIVITY" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"

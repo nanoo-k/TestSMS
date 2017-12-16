@@ -27,11 +27,13 @@
 
     <Button
         android:id="@+id/toll_free_number"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:background="#FAFAFA"
+        android:backgroundTint="#FAFAFA"
         android:onClick="makeCall"
         android:text="Toll Free (844) 278 - 6643"
         android:textColor="#2A9BD2"
