@@ -138,18 +138,19 @@
 
     <EditText
         android:id="@+id/block_text_field"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/edit_text_border_color"
         android:backgroundTint="#FAFAFA"
         android:ems="10"
+        android:gravity="top"
         android:hint="How can we help you?"
         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
         android:textColor="#565656"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/submit_button"
         app:layout_constraintEnd_toEndOf="@+id/contact_name_field"
         app:layout_constraintStart_toStartOf="@+id/contact_name_field"
         app:layout_constraintTop_toBottomOf="@+id/contact_phone_field" />
