@@ -23,10 +23,15 @@ import com.testmenudrawer.android.testmenudrawer.UserActivity
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.pm.PackageManager
+import android.databinding.DataBindingUtil.setContentView
 import android.net.Uri
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v4.content.PermissionChecker.PERMISSION_GRANTED
+import android.text.Editable
+import android.text.InputFilter
+import android.text.TextWatcher
 import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
@@ -124,6 +129,89 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             //                animateTextFields(0);
             true
         })
+
+        mPhoneEditText!!.addTextChangedListener( object : TextWatcher {
+            private var startString = ""
+            private var endString = ""
+            private var selectionStartPosition = 0
+            private var selectionEndPosition = 0
+
+            // If startPosition > endPosition, something deleted,
+            // else something added,
+            // (else if equal, something replaced and do nothing unless it's a 0, )
+            // (004) 567-8911
+
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                selectionStartPosition = mPhoneEditText!!.selectionStart
+                selectionEndPosition = mPhoneEditText!!.selectionEnd
+//                Log.i("beforeTextChanged: sSrt", mPhoneEditText!!.selectionStart.toString())
+//                Log.i("beforeTextChanged: sEnd", mPhoneEditText!!.selectionEnd.toString())
+
+                startString = s.toString()
+            }
+
+            override fun afterTextChanged(s: Editable) {
+
+                selectionEndPosition = mPhoneEditText!!.selectionStart
+
+                if (selectionStartPosition < selectionEndPosition) {
+                    when(selectionStartPosition) {
+                        0 -> {
+                            s.insert(0, "(")
+                        }
+                        4 -> {
+                            s.insert(4, ") ")
+                        }
+                        9 -> {
+                            s.insert(9, "-")
+                        }
+
+                    }
+                } else {
+
+                    when(selectionEndPosition) {
+                        1 -> {
+                            s.delete(0, 1)
+                        }
+                        6 -> {
+                            s.delete(4, 6)
+                        }
+                        10 -> {
+                            s.delete(9, 10)
+                        }
+
+                    }
+                }
+
+
+//                Log.i("afterTextChanged: sSrt", mPhoneEditText!!.selectionStart.toString())
+//                Log.i("afterTextChanged: sEnd", mPhoneEditText!!.selectionEnd.toString())
+
+
+
+//        if (s.toString() != current) {
+//            val userInput = s.toString().replace("[^\\d]".toRegex(), "")
+//            if (userInput.length <= 16) {
+//                val sb = StringBuilder()
+//                for (i in 0..userInput.length - 1) {
+//                    if (i % 4 == 0 && i > 0) {
+//                        sb.append(" ")
+//                    }
+//                    sb.append(userInput[i])
+//                }
+//                current = sb.toString()
+//
+//                s.filters = arrayOfNulls<InputFilter>(0)
+//            }
+//            s.replace(0, s.length, current, 0, current.length)
+//        }
+            }
+        } )
 
 
         // Add elements to array of EditTexts that are going to be validated
@@ -311,5 +399,43 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             }
         }
         // END_INCLUDE(onRequestPermissionsResult)
+    }
+}
+
+class PhoneNumberTextWatcher : TextWatcher {
+    private var current = ""
+
+    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+
+
+
+        current = s.toString()
+//        Log.i("onTextChanged", current)
+    }
+
+    override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+        current = s.toString()
+//        Log.i("beforeTextChanged", current)
+    }
+
+    override fun afterTextChanged(s: Editable) {
+        current = s.toString()
+//        Log.i("afterTextChanged", current)
+//        if (s.toString() != current) {
+//            val userInput = s.toString().replace("[^\\d]".toRegex(), "")
+//            if (userInput.length <= 16) {
+//                val sb = StringBuilder()
+//                for (i in 0..userInput.length - 1) {
+//                    if (i % 4 == 0 && i > 0) {
+//                        sb.append(" ")
+//                    }
+//                    sb.append(userInput[i])
+//                }
+//                current = sb.toString()
+//
+//                s.filters = arrayOfNulls<InputFilter>(0)
+//            }
+//            s.replace(0, s.length, current, 0, current.length)
+//        }
     }
 }
