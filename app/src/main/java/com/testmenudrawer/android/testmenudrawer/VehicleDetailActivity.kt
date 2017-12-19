@@ -104,14 +104,14 @@ class VehicleDetailActivity : AppCompatActivity() {
         val id = item.itemId
 
 
-        if (id == R.id.action_logout) {
-            PreferenceData.clearJwt(applicationContext);
-
-
-            val intent = Intent(applicationContext, LoginActivity::class.java)
-            startActivity(intent)
-            return true
-        }
+//        if (id == R.id.action_logout) {
+//            PreferenceData.clearJwt(applicationContext);
+//
+//
+//            val intent = Intent(applicationContext, LoginActivity::class.java)
+//            startActivity(intent)
+//            return true
+//        }
 
         when (item.itemId) {
         // Respond to the action bar's Up/Home button

@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 
 import com.testmenudrawer.android.testmenudrawer.utilities.PreferenceData
 
@@ -56,17 +57,16 @@ class UserActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        val id = item.itemId
+//        val id = item.itemId
 
 
-        if (id == R.id.action_logout) {
-            PreferenceData.clearJwt(applicationContext);
-
-
-            val intent = Intent(applicationContext, LoginActivity::class.java)
-            startActivity(intent)
-            return true
-        }
+//        if (id == R.id.action_logout) {
+//            PreferenceData.clearJwt(applicationContext);
+//
+//            val intent = Intent(applicationContext, LoginActivity::class.java)
+//            startActivity(intent)
+//            return true
+//        }
 
         return super.onOptionsItemSelected(item)
     }
@@ -106,6 +106,13 @@ class UserActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun goToUserActivity() {
         val intent = Intent(applicationContext, UserActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun logout(view: View) {
+        PreferenceData.clearJwt(applicationContext);
+
+        val intent = Intent(applicationContext, LoginActivity::class.java)
         startActivity(intent)
     }
 }

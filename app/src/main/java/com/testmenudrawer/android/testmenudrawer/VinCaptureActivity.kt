@@ -80,14 +80,14 @@ class VinCaptureActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         val id = item.itemId
 
 
-        if (id == R.id.action_logout) {
-            PreferenceData.clearJwt(applicationContext);
-
-
-            val intent = Intent(applicationContext, LoginActivity::class.java)
-            startActivity(intent)
-            return true
-        }
+//        if (id == R.id.action_logout) {
+//            PreferenceData.clearJwt(applicationContext);
+//
+//
+//            val intent = Intent(applicationContext, LoginActivity::class.java)
+//            startActivity(intent)
+//            return true
+//        }
 
         return super.onOptionsItemSelected(item)
     }
