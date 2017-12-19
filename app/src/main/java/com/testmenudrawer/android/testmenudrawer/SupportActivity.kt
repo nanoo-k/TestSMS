@@ -14,8 +14,6 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 
 
 import com.testmenudrawer.android.testmenudrawer.VinList
@@ -31,9 +29,9 @@ import android.support.v4.content.ContextCompat.startActivity
 import android.support.v4.content.PermissionChecker.PERMISSION_GRANTED
 import android.text.Editable
 import android.text.InputFilter
+import android.text.SpannableStringBuilder
 import android.text.TextWatcher
-import android.view.MotionEvent
-import android.view.View
+import android.view.*
 import android.widget.EditText
 import android.widget.Toast
 import com.testmenudrawer.android.testmenudrawer.models.SupportViewModel
@@ -41,6 +39,7 @@ import android.view.View.OnFocusChangeListener
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.TextView
+import java.nio.file.Files.delete
 
 
 //import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion.User
@@ -130,6 +129,29 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             true
         })
 
+//        mPhoneEditText!!.setOnKeyListener(object : OnKeyListener {
+//
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                //You can identify which key pressed buy checking keyCode value with KeyEvent.KEYCODE_
+//                if(keyCode == KeyEvent.KEYCODE_DEL) {
+//                    //this is for backspace
+//                }
+//                return false;
+//            }
+//        });
+
+//        mPhoneEditText!!.setOnKeyListener(View.OnKeyListener{ view: View, i: Int, keyEvent: KeyEvent ->
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                // You can identify which key pressed buy checking keyCode value
+//                // with KeyEvent.KEYCODE_
+//                if (keyCode == KeyEvent.KEYCODE_DEL) {
+//                    // this is for backspace
+//                    Log.e("IME_TEST", "DEL KEY");
+//                }
+//                return false;
+//            }
+//        })
+
         mPhoneEditText!!.addTextChangedListener( object : TextWatcher {
             private var startString = ""
             private var endString = ""
@@ -147,12 +169,13 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             }
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                startString = s.toString()
                 selectionStartPosition = mPhoneEditText!!.selectionStart
-                selectionEndPosition = mPhoneEditText!!.selectionEnd
-//                Log.i("beforeTextChanged: sSrt", mPhoneEditText!!.selectionStart.toString())
-//                Log.i("beforeTextChanged: sEnd", mPhoneEditText!!.selectionEnd.toString())
+//                selectionEndPosition = mPhoneEditText!!.selectionEnd
 
                 startString = s.toString()
+
+
             }
 
             override fun afterTextChanged(s: Editable) {
@@ -160,55 +183,78 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 selectionEndPosition = mPhoneEditText!!.selectionStart
 
                 if (selectionStartPosition < selectionEndPosition) {
-                    when(selectionStartPosition) {
-                        0 -> {
-                            s.insert(0, "(")
-                        }
-                        4 -> {
-                            s.insert(4, ") ")
-                        }
-                        9 -> {
-                            s.insert(9, "-")
-                        }
 
-                    }
+                    var clean = stripPhoneNumber(s)
+                    var new = formatPhoneNumber(clean)
+                    s.replace(0, s.length, new, 0, new.length)
+
                 } else {
 
-                    when(selectionEndPosition) {
-                        1 -> {
-                            s.delete(0, 1)
-                        }
-                        6 -> {
-                            s.delete(4, 6)
-                        }
-                        10 -> {
-                            s.delete(9, 10)
-                        }
+                    var editable = SpannableStringBuilder(startString)
 
-                    }
+                    var clean = stripPhoneNumber(editable)
+
+                    clean.delete(clean.length - 1, 1)
+
+                    var new = formatPhoneNumber(clean)
+                    s.replace(0, s.length, new, 0, new.length)
+
+                    // if trying to delete startCharacter 0, 4, 5, 9
+                    // delete phone number character none, 3, 3, 6
+//                    when(selectionEndPosition) {
+//                        1 -> {
+//                            s.delete(0, 1)
+//                        }
+//                        9 -> {
+//
+//                            var editable = SpannableStringBuilder(startString)
+//                            var clean = stripPhoneNumber(editable)
+//
+//                            Log.i("clean", clean.toString())
+//
+////                            var editable = SpannableStringBuilder(clean)
+//                            clean.delete(5, 6)
+//
+//                            var new = formatPhoneNumber(clean)
+//
+//                            Log.i("new phone", new.toString())
+//
+//
+//                            s.delete(0, s.length)
+//                            s.insert(0, editable)
+//
+////                            s = new
+////                            var char = new.toCharArray()
+////                            s.replace(0, s.length, new)
+////                            s.replaceRange(0, s.length, new)
+//
+//                        }
+//                        6 -> {
+//                            s.delete(4, 6)
+//                        }
+//                        10 -> {
+//                            s.delete(9, 10)
+//                        }
+//
+//                    }
                 }
 
 
-//                Log.i("afterTextChanged: sSrt", mPhoneEditText!!.selectionStart.toString())
-//                Log.i("afterTextChanged: sEnd", mPhoneEditText!!.selectionEnd.toString())
-
-
-
-//        if (s.toString() != current) {
-//            val userInput = s.toString().replace("[^\\d]".toRegex(), "")
-//            if (userInput.length <= 16) {
-//                val sb = StringBuilder()
-//                for (i in 0..userInput.length - 1) {
-//                    if (i % 4 == 0 && i > 0) {
-//                        sb.append(" ")
-//                    }
-//                    sb.append(userInput[i])
-//                }
-//                current = sb.toString()
+//                    if (s.toString() != current) {
+//                        val userInput = s.toString().replace("[^\\d]".toRegex(), "")
+//                        if (userInput.length <= 16) {
+//                            val sb = StringBuilder()
+//                            for (i in 0..userInput.length - 1) {
+//                                if (i % 4 == 0 && i > 0) {
+//                                    sb.append(" ")
+//                                }
+//                                sb.append(userInput[i])
+//                            }
+//                            current = sb.toString()
 //
-//                s.filters = arrayOfNulls<InputFilter>(0)
-//            }
-//            s.replace(0, s.length, current, 0, current.length)
+//                            s.filters = arrayOfNulls<InputFilter>(0)
+//                        }
+//                        s.replace(0, s.length, current, 0, current.length)
 //        }
             }
         } )
@@ -220,6 +266,38 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         editTexts.add(mPhoneEditText!!)
         editTexts.add(mEmailEditText!!)
         validateForm()
+    }
+
+
+    private fun stripPhoneNumber(phoneNumber: Editable): Editable {
+        var phoneNumberAsString = phoneNumber.toString()
+
+        phoneNumberAsString.replace("(", "")
+        phoneNumberAsString.replace(")", "")
+        phoneNumberAsString.replace(" ", "")
+        phoneNumberAsString.replace("-", "")
+
+        var editable = SpannableStringBuilder(phoneNumberAsString)
+
+        return editable
+    }
+
+    private fun formatPhoneNumber(phoneNumber: Editable): Editable {
+
+        if (phoneNumber.get(0).toString() != "(") {
+            phoneNumber.insert(0, "(")
+        }
+        if (phoneNumber.length >= 5 && phoneNumber.get(4).toString() != ")") {
+            phoneNumber.insert(4, ")")
+        }
+        if (phoneNumber.length >= 6 && phoneNumber.get(5).toString() != " ") {
+            phoneNumber.insert(5, " ")
+        }
+        if (phoneNumber.length >= 10 && phoneNumber.get(9).toString() != "-") {
+            phoneNumber.insert(9, "-")
+        }
+
+        return phoneNumber
     }
 
     private fun validateForm() {
