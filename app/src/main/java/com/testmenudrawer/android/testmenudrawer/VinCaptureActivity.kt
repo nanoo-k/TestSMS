@@ -69,7 +69,7 @@ class VinCaptureActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.logout, menu);
+//        getMenuInflater().inflate(R.menu.logout, menu);
         return true
     }
 
@@ -78,16 +78,6 @@ class VinCaptureActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
-
-
-//        if (id == R.id.action_logout) {
-//            PreferenceData.clearJwt(applicationContext);
-//
-//
-//            val intent = Intent(applicationContext, LoginActivity::class.java)
-//            startActivity(intent)
-//            return true
-//        }
 
         return super.onOptionsItemSelected(item)
     }

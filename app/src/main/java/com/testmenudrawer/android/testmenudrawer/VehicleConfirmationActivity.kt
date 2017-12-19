@@ -105,16 +105,6 @@ class VehicleConfirmationActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
 
-
-//        if (id == R.id.action_logout) {
-//            PreferenceData.clearJwt(applicationContext);
-//
-//
-//            val intent = Intent(applicationContext, LoginActivity::class.java)
-//            startActivity(intent)
-//            return true
-//        }
-
         when (item.itemId) {
         // Respond to the action bar's Up/Home button
             android.R.id.home -> {
@@ -134,15 +124,6 @@ class VehicleConfirmationActivity : AppCompatActivity() {
                 }
                 return true
             }
-
-//            R.id.action_logout -> {
-//                PreferenceData.clearJwt(applicationContext);
-//
-//
-//                val intent = Intent(applicationContext, LoginActivity::class.java)
-//                startActivity(intent)
-//                return true
-//            }
         }
 
         return super.onOptionsItemSelected(item)
