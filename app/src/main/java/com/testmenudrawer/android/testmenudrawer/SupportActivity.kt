@@ -178,26 +178,59 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
             }
 
+            private var formattedPhoneNumber = ""
+
             override fun afterTextChanged(s: Editable) {
 
                 selectionEndPosition = mPhoneEditText!!.selectionStart
 
+
+                if (s.toString() != formattedPhoneNumber) {
+                    if (selectionStartPosition < selectionEndPosition) {
+                        var clean = stripPhoneNumber(s)
+                        var new = formatPhoneNumber(clean)
+
+                        formattedPhoneNumber = new.toString()
+                        s.replace(0, s.length, new, 0, new.length)
+
+                    } else {
+                        var editable = SpannableStringBuilder(startString)
+                        var clean = stripPhoneNumber(editable)
+
+
+                        Log.i("cursor position", selectionStartPosition.toString())
+
+                        // TODO: This should delete whatever the selection was and not just assume
+                        // the user wants to delete the last nums.
+//                        clean.delete(clean.length - 1, clean.length)
+
+                        var deleted = deleteFromPhoneNumber(clean, selectionStartPosition)
+
+
+                        var new = formatPhoneNumber(deleted)
+
+                        formattedPhoneNumber = new.toString()
+                        s.replace(0, s.length, new, 0, new.length)
+                    }
+
+                }
+
                 if (selectionStartPosition < selectionEndPosition) {
 
-                    var clean = stripPhoneNumber(s)
-                    var new = formatPhoneNumber(clean)
-                    s.replace(0, s.length, new, 0, new.length)
+//                    var clean = stripPhoneNumber(s)
+//                    var new = formatPhoneNumber(clean)
+//                    s.replace(0, s.length, new, 0, new.length)
 
                 } else {
 
-                    var editable = SpannableStringBuilder(startString)
-
-                    var clean = stripPhoneNumber(editable)
-
-                    clean.delete(clean.length - 1, 1)
-
-                    var new = formatPhoneNumber(clean)
-                    s.replace(0, s.length, new, 0, new.length)
+//                    var editable = SpannableStringBuilder(startString)
+//
+//                    var clean = stripPhoneNumber(editable)
+//
+//                    clean.delete(clean.length - 1, 1)
+//
+//                    var new = formatPhoneNumber(clean)
+//                    s.replace(0, s.length, new, 0, new.length)
 
                     // if trying to delete startCharacter 0, 4, 5, 9
                     // delete phone number character none, 3, 3, 6
@@ -268,14 +301,79 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         validateForm()
     }
 
+    private fun deleteFromPhoneNumber(phoneNumber: Editable, cursorPosition: Int): Editable {
+
+        var actualCursorPosition: Int = cursorPosition
+
+
+        var greaterThanOne = 1
+        var greaterThanFour = 2
+        var greaterThanNine = 1
+
+        // (123) 123-1234
+        when(cursorPosition) {
+            1 -> {
+                actualCursorPosition = cursorPosition - greaterThanOne
+            }
+            2 -> {
+                actualCursorPosition = cursorPosition - greaterThanOne
+            }
+            3 -> {
+                actualCursorPosition = cursorPosition - greaterThanOne
+            }
+            4 -> {
+                actualCursorPosition = cursorPosition - greaterThanOne
+            }
+            5 -> {
+                actualCursorPosition = 4 - greaterThanOne
+            }
+            6 -> {
+                actualCursorPosition = 4 - greaterThanOne
+            }
+            7 -> {
+                actualCursorPosition = cursorPosition - greaterThanOne - greaterThanFour
+            }
+            8 -> {
+                actualCursorPosition = cursorPosition - greaterThanOne - greaterThanFour
+            }
+            9 -> {
+                actualCursorPosition = cursorPosition - greaterThanOne - greaterThanFour
+            }
+            10 -> {
+                actualCursorPosition = 9 - greaterThanOne - greaterThanFour
+            }
+            11 -> {
+                actualCursorPosition = cursorPosition - greaterThanOne - greaterThanFour - greaterThanNine
+            }
+            12 -> {
+                actualCursorPosition = cursorPosition - greaterThanOne - greaterThanFour - greaterThanNine
+            }
+            13 -> {
+                actualCursorPosition = cursorPosition - greaterThanOne - greaterThanFour - greaterThanNine
+            }
+            14 -> {
+                actualCursorPosition = cursorPosition - greaterThanOne - greaterThanFour - greaterThanNine
+            }
+
+        }
+
+        if (actualCursorPosition > 1) {
+            phoneNumber.delete(actualCursorPosition - 1, actualCursorPosition)
+        } else {
+
+            phoneNumber.delete(0, 1)
+        }
+
+        return phoneNumber
+    }
 
     private fun stripPhoneNumber(phoneNumber: Editable): Editable {
         var phoneNumberAsString = phoneNumber.toString()
 
-        phoneNumberAsString.replace("(", "")
-        phoneNumberAsString.replace(")", "")
-        phoneNumberAsString.replace(" ", "")
-        phoneNumberAsString.replace("-", "")
+        phoneNumberAsString = phoneNumberAsString.replace("(", "")
+        phoneNumberAsString = phoneNumberAsString.replace(")", "")
+        phoneNumberAsString = phoneNumberAsString.replace(" ", "")
+        phoneNumberAsString = phoneNumberAsString.replace("-", "")
 
         var editable = SpannableStringBuilder(phoneNumberAsString)
 
