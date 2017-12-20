@@ -357,12 +357,7 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         }
 
-        if (actualCursorPosition > 1) {
-            phoneNumber.delete(actualCursorPosition - 1, actualCursorPosition)
-        } else {
-
-            phoneNumber.delete(0, 1)
-        }
+        phoneNumber.delete(actualCursorPosition - 1, actualCursorPosition)
 
         return phoneNumber
     }
@@ -382,7 +377,7 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     private fun formatPhoneNumber(phoneNumber: Editable): Editable {
 
-        if (phoneNumber.get(0).toString() != "(") {
+        if (phoneNumber.length > 0 && phoneNumber.get(0).toString() != "(") {
             phoneNumber.insert(0, "(")
         }
         if (phoneNumber.length >= 5 && phoneNumber.get(4).toString() != ")") {
