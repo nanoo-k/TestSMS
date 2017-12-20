@@ -125,38 +125,17 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             mUsernameEditText!!.clearFocus()
             mCommentsEditText!!.clearFocus()
 
-            //                animateTextFields(0);
             true
         })
-
-//        mPhoneEditText!!.setOnKeyListener(object : OnKeyListener {
-//
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                //You can identify which key pressed buy checking keyCode value with KeyEvent.KEYCODE_
-//                if(keyCode == KeyEvent.KEYCODE_DEL) {
-//                    //this is for backspace
-//                }
-//                return false;
-//            }
-//        });
-
-//        mPhoneEditText!!.setOnKeyListener(View.OnKeyListener{ view: View, i: Int, keyEvent: KeyEvent ->
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                // You can identify which key pressed buy checking keyCode value
-//                // with KeyEvent.KEYCODE_
-//                if (keyCode == KeyEvent.KEYCODE_DEL) {
-//                    // this is for backspace
-//                    Log.e("IME_TEST", "DEL KEY");
-//                }
-//                return false;
-//            }
-//        })
 
         mPhoneEditText!!.addTextChangedListener( object : TextWatcher {
             private var startString = ""
             private var endString = ""
             private var selectionStartPosition = 0
             private var selectionEndPosition = 0
+            private var cursorStartPosition = 0
+            private var cursorEndPosition = 0
+            private var numberOfCharsToDelete = 0
 
             // If startPosition > endPosition, something deleted,
             // else something added,
@@ -170,8 +149,13 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 startString = s.toString()
+
+                numberOfCharsToDelete = count
+
                 selectionStartPosition = mPhoneEditText!!.selectionStart
-//                selectionEndPosition = mPhoneEditText!!.selectionEnd
+                selectionEndPosition = mPhoneEditText!!.selectionEnd
+
+                cursorStartPosition = mPhoneEditText!!.selectionEnd
 
                 startString = s.toString()
 
@@ -182,11 +166,17 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
             override fun afterTextChanged(s: Editable) {
 
-                selectionEndPosition = mPhoneEditText!!.selectionStart
+                cursorEndPosition = mPhoneEditText!!.selectionEnd
 
 
+                // `afterTextChanged` is going to be called over and over again when running
+                // `s.replace()` down below unless you give it a reason not to, so I save a copy of
+                // the formatted phone number, and if it matches what the "change" is, we do nothing.
                 if (s.toString() != formattedPhoneNumber) {
-                    if (selectionStartPosition < selectionEndPosition) {
+
+                    // If the end position of the cursor is grater than the start position, user
+                    // added characters. Else user deleted characters.
+                    if (cursorStartPosition < cursorEndPosition) {
                         var clean = stripPhoneNumber(s)
                         var new = formatPhoneNumber(clean)
 
@@ -198,13 +188,12 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                         var clean = stripPhoneNumber(editable)
 
 
-                        Log.i("cursor position", selectionStartPosition.toString())
 
                         // TODO: This should delete whatever the selection was and not just assume
                         // the user wants to delete the last nums.
 //                        clean.delete(clean.length - 1, clean.length)
 
-                        var deleted = deleteFromPhoneNumber(clean, selectionStartPosition)
+                        var deleted = deleteFromPhoneNumber(clean, selectionStartPosition, selectionEndPosition, numberOfCharsToDelete)
 
 
                         var new = formatPhoneNumber(deleted)
@@ -214,83 +203,8 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     }
 
                 }
-
-                if (selectionStartPosition < selectionEndPosition) {
-
-//                    var clean = stripPhoneNumber(s)
-//                    var new = formatPhoneNumber(clean)
-//                    s.replace(0, s.length, new, 0, new.length)
-
-                } else {
-
-//                    var editable = SpannableStringBuilder(startString)
-//
-//                    var clean = stripPhoneNumber(editable)
-//
-//                    clean.delete(clean.length - 1, 1)
-//
-//                    var new = formatPhoneNumber(clean)
-//                    s.replace(0, s.length, new, 0, new.length)
-
-                    // if trying to delete startCharacter 0, 4, 5, 9
-                    // delete phone number character none, 3, 3, 6
-//                    when(selectionEndPosition) {
-//                        1 -> {
-//                            s.delete(0, 1)
-//                        }
-//                        9 -> {
-//
-//                            var editable = SpannableStringBuilder(startString)
-//                            var clean = stripPhoneNumber(editable)
-//
-//                            Log.i("clean", clean.toString())
-//
-////                            var editable = SpannableStringBuilder(clean)
-//                            clean.delete(5, 6)
-//
-//                            var new = formatPhoneNumber(clean)
-//
-//                            Log.i("new phone", new.toString())
-//
-//
-//                            s.delete(0, s.length)
-//                            s.insert(0, editable)
-//
-////                            s = new
-////                            var char = new.toCharArray()
-////                            s.replace(0, s.length, new)
-////                            s.replaceRange(0, s.length, new)
-//
-//                        }
-//                        6 -> {
-//                            s.delete(4, 6)
-//                        }
-//                        10 -> {
-//                            s.delete(9, 10)
-//                        }
-//
-//                    }
-                }
-
-
-//                    if (s.toString() != current) {
-//                        val userInput = s.toString().replace("[^\\d]".toRegex(), "")
-//                        if (userInput.length <= 16) {
-//                            val sb = StringBuilder()
-//                            for (i in 0..userInput.length - 1) {
-//                                if (i % 4 == 0 && i > 0) {
-//                                    sb.append(" ")
-//                                }
-//                                sb.append(userInput[i])
-//                            }
-//                            current = sb.toString()
-//
-//                            s.filters = arrayOfNulls<InputFilter>(0)
-//                        }
-//                        s.replace(0, s.length, current, 0, current.length)
-//        }
             }
-        } )
+        })
 
 
         // Add elements to array of EditTexts that are going to be validated
@@ -301,65 +215,151 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         validateForm()
     }
 
-    private fun deleteFromPhoneNumber(phoneNumber: Editable, cursorPosition: Int): Editable {
+    private fun deleteFromPhoneNumber(phoneNumber: Editable, selectionStartPosition: Int, selectionEndPosition: Int, numberOfCharsToDelete: Int): Editable {
 
-        var actualCursorPosition: Int = cursorPosition
+        var actualStartCursorPosition: Int = selectionStartPosition
+        var numberOfCharsToDelete = numberOfCharsToDelete
 
+        Log.i("selectionStartPosition", selectionStartPosition.toString())
+        Log.i("selectionEndPosition", selectionEndPosition.toString())
+        Log.i("numberOfCharsToDelete", numberOfCharsToDelete.toString())
 
         var greaterThanOne = 1
         var greaterThanFour = 2
         var greaterThanNine = 1
 
-        // (123) 123-1234
-        when(cursorPosition) {
+        // Set the cursor position
+        when(selectionStartPosition) {
             1 -> {
-                actualCursorPosition = cursorPosition - greaterThanOne
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne
+                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 13)
             }
             2 -> {
-                actualCursorPosition = cursorPosition - greaterThanOne
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne
+                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 12)
             }
             3 -> {
-                actualCursorPosition = cursorPosition - greaterThanOne
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne
+                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 11)
             }
             4 -> {
-                actualCursorPosition = cursorPosition - greaterThanOne
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne
+                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 10)
             }
             5 -> {
-                actualCursorPosition = 4 - greaterThanOne
+                actualStartCursorPosition = 4 - greaterThanOne
+                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 9)
             }
             6 -> {
-                actualCursorPosition = 4 - greaterThanOne
+                actualStartCursorPosition = 4 - greaterThanOne
+                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 8)
             }
             7 -> {
-                actualCursorPosition = cursorPosition - greaterThanOne - greaterThanFour
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour
+                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 7)
             }
             8 -> {
-                actualCursorPosition = cursorPosition - greaterThanOne - greaterThanFour
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour
+                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 6)
             }
             9 -> {
-                actualCursorPosition = cursorPosition - greaterThanOne - greaterThanFour
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour
+                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 5)
             }
             10 -> {
-                actualCursorPosition = 9 - greaterThanOne - greaterThanFour
+                actualStartCursorPosition = 9 - greaterThanOne - greaterThanFour
+                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 4)
             }
             11 -> {
-                actualCursorPosition = cursorPosition - greaterThanOne - greaterThanFour - greaterThanNine
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour - greaterThanNine
+                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 3)
             }
             12 -> {
-                actualCursorPosition = cursorPosition - greaterThanOne - greaterThanFour - greaterThanNine
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour - greaterThanNine
+                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 2)
             }
             13 -> {
-                actualCursorPosition = cursorPosition - greaterThanOne - greaterThanFour - greaterThanNine
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour - greaterThanNine
+                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 1)
+
+
+                // (234) 789-0123
+//                var count = numberOfCharsToDelete
+
+//                if (count > 3) {
+//                    numberOfCharsToDelete - 1
+//                }
+//                if (count > 8) {
+//                    numberOfCharsToDelete - 1
+//                }
+//                if (count > 9) {
+//                    numberOfCharsToDelete - 1
+//                }
+//                if (count > 13) {
+//                    numberOfCharsToDelete - 1
+//                }
             }
             14 -> {
-                actualCursorPosition = cursorPosition - greaterThanOne - greaterThanFour - greaterThanNine
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour - greaterThanNine
+                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 0)
+
+                // (234) 789-0123
+//                var count = numberOfCharsToDelete
+//
+//                if (count > (4 - index)) {
+//                    numberOfCharsToDelete - 1
+//                }
+//                if (count > 9) {
+//                    numberOfCharsToDelete - 1
+//                }
+//                if (count > 10) {
+//                    numberOfCharsToDelete - 1
+//                }
+//                if (count > 14) {
+//                    numberOfCharsToDelete - 1
+//                }
+
             }
 
         }
 
-        phoneNumber.delete(actualCursorPosition - 1, actualCursorPosition)
+        Log.i("numberOfCharsToDelete", numberOfCharsToDelete.toString())
+
+        // (234) 789-0123
+        // 2347890
+
+//        actualStartCursorPosition = actualStartCursorPosition
+
+
+        Log.i("start", (actualStartCursorPosition - numberOfCharsToDelete).toString())
+        Log.i("end", actualStartCursorPosition.toString())
+
+        phoneNumber.delete(actualStartCursorPosition - numberOfCharsToDelete, actualStartCursorPosition)
 
         return phoneNumber
+    }
+
+    private fun updateNumberOfCharsToDelete(numberOfCharsToDelete: Int, index: Int) : Int {
+        var numberOfCharsToDelete = numberOfCharsToDelete
+        // (234) 789-0123
+        var count = numberOfCharsToDelete
+
+        if (count > (4 - index)) {
+            numberOfCharsToDelete = numberOfCharsToDelete - 1
+        }
+        if (count > (9 - index)) {
+            numberOfCharsToDelete = numberOfCharsToDelete - 1
+        }
+        if (count > (10 - index)) {
+            numberOfCharsToDelete = numberOfCharsToDelete - 1
+        }
+        if (count > (14 - index)) {
+            numberOfCharsToDelete = numberOfCharsToDelete - 1
+        }
+
+        Log.i("index", numberOfCharsToDelete.toString())
+        Log.i("updateNumberOfCharsToDelete", numberOfCharsToDelete.toString())
+        return numberOfCharsToDelete
     }
 
     private fun stripPhoneNumber(phoneNumber: Editable): Editable {
