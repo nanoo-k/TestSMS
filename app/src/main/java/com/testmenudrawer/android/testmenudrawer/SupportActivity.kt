@@ -184,17 +184,18 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                         s.replace(0, s.length, new, 0, new.length)
 
                     } else {
-                        var editable = SpannableStringBuilder(startString)
-                        var clean = stripPhoneNumber(editable)
 
+                        var deleted: Editable
+                        if (numberOfCharsToDelete == 1) {
+                            Log.i("deleting one", "m")
+                            var editable = SpannableStringBuilder(startString)
+                            var clean = stripPhoneNumber(editable)
 
-
-                        // TODO: This should delete whatever the selection was and not just assume
-                        // the user wants to delete the last nums.
-//                        clean.delete(clean.length - 1, clean.length)
-
-                        var deleted = deleteFromPhoneNumber(clean, selectionStartPosition, selectionEndPosition, numberOfCharsToDelete)
-
+                            deleted = deleteOneFromPhoneNumber(clean, selectionStartPosition, selectionEndPosition, numberOfCharsToDelete)
+                        } else {
+                            Log.i("deleting two", "m")
+                            deleted = s
+                        }
 
                         var new = formatPhoneNumber(deleted)
 
@@ -215,152 +216,95 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         validateForm()
     }
 
-    private fun deleteFromPhoneNumber(phoneNumber: Editable, selectionStartPosition: Int, selectionEndPosition: Int, numberOfCharsToDelete: Int): Editable {
+    private fun deleteOneFromPhoneNumber(phoneNumber: Editable, selectionStartPosition: Int, selectionEndPosition: Int, numberOfCharsToDelete: Int): Editable {
 
         var actualStartCursorPosition: Int = selectionStartPosition
         var numberOfCharsToDelete = numberOfCharsToDelete
 
-        Log.i("selectionStartPosition", selectionStartPosition.toString())
-        Log.i("selectionEndPosition", selectionEndPosition.toString())
-        Log.i("numberOfCharsToDelete", numberOfCharsToDelete.toString())
-
-        var greaterThanOne = 1
-        var greaterThanFour = 2
-        var greaterThanNine = 1
-
-        // Set the cursor position
-        when(selectionStartPosition) {
-            1 -> {
-                actualStartCursorPosition = selectionStartPosition - greaterThanOne
-                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 13)
-            }
-            2 -> {
-                actualStartCursorPosition = selectionStartPosition - greaterThanOne
-                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 12)
-            }
-            3 -> {
-                actualStartCursorPosition = selectionStartPosition - greaterThanOne
-                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 11)
-            }
-            4 -> {
-                actualStartCursorPosition = selectionStartPosition - greaterThanOne
-                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 10)
-            }
-            5 -> {
-                actualStartCursorPosition = 4 - greaterThanOne
-                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 9)
-            }
-            6 -> {
-                actualStartCursorPosition = 4 - greaterThanOne
-                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 8)
-            }
-            7 -> {
-                actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour
-                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 7)
-            }
-            8 -> {
-                actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour
-                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 6)
-            }
-            9 -> {
-                actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour
-                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 5)
-            }
-            10 -> {
-                actualStartCursorPosition = 9 - greaterThanOne - greaterThanFour
-                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 4)
-            }
-            11 -> {
-                actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour - greaterThanNine
-                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 3)
-            }
-            12 -> {
-                actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour - greaterThanNine
-                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 2)
-            }
-            13 -> {
-                actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour - greaterThanNine
-                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 1)
-
-
-                // (234) 789-0123
-//                var count = numberOfCharsToDelete
-
-//                if (count > 3) {
-//                    numberOfCharsToDelete - 1
-//                }
-//                if (count > 8) {
-//                    numberOfCharsToDelete - 1
-//                }
-//                if (count > 9) {
-//                    numberOfCharsToDelete - 1
-//                }
-//                if (count > 13) {
-//                    numberOfCharsToDelete - 1
-//                }
-            }
-            14 -> {
-                actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour - greaterThanNine
-                numberOfCharsToDelete = updateNumberOfCharsToDelete(numberOfCharsToDelete, 0)
-
-                // (234) 789-0123
-//                var count = numberOfCharsToDelete
+//        if (numberOfCharsToDelete > 1) {
 //
-//                if (count > (4 - index)) {
-//                    numberOfCharsToDelete - 1
-//                }
-//                if (count > 9) {
-//                    numberOfCharsToDelete - 1
-//                }
-//                if (count > 10) {
-//                    numberOfCharsToDelete - 1
-//                }
-//                if (count > 14) {
-//                    numberOfCharsToDelete - 1
-//                }
+////            var clean = stripPhoneNumber(phoneNumber)
+//        } else {
+
+            var greaterThanOne = 1
+            var greaterThanFour = 2
+            var greaterThanNine = 1
+
+            // Set the cursor position
+            when(selectionStartPosition) {
+                1 -> {
+                    actualStartCursorPosition = selectionStartPosition - greaterThanOne
+                }
+                2 -> {
+                    actualStartCursorPosition = selectionStartPosition - greaterThanOne
+                }
+                3 -> {
+                    actualStartCursorPosition = selectionStartPosition - greaterThanOne
+                }
+                4 -> {
+                    actualStartCursorPosition = selectionStartPosition - greaterThanOne
+                }
+                5 -> {
+                    actualStartCursorPosition = 4 - greaterThanOne
+                }
+                6 -> {
+                    actualStartCursorPosition = 4 - greaterThanOne
+                }
+                7 -> {
+                    actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour
+                }
+                8 -> {
+                    actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour
+                }
+                9 -> {
+                    actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour
+                }
+                10 -> {
+                    actualStartCursorPosition = 9 - greaterThanOne - greaterThanFour
+                }
+                11 -> {
+                    actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour - greaterThanNine
+                }
+                12 -> {
+                    actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour - greaterThanNine
+                }
+                13 -> {
+                    actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour - greaterThanNine
+                }
+                14 -> {
+                    actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour - greaterThanNine
+                }
 
             }
 
-        }
-
-        Log.i("numberOfCharsToDelete", numberOfCharsToDelete.toString())
-
-        // (234) 789-0123
-        // 2347890
-
-//        actualStartCursorPosition = actualStartCursorPosition
-
-
-        Log.i("start", (actualStartCursorPosition - numberOfCharsToDelete).toString())
-        Log.i("end", actualStartCursorPosition.toString())
-
-        phoneNumber.delete(actualStartCursorPosition - numberOfCharsToDelete, actualStartCursorPosition)
+            phoneNumber.delete(actualStartCursorPosition - numberOfCharsToDelete, actualStartCursorPosition)
+//        }
 
         return phoneNumber
     }
 
-    private fun updateNumberOfCharsToDelete(numberOfCharsToDelete: Int, index: Int) : Int {
-        var numberOfCharsToDelete = numberOfCharsToDelete
-        // (234) 789-0123
-        var count = numberOfCharsToDelete
-
-        if (count > (4 - index)) {
-            numberOfCharsToDelete = numberOfCharsToDelete - 1
-        }
-        if (count > (9 - index)) {
-            numberOfCharsToDelete = numberOfCharsToDelete - 1
-        }
-        if (count > (10 - index)) {
-            numberOfCharsToDelete = numberOfCharsToDelete - 1
-        }
-        if (count > (14 - index)) {
-            numberOfCharsToDelete = numberOfCharsToDelete - 1
-        }
-
-        Log.i("index", numberOfCharsToDelete.toString())
-        Log.i("updateNumberOfCharsToDelete", numberOfCharsToDelete.toString())
-        return numberOfCharsToDelete
-    }
+//    private fun updateNumberOfCharsToDelete(numberOfCharsToDelete: Int, index: Int) : Int {
+//        var numberOfCharsToDelete = numberOfCharsToDelete
+//        // (234) 789-0123
+//        var count = numberOfCharsToDelete
+//
+//        if (count > (4 - index)) {
+//            numberOfCharsToDelete = numberOfCharsToDelete - 1
+//        }
+//        if (count > (9 - index)) {
+//            numberOfCharsToDelete = numberOfCharsToDelete - 1
+//        }
+//        if (count > (10 - index)) {
+//            numberOfCharsToDelete = numberOfCharsToDelete - 1
+//        }
+//        if (count > (14 - index)) {
+//            numberOfCharsToDelete = numberOfCharsToDelete - 1
+//        }
+//
+//        Log.i("index", numberOfCharsToDelete.toString())
+//        Log.i("updateNumberOfCharsToDelete", numberOfCharsToDelete.toString())
+//        return numberOfCharsToDelete
+//    }
 
     private fun stripPhoneNumber(phoneNumber: Editable): Editable {
         var phoneNumberAsString = phoneNumber.toString()
