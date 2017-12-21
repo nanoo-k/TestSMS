@@ -203,7 +203,7 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
                         var new = formatPhoneNumber(deleted)
 //
-                        mPhoneEditText!!.setSelection(correctCursorLocation)
+                        mPhoneEditText!!.setSelection(correctCursorLocation, correctCursorLocation)
 
                         formattedPhoneNumber = new.toString()
                         s.replace(0, s.length, new, 0, new.length)
@@ -251,18 +251,24 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         // (234) 789-0123
         // This gets run only when deleting things
 
+        Log.i("cursorLocation", cursorLocation.toString())
+
         when(cursorLocation) {
-            4 -> {
-                if (phoneNumberLength > 4) {
-                    Log.i("hap", "enning")
-                    cursorLocation = cursorLocation + 2
+            0 -> {
+                if (phoneNumberLength > 2) {
+                    cursorLocation = 1
                 }
             }
-//            5 -> {
-//                if (phoneNumberLength > 4) {
-//                    cursorLocation = 5
-//                }
-//            }
+            4 -> {
+                if (phoneNumberLength > 4) {
+                    cursorLocation = 6
+                }
+            }
+            5 -> {
+                if (phoneNumberLength > 4) {
+                    cursorLocation = 6
+                }
+            }
             9 -> {
                 if (phoneNumberLength > 6) {
                     cursorLocation = 10
@@ -270,6 +276,7 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             }
         }
 
+        Log.i("cursorLocation", cursorLocation.toString())
         return cursorLocation
     }
 
