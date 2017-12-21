@@ -185,22 +185,30 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
                     } else {
 
+                        var correctCursorLocation: Int = mPhoneEditText!!.selectionStart
                         var deleted: Editable
                         if (numberOfCharsToDelete == 1) {
-                            Log.i("deleting one", "m")
                             var editable = SpannableStringBuilder(startString)
                             var clean = stripPhoneNumber(editable)
 
-                            deleted = deleteOneFromPhoneNumber(clean, selectionStartPosition, selectionEndPosition, numberOfCharsToDelete)
+                            deleted = deleteOneFromPhoneNumber(clean, selectionStartPosition, numberOfCharsToDelete)
+                            correctCursorLocation = correctCursorLocationWhenDeletingOneChar(mPhoneEditText!!.selectionStart)
+
                         } else {
-                            Log.i("deleting two", "m")
-                            deleted = s
+                            var clean = stripPhoneNumber(s)
+                            deleted = clean
+
+                            correctCursorLocation = correctCursorLocationWhenDeletingManyChars(mPhoneEditText!!.selectionStart, deleted.length)
                         }
 
                         var new = formatPhoneNumber(deleted)
+//
+                        mPhoneEditText!!.setSelection(correctCursorLocation)
 
                         formattedPhoneNumber = new.toString()
                         s.replace(0, s.length, new, 0, new.length)
+
+
                     }
 
                 }
@@ -216,69 +224,112 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         validateForm()
     }
 
-    private fun deleteOneFromPhoneNumber(phoneNumber: Editable, selectionStartPosition: Int, selectionEndPosition: Int, numberOfCharsToDelete: Int): Editable {
+    private fun correctCursorLocationWhenDeletingOneChar(cursorLocation: Int): Int {
+        var cursorLocation = cursorLocation
+
+        // (234) 789-0123
+        // This gets run only when deleting things
+
+        when(cursorLocation) {
+            4 -> {
+                cursorLocation = 3
+            }
+            5 -> {
+                cursorLocation = 3
+            }
+            9 -> {
+                cursorLocation = 8
+            }
+        }
+
+        return cursorLocation
+    }
+
+    private fun correctCursorLocationWhenDeletingManyChars(cursorLocation: Int, phoneNumberLength: Int): Int {
+        var cursorLocation = cursorLocation
+
+        // (234) 789-0123
+        // This gets run only when deleting things
+
+        when(cursorLocation) {
+            4 -> {
+                if (phoneNumberLength > 4) {
+                    Log.i("hap", "enning")
+                    cursorLocation = cursorLocation + 2
+                }
+            }
+//            5 -> {
+//                if (phoneNumberLength > 4) {
+//                    cursorLocation = 5
+//                }
+//            }
+            9 -> {
+                if (phoneNumberLength > 6) {
+                    cursorLocation = 10
+                }
+            }
+        }
+
+        return cursorLocation
+    }
+
+    private fun deleteOneFromPhoneNumber(phoneNumber: Editable, selectionStartPosition: Int, numberOfCharsToDelete: Int): Editable {
 
         var actualStartCursorPosition: Int = selectionStartPosition
         var numberOfCharsToDelete = numberOfCharsToDelete
 
-//        if (numberOfCharsToDelete > 1) {
-//
-////            var clean = stripPhoneNumber(phoneNumber)
-//        } else {
+        var greaterThanOne = 1
+        var greaterThanFour = 2
+        var greaterThanNine = 1
 
-            var greaterThanOne = 1
-            var greaterThanFour = 2
-            var greaterThanNine = 1
-
-            // Set the cursor position
-            when(selectionStartPosition) {
-                1 -> {
-                    actualStartCursorPosition = selectionStartPosition - greaterThanOne
-                }
-                2 -> {
-                    actualStartCursorPosition = selectionStartPosition - greaterThanOne
-                }
-                3 -> {
-                    actualStartCursorPosition = selectionStartPosition - greaterThanOne
-                }
-                4 -> {
-                    actualStartCursorPosition = selectionStartPosition - greaterThanOne
-                }
-                5 -> {
-                    actualStartCursorPosition = 4 - greaterThanOne
-                }
-                6 -> {
-                    actualStartCursorPosition = 4 - greaterThanOne
-                }
-                7 -> {
-                    actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour
-                }
-                8 -> {
-                    actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour
-                }
-                9 -> {
-                    actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour
-                }
-                10 -> {
-                    actualStartCursorPosition = 9 - greaterThanOne - greaterThanFour
-                }
-                11 -> {
-                    actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour - greaterThanNine
-                }
-                12 -> {
-                    actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour - greaterThanNine
-                }
-                13 -> {
-                    actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour - greaterThanNine
-                }
-                14 -> {
-                    actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour - greaterThanNine
-                }
-
+        // Set the cursor position
+        when(selectionStartPosition) {
+            1 -> {
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne
+            }
+            2 -> {
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne
+            }
+            3 -> {
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne
+            }
+            4 -> {
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne
+            }
+            5 -> {
+                actualStartCursorPosition = 4 - greaterThanOne
+            }
+            6 -> {
+                actualStartCursorPosition = 4 - greaterThanOne
+            }
+            7 -> {
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour
+            }
+            8 -> {
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour
+            }
+            9 -> {
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour
+            }
+            10 -> {
+                actualStartCursorPosition = 9 - greaterThanOne - greaterThanFour
+            }
+            11 -> {
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour - greaterThanNine
+            }
+            12 -> {
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour - greaterThanNine
+            }
+            13 -> {
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour - greaterThanNine
+            }
+            14 -> {
+                actualStartCursorPosition = selectionStartPosition - greaterThanOne - greaterThanFour - greaterThanNine
             }
 
-            phoneNumber.delete(actualStartCursorPosition - numberOfCharsToDelete, actualStartCursorPosition)
-//        }
+        }
+
+        phoneNumber.delete(actualStartCursorPosition - numberOfCharsToDelete, actualStartCursorPosition)
 
         return phoneNumber
     }
