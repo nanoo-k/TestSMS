@@ -100,14 +100,18 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         setFocusEventHandlers()
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar_support)
+//        toolbar.setVisibility(View.INVISIBLE)
         setSupportActionBar(toolbar)
-
+//
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
         val toggle = ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer.setDrawerListener(toggle)
         toggle.syncState()
 
+        extractDataFromIntent()
+
+        setToolbar(toggle)
 
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
@@ -224,6 +228,21 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         validateForm()
     }
 
+    private var mBackButtonIntent: String? = null
+    private val EXTRA_BACK_BUTTON_INTENT: String = "setBackButtonToThisActivity"
+    private fun extractDataFromIntent() {
+        var intent: Intent = getIntent()
+        mBackButtonIntent = intent.getStringExtra(EXTRA_BACK_BUTTON_INTENT)
+    }
+
+    private fun setToolbar(toggle: ActionBarDrawerToggle) {
+        if (mBackButtonIntent == "LoginActivity") {
+            toggle.setDrawerIndicatorEnabled(false)
+        } else {
+            toggle.setDrawerIndicatorEnabled(false)
+        }
+    }
+
     private fun correctCursorLocationWhenDeletingOneChar(cursorLocation: Int): Int {
         var cursorLocation = cursorLocation
 
@@ -251,8 +270,6 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         // (234) 789-0123
         // This gets run only when deleting things
 
-        Log.i("cursorLocation", cursorLocation.toString())
-
         when(cursorLocation) {
             0 -> {
                 if (phoneNumberLength > 2) {
@@ -276,7 +293,6 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             }
         }
 
-        Log.i("cursorLocation", cursorLocation.toString())
         return cursorLocation
     }
 
@@ -453,18 +469,28 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     override fun onBackPressed() {
-        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START)
-        } else {
+//        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START)
+//        } else {
             super.onBackPressed()
-        }
+//        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
 //        getMenuInflater().inflate(R.menu.logout, menu);
         return true
+    }
+
+
+    private fun hideBackButton() {
+        val actionBar = getSupportActionBar()
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(false) // disable the button
+            actionBar.setDisplayHomeAsUpEnabled(false) // remove the left caret
+            actionBar.setDisplayShowHomeEnabled(false) // remove the icon
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -516,16 +542,19 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     fun goBack(view: View) {
-
-        // If user is logged in, go to vin list
-        if (false) {
-            val intent = Intent(applicationContext, LoginActivity::class.java)
-            startActivity(intent)
-        }
-        // Else go to login screen
-        else {
-            val intent = Intent(applicationContext, LoginActivity::class.java)
-            startActivity(intent)
+        when (mBackButtonIntent) {
+            "LoginActivity" -> {
+                val intent = Intent(applicationContext, LoginActivity::class.java)
+                startActivity(intent)
+            }
+            "VinList" -> {
+                val intent = Intent(applicationContext, VinList::class.java)
+                startActivity(intent)
+            }
+            "UserActivity" -> {
+                val intent = Intent(applicationContext, UserActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 
@@ -572,43 +601,5 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             }
         }
         // END_INCLUDE(onRequestPermissionsResult)
-    }
-}
-
-class PhoneNumberTextWatcher : TextWatcher {
-    private var current = ""
-
-    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-
-
-
-        current = s.toString()
-//        Log.i("onTextChanged", current)
-    }
-
-    override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-        current = s.toString()
-//        Log.i("beforeTextChanged", current)
-    }
-
-    override fun afterTextChanged(s: Editable) {
-        current = s.toString()
-//        Log.i("afterTextChanged", current)
-//        if (s.toString() != current) {
-//            val userInput = s.toString().replace("[^\\d]".toRegex(), "")
-//            if (userInput.length <= 16) {
-//                val sb = StringBuilder()
-//                for (i in 0..userInput.length - 1) {
-//                    if (i % 4 == 0 && i > 0) {
-//                        sb.append(" ")
-//                    }
-//                    sb.append(userInput[i])
-//                }
-//                current = sb.toString()
-//
-//                s.filters = arrayOfNulls<InputFilter>(0)
-//            }
-//            s.replace(0, s.length, current, 0, current.length)
-//        }
     }
 }

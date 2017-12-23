@@ -47,21 +47,6 @@ class VehicleDetailActivity : AppCompatActivity() {
         mModel = findViewById<TextView>(R.id.model_value)
         mEngine = findViewById<TextView>(R.id.engine_value)
 
-//        val toolbar = findViewById(R.id.toolbar) as Toolbar
-//        setSupportActionBar(toolbar)
-//
-//        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
-//        val toggle = ActionBarDrawerToggle(
-//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-//        drawer.setDrawerListener(toggle)
-//        toggle.syncState()
-
-//        val navigationView = findViewById(R.id.nav_view) as NavigationView
-//        navigationView.setNavigationItemSelectedListener(this)
-
-        // Back btn
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
-
         extractDataFromIntent()
 
     }
@@ -94,7 +79,19 @@ class VehicleDetailActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.delete_vin, menu);
+
+//        hideBackButton()
+
         return true
+    }
+
+    private fun hideBackButton() {
+        val actionBar = getSupportActionBar()
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(false) // disable the button
+            actionBar.setDisplayHomeAsUpEnabled(false) // remove the left caret
+            actionBar.setDisplayShowHomeEnabled(false) // remove the icon
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

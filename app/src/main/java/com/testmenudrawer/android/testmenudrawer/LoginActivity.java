@@ -375,6 +375,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void goToSupportActivity(View view) {
         Intent intent = new Intent(getApplicationContext(), SupportActivity.class);
+        intent.putExtra("setBackButtonToThisActivity", "LoginActivity");
         startActivity(intent);
     }
 
