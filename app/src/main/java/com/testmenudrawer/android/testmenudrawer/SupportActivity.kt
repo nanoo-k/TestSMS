@@ -111,7 +111,8 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         extractDataFromIntent()
 
-        setToolbar(toggle)
+        setToolbar(toggle, toolbar)
+
 
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
@@ -235,11 +236,21 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         mBackButtonIntent = intent.getStringExtra(EXTRA_BACK_BUTTON_INTENT)
     }
 
-    private fun setToolbar(toggle: ActionBarDrawerToggle) {
+    // TODO: Figure out how to include a back button in the toolbar
+    private fun setToolbar(toggle: ActionBarDrawerToggle, toolbar: Toolbar) {
         if (mBackButtonIntent == "LoginActivity") {
             toggle.setDrawerIndicatorEnabled(false)
+            toolbar.setNavigationOnClickListener(object : View.OnClickListener {
+                override fun onClick(v: View) {
+                    val intent = Intent(applicationContext, LoginActivity::class.java)
+                    startActivity(intent)
+                }
+            })
+            toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_material)
+
         } else {
-            toggle.setDrawerIndicatorEnabled(false)
+            toggle.setDrawerIndicatorEnabled(true)
+
         }
     }
 
@@ -479,8 +490,20 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.logout, menu);
+//        getMenuInflater().inflate(R.menu.back, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // TODO Auto-generated method stub
+        Log.i("itemId", item.itemId.toString())
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 
 

@@ -139,7 +139,7 @@ public class VinList extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         boolean isLoggedIn = PreferenceData.getUserLoggedInStatus(this.getApplicationContext());
-        if (!isLoggedIn || true) {
+        if (!isLoggedIn || false) {
 
             navigateToLogin();
         }
