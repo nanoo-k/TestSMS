@@ -236,7 +236,6 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         mBackButtonIntent = intent.getStringExtra(EXTRA_BACK_BUTTON_INTENT)
     }
 
-    // TODO: Figure out how to include a back button in the toolbar
     private fun setToolbar(toggle: ActionBarDrawerToggle, toolbar: Toolbar) {
         if (mBackButtonIntent == "LoginActivity") {
             toggle.setDrawerIndicatorEnabled(false)
