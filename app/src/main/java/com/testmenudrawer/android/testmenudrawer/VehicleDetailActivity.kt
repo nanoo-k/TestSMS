@@ -29,7 +29,7 @@ private var EXTRA_ENGINE: String = "VehicleDetailActivity - engine"
  * Created by mvalencia on 10/9/17.
  */
 
-class VehicleDetailActivity : AppCompatActivity() {
+open class VehicleDetailActivity : AppCompatActivity() {
 
     private var mVin: TextView? = null
     private var mYear: TextView? = null
@@ -120,14 +120,6 @@ class VehicleDetailActivity : AppCompatActivity() {
                 return true
             }
 
-//            R.id.action_logout -> {
-//                PreferenceData.clearJwt(applicationContext);
-//
-//
-//                val intent = Intent(applicationContext, LoginActivity::class.java)
-//                startActivity(intent)
-//                return true
-//            }
         }
 
         return super.onOptionsItemSelected(item)
