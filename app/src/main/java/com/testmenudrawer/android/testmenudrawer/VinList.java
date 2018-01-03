@@ -67,17 +67,17 @@ public class VinList extends AppCompatActivity
     // Our Callbacks. Could also have the Activity/Fragment implement
 // LoaderManager.LoaderCallbacks<List<String>>
     private LoaderManager.LoaderCallbacks<List<Vin>>
-            mLoaderCallbacks =
-            new LoaderManager.LoaderCallbacks<List<Vin>>() {
-                @Override
-                public Loader<List<Vin>> onCreateLoader(
-                        int id, Bundle args) {
-                    Log.i("onCreateLoader", "STARTED");
-                    return new VinListAsyncTaskLoader(VinList.this);
-                }
+        mLoaderCallbacks =
+        new LoaderManager.LoaderCallbacks<List<Vin>>() {
+            @Override
+            public Loader<List<Vin>> onCreateLoader(
+                    int id, Bundle args) {
+                Log.i("onCreateLoader", "STARTED");
+                return new VinListAsyncTaskLoader(VinList.this);
+            }
 
-                @Override
-                public void onLoadFinished(Loader<List<Vin>> loader, List<Vin> data) {
+            @Override
+            public void onLoadFinished(Loader<List<Vin>> loader, List<Vin> data) {
 //                    Log.i("onLoadFinished", "DONE");
 //                    Log.i("Datum: ", data.get(0));
 //
@@ -89,40 +89,40 @@ public class VinList extends AppCompatActivity
 //                    }
 
 
-                    mVinsList = findViewById(R.id.recyclerview_vins);
+                mVinsList = findViewById(R.id.recyclerview_vins);
 
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                    mVinsList.setLayoutManager(layoutManager);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                mVinsList.setLayoutManager(layoutManager);
 
-                    mVinsList.setHasFixedSize(true);
+                mVinsList.setHasFixedSize(true);
 
 //                    mAdapter = new VinsAdapter(vinList);
-                    if (mAdapter != null) {
-                        mAdapter.setVinList(data);
-                    }
-
-                    mVinsList.setAdapter(mAdapter);
-
+                if (mAdapter != null) {
+                    mAdapter.setVinList(data);
                 }
 
-                @Override
-                public void onLoaderReset(Loader<List<Vin>> loader) {
+                mVinsList.setAdapter(mAdapter);
 
-                    // Loader reset, throw away our data,
-                    // unregister any listeners, etc.
+            }
 
-                    if (mAdapter == null) {
-                        Log.i("mAdapter is ", "null");
-                    } else {
+            @Override
+            public void onLoaderReset(Loader<List<Vin>> loader) {
 
-                        mAdapter.setVinList(null);
-                    }
-                    // Of course, unless you use destroyLoader(),
-                    // this is called when everything is already dying
-                    // so a completely empty onLoaderReset() is
-                    // totally acceptable
+                // Loader reset, throw away our data,
+                // unregister any listeners, etc.
+
+                if (mAdapter == null) {
+                    Log.i("mAdapter is ", "null");
+                } else {
+
+                    mAdapter.setVinList(null);
                 }
-            };
+                // Of course, unless you use destroyLoader(),
+                // this is called when everything is already dying
+                // so a completely empty onLoaderReset() is
+                // totally acceptable
+            }
+        };
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {

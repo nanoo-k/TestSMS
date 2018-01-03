@@ -193,7 +193,7 @@ public class VinsAdapter extends RecyclerView.Adapter<VinsAdapter.VinsViewHolder
             protected void onPostExecute(String isSuccess) {
 
                 if (isSuccess == "true") {
-                    sendAnalyticsHit(context, "DeleteVinSuccess", "DeleteVinSuccess", "DeleteVinSuccess");
+//                    sendAnalyticsHit(context, "DeleteVinSuccess", "DeleteVinSuccess", "DeleteVinSuccess");
 
                     Log.i("SUCCESS: ", "SUCCESS");
                 }
