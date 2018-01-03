@@ -36,6 +36,7 @@ class UserActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
+        navigationView.getMenu().getItem(1).setChecked(true)
     }
 
     override fun onBackPressed() {

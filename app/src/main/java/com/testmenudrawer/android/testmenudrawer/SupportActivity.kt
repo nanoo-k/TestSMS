@@ -113,9 +113,9 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         setToolbar(toggle, toolbar)
 
-
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
+        navigationView.getMenu().getItem(2).setChecked(true)
 
 
         // Hide keyboard when user clicks around screen
