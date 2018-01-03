@@ -32,13 +32,10 @@ import android.text.InputFilter
 import android.text.SpannableStringBuilder
 import android.text.TextWatcher
 import android.view.*
-import android.widget.EditText
-import android.widget.Toast
 import com.testmenudrawer.android.testmenudrawer.models.SupportViewModel
 import android.view.View.OnFocusChangeListener
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.TextView
+import android.widget.*
 import java.nio.file.Files.delete
 
 
@@ -116,6 +113,13 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
         navigationView.getMenu().getItem(2).setChecked(true)
+
+        val header = navigationView.getHeaderView(0)
+        val closeMenuBtn = header.findViewById<View>(R.id.close_menu_btn) as ImageView
+        closeMenuBtn.setOnClickListener {
+            val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
+            drawer.closeDrawers()
+        }
 
 
         // Hide keyboard when user clicks around screen

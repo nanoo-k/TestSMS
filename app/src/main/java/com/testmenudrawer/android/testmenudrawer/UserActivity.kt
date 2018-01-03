@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
+import com.testmenudrawer.android.testmenudrawer.R.id.header
 
 import com.testmenudrawer.android.testmenudrawer.utilities.PreferenceData
 
@@ -37,6 +39,13 @@ class UserActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
         navigationView.getMenu().getItem(1).setChecked(true)
+
+        val header = navigationView.getHeaderView(0)
+        val closeMenuBtn = header.findViewById<View>(R.id.close_menu_btn) as ImageView
+        closeMenuBtn.setOnClickListener {
+            val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
+            drawer.closeDrawers()
+        }
     }
 
     override fun onBackPressed() {
