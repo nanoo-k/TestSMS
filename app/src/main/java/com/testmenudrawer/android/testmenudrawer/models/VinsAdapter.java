@@ -84,6 +84,7 @@ public class VinsAdapter extends RecyclerView.Adapter<VinsAdapter.VinsViewHolder
 
     @Override
     public int getItemCount() {
+        Log.i("list size", String.valueOf(mVins.size()));
         return mVins.size();
     }
 
