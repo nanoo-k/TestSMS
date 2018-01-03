@@ -11,22 +11,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.testmenudrawer.android.testmenudrawer.LoginActivity;
 import com.testmenudrawer.android.testmenudrawer.R;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 
-import com.testmenudrawer.android.testmenudrawer.SupportActivity;
 import com.testmenudrawer.android.testmenudrawer.VehicleDetailActivity;
 import com.testmenudrawer.android.testmenudrawer.utilities.NetworkUtils;
 import com.testmenudrawer.android.testmenudrawer.utilities.PreferenceData;
-
-import com.testmenudrawer.android.testmenudrawer.VehicleDetailActivity;
 
 /**
  * Created by mvalencia on 10/17/17.
@@ -106,15 +100,15 @@ public class VinsAdapter extends RecyclerView.Adapter<VinsAdapter.VinsViewHolder
             super(itemView);
             itemView.setOnClickListener(this);
 
-            dateTextView = (TextView) itemView.findViewById(R.id.date_text_view);
-            vinTextView = (TextView) itemView.findViewById(R.id.vin_text_view);
+            dateTextView = (TextView) itemView.findViewById(R.id.car_details_year_text_view);
+            vinTextView = (TextView) itemView.findViewById(R.id.car_details_make_text_view);
             carDetailsYearTextView = (TextView) itemView.findViewById(R.id.car_details_year_text_view);
             carDetailsMakeTextView = (TextView) itemView.findViewById(R.id.car_details_make_text_view);
             carDetailsModelTextView = (TextView) itemView.findViewById(R.id.car_details_model_text_view);
 
 
             /* Handle request to delete VIN */
-            Button deleteButton = (Button) itemView.findViewById(R.id.delete_button);
+//            Button deleteButton = (Button) itemView.findViewById(R.id.delete_button);
 //        deleteButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

@@ -154,8 +154,6 @@ public class VinList extends AppCompatActivity
 
             /* Save references to onscreen elements */
             mLoadingIndicator = (ProgressBar) findViewById(R.id.loading_indicator);
-            mResultTextView = (TextView) findViewById(R.id.result_textview);
-            mDecodedVinTextView = (TextView) findViewById(R.id.decode_vin_result_textview);
     //        mRecentVinsListView = (ListView) findViewById(R.id.recent_vins_list_view);
 
             setContentView(R.layout.activity_vin_list);
