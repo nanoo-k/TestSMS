@@ -6,65 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!--<TextView-->
-        <!--android:id="@+id/date_text_view"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textSize="20sp"-->
-        <!--android:textColor="@color/colorPrimaryDark"-->
-        <!--/>-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/vin_text_view"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/date_text_view"-->
-        <!--android:textSize="20sp"-->
-        <!--android:textColor="@color/colorPrimaryDark"-->
-        <!--/>-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/car_details_year_text_view"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/vin_text_view"-->
-        <!--android:textSize="20sp"-->
-        <!--android:textColor="@color/colorPrimaryDark"-->
-        <!--/>-->
-    <!--<TextView-->
-        <!--android:id="@+id/car_details_make_text_view"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/car_details_year_text_view"-->
-        <!--android:textSize="20sp"-->
-        <!--android:textColor="@color/colorPrimaryDark"-->
-        <!--/>-->
-    <!--<TextView-->
-        <!--android:id="@+id/car_details_model_text_view"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/car_details_make_text_view"-->
-        <!--android:textSize="20sp"-->
-        <!--android:textColor="@color/colorPrimaryDark"-->
-        <!--/>-->
-
-    <!--<Button-->
-        <!--android:id="@+id/delete_button"-->
-        <!--android:layout_width="150dp"-->
-        <!--android:layout_height="70dp"-->
-        <!--android:text="@string/delete_vin"-->
-        <!--android:background="@color/colorPrimaryDark"-->
-        <!--android:textColor="@color/colorWhite"-->
-        <!--android:textSize="20sp"-->
-        <!--android:layout_marginBottom="@dimen/activity_vertical_margin"/>-->
-
     <TextView
         android:id="@+id/car_details_year_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="Year"
+        android:textColor="#606060"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -72,8 +22,10 @@
         android:id="@+id/vin_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="Vin"
+        android:textAllCaps="true"
+        android:textColor="#969696"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/car_details_year_text_view"
         app:layout_constraintTop_toBottomOf="@+id/car_details_year_text_view" />
 
@@ -83,6 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Make"
+        android:textColor="#606060"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/car_details_year_text_view"
         app:layout_constraintTop_toTopOf="@+id/car_details_year_text_view" />
 
@@ -92,6 +46,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Model"
+        android:textColor="#606060"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/car_details_make_text_view"
         app:layout_constraintTop_toTopOf="@+id/car_details_year_text_view" />
 
@@ -101,6 +57,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="Date"
+        android:textColor="#969696"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/car_details_year_text_view" />
 
@@ -110,6 +68,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="24dp"
         android:background="#E1E1E1"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vin_text_view" />

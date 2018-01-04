@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">TestMenuDrawer</string>
 
-    <string name="vin_list_title">VIN List</string>
+    <string name="vin_list_title">Vehicles</string>
     <string name="user_title">User</string>
     <string name="support_title">Support</string>
     <string name="vehicle_detail_title">Vehicle Information</string>
