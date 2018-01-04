@@ -100,8 +100,8 @@ public class VinsAdapter extends RecyclerView.Adapter<VinsAdapter.VinsViewHolder
             super(itemView);
             itemView.setOnClickListener(this);
 
-            dateTextView = (TextView) itemView.findViewById(R.id.car_details_year_text_view);
-            vinTextView = (TextView) itemView.findViewById(R.id.car_details_make_text_view);
+            dateTextView = (TextView) itemView.findViewById(R.id.date_text_view);
+            vinTextView = (TextView) itemView.findViewById(R.id.vin_text_view);
             carDetailsYearTextView = (TextView) itemView.findViewById(R.id.car_details_year_text_view);
             carDetailsMakeTextView = (TextView) itemView.findViewById(R.id.car_details_make_text_view);
             carDetailsModelTextView = (TextView) itemView.findViewById(R.id.car_details_model_text_view);
