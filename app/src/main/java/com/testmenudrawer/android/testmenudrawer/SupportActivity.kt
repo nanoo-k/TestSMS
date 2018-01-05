@@ -231,6 +231,8 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         editTexts.add(mPhoneEditText!!)
         editTexts.add(mEmailEditText!!)
         validateForm()
+
+        mCommentsEditText!!.setBackgroundResource(R.drawable.edit_text_border_color);
     }
 
     private var mBackButtonIntent: String? = null
