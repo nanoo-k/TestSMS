@@ -1,4 +1,10 @@
 package com.testmenudrawer.android.testmenudrawer.models;
+import android.util.Log;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by mvalencia on 10/17/17.
@@ -94,5 +100,37 @@ public class Vin {
                 ", date='" + model + '\'' +
                 ", vin='" + engine + '\'' +
                 '}';
+    }
+
+    /**
+     * Convert the vin's scanned date into h:mm aa or MM/dd/yy depending on how old it is.
+     * @return String dateString
+     */
+    public String getLastScannedDate() {
+        Date currentTime = Calendar.getInstance().getTime();
+
+        String dateString = date;
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Date convertedDate = new Date();
+        try {
+            convertedDate = dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        // If scan date is today, send back the hh:mm aa
+        // else send back MM/dd/yy
+
+        if (convertedDate.getDate() == currentTime.getDate()) {
+            SimpleDateFormat hoursMinutesFormat = new SimpleDateFormat("h:mm aa");
+            dateString = hoursMinutesFormat.format(convertedDate);
+        } else {
+            SimpleDateFormat monthDayYearFormat = new SimpleDateFormat("MM/dd/yy");
+            dateString = monthDayYearFormat.format(convertedDate);
+        }
+
+
+        return dateString;
     }
 }

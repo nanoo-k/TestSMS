@@ -98,7 +98,7 @@ public class VinListAsyncTaskLoader extends
                  * gson the listType */
                 List<Vin> vinList = gson.fromJson(vinResults, listType);
 
-                Vin newVin = new Vin(11, "2017-10-31T19:29:37", "2FABP7BVXBX138080", "2011", "Ford", "Crown Victoria", "4.6L 281CI V8 FI VIN: V-Flex");
+                Vin newVin = new Vin(11, "2018-1-5T12:29:37", "2FABP7BVXBX138080", "2011", "Ford", "Crown Victoria", "4.6L 281CI V8 FI VIN: V-Flex");
                 vinList.add(newVin);
 
     //            mVinsList = (RecyclerView) findViewById(R.id.recyclerview_vins);

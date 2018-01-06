@@ -248,7 +248,9 @@ public class VinsAdapter extends RecyclerView.Adapter<VinsAdapter.VinsViewHolder
             mVin = vin.getVin();
 //        mPosition = position;
 
-            dateTextView.setText(vin.getDate());
+//            String blah = vin.getLastScannedDate();
+
+            dateTextView.setText(vin.getLastScannedDate());
             vinTextView.setText(vin.getVin());
             carDetailsYearTextView.setText(vin.getYear());
             carDetailsMakeTextView.setText(vin.getMake());
