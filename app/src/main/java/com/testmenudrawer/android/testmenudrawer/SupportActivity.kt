@@ -1,6 +1,7 @@
 package com.testmenudrawer.android.testmenudrawer
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
@@ -590,44 +591,48 @@ class SupportActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     fun makeCall(view: View) {
 //        makeLoginRequest()
 
-        Log.i("Make call", "calling");
+        Log.i("Make call", "calling")
 
-        var permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
+        startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + 8442786643)))
 
-        if (permissionCheck ==  PackageManager.PERMISSION_GRANTED) {
-            val callIntent = Intent(Intent.ACTION_CALL)
-            callIntent.data = Uri.parse("tel:" + 8442786643)//change the number
-            startActivity(callIntent)
-        } else {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_CONTACTS), PERMISSION_REQUEST_CALL_PHONE);
-        }
+//        var permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
+//
+//        if (permissionCheck ==  PackageManager.PERMISSION_GRANTED) {
+//            val callIntent = Intent(Intent.ACTION_CALL)
+//            callIntent.data = Uri.parse("tel:" + 8442786643)//change the number
+//            startActivity(callIntent)
+//        } else {
+//            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_CONTACTS), PERMISSION_REQUEST_CALL_PHONE);
+//        }
 
     }
 
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
-                                            grantResults: IntArray) {
-        // BEGIN_INCLUDE(onRequestPermissionsResult)
-        if (requestCode == PERMISSION_REQUEST_CALL_PHONE) {
-            // Request for camera permission.
-            if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission has been granted. Start camera preview Activity.
-//                Snackbar.make(mLayout, "Camera permission was granted. Starting preview.",
-//                        Snackbar.LENGTH_SHORT)
-//                        .show()
-//                startCamera()
-
-                Log.i("Make call", "calling...");
-
-            } else {
-                // Permission request was denied.
-//                Snackbar.make(mLayout, "Camera permission request was denied.",
-//                        Snackbar.LENGTH_SHORT)
-//                        .show()
-
-                Log.i("Call denied", "calling...");
-            }
-        }
-        // END_INCLUDE(onRequestPermissionsResult)
-    }
+//    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
+//                                            grantResults: IntArray) {
+//
+//        Log.i("requestCode", requestCode.toString())
+//
+//        // BEGIN_INCLUDE(onRequestPermissionsResult)
+//        if (requestCode == PERMISSION_REQUEST_CALL_PHONE) {
+//            // Request for camera permission.
+//            if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                // Permission has been granted. Start camera preview Activity.
+////                Snackbar.make(mLayout, "Camera permission was granted. Starting preview.",
+////                        Snackbar.LENGTH_SHORT)
+////                        .show()
+////                startCamera()
+//                Log.i("Make call", "calling...");
+//
+//            } else {
+//                // Permission request was denied.
+////                Snackbar.make(mLayout, "Camera permission request was denied.",
+////                        Snackbar.LENGTH_SHORT)
+////                        .show()
+//
+//                Log.i("Call denied", "Nope");
+//            }
+//        }
+//        // END_INCLUDE(onRequestPermissionsResult)
+//    }
 }
