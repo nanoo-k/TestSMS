@@ -9,42 +9,8 @@
     tools:context="com.testmenudrawer.android.testmenudrawer.VinList"
     tools:showIn="@layout/app_bar_vin_list">
 
-
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Hello World!"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintLeft_toLeftOf="parent"-->
-        <!--app:layout_constraintRight_toRightOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-        <!--xmlns:tools="http://schemas.android.com/tools"-->
-        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-        <!--android:animateLayoutChanges="true"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:orientation="vertical"-->
-        <!--tools:context="com.varvet.barcodereadersample.MainActivity">-->
-
-        <!--<android.support.v7.widget.Toolbar-->
-            <!--android:id="@+id/my_toolbar"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="?attr/actionBarSize"-->
-            <!--android:background="@color/colorPrimary"-->
-            <!--android:elevation="4dp"-->
-            <!--android:theme="@style/ThemeOverlay.AppCompat.ActionBar"-->
-            <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />-->
-
-
-        <!--
-            FrameLayout is designed to block out an area on the screen to display a single item.
-            Generally, FrameLayout should be used to hold a single child view, because it can be
-            difficult to organize child views in a way that's scalable to different screen sizes
-            without the children overlapping each other.
-        -->
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,21 +24,6 @@
             android:layout_height="match_parent" />
 
 
-        <!--<ScrollView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="16dp">-->
-
-
-        <!--<ListView-->
-        <!--android:id="@+id/recent_vins_list_view"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:layout_below="@+id/manual_entry_button" />-->
-
-        <!--</ScrollView>-->
-
         <ProgressBar
             android:id="@+id/loading_indicator"
             android:layout_width="42dp"
@@ -81,8 +32,39 @@
             android:visibility="invisible" />
     </FrameLayout>
 
+    <Button
+        android:id="@+id/message_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FAFAFA"
+        android:text=" You have no vehicles."
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#8E8E8E"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="202dp" />
 
-    <!--</RelativeLayout>-->
+    <Button
+        android:id="@+id/message_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FAFAFA"
+        android:text="Tap [---] to scan your first vehicle."
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#8E8E8E"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/message_one" />
+
+    <!--<Button-->
+        <!--android:id="@+id/empty_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:gravity="center"-->
+        <!--android:visibility="gone"-->
+        <!--android:text="You have no vehicles." />-->
 
 
 </android.support.constraint.ConstraintLayout>
